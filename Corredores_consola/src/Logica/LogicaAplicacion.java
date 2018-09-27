@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +42,9 @@ public class LogicaAplicacion {
     public LogicaAplicacion() throws IOException {
         this.corredores = new HashMap<>();
         File fichero = new File("fichero_corredores.csv");
-        fichero.createNewFile();
+        if (!fichero.exists()) {
+            fichero.createNewFile();
+        }
         this.fichero_corredores = new Fichero_csv(fichero);
         this.separador = ";";
     }
@@ -104,19 +107,19 @@ public class LogicaAplicacion {
             throw new IllegalArgumentException("No se puede convertir a string un objeto null");
         }
         StringTokenizer st = new StringTokenizer(linea, this.separador);
-        ArrayList<String> tk = new ArrayList<>();
+        ArrayList<String> tokens = new ArrayList<>();
         while (st.hasMoreTokens()) {
-            tk.add(st.nextToken());
+            tokens.add(st.nextToken());
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
-        Runner c = null;
+        Runner runner = null;
         try {
-            c = new Runner(tk.get(0), tk.get(1),
-                    sdf.parse(tk.get(2)), tk.get(3), tk.get(4));
+            runner = new Runner(tokens.get(0), tokens.get(1),
+                    sdf.parse(tokens.get(2)), tokens.get(3), tokens.get(4));
         } catch (ParseException ex) {
             System.out.println("Error al transformar la fecha del fichero");
         }
-        return c;
+        return runner;
     }
 
     public String runner_a_linea(Runner corredor) {
@@ -131,21 +134,40 @@ public class LogicaAplicacion {
 
     public void volcar_de_csv() {
         this.fichero_corredores.abrirLector();
-        String linea = "";
-        Runner r = null;
+        String linea = null;
+        Runner runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
-            r = linea_a_runner(linea);
-            this.corredores.put(r.getDni(), r);
+            runner = linea_a_runner(linea);
+            this.corredores.put(runner.getDni(), runner);
         }
         this.fichero_corredores.cerrarLector();
     }
 
     public void volcar_a_csv() {
         this.fichero_corredores.abrirEscritor(false);
-        for (Runner r : corredores.values()) {
-            fichero_corredores.println(runner_a_linea(r));
+        for (Runner runner : corredores.values()) {
+            fichero_corredores.println(runner_a_linea(runner));
         }
         this.fichero_corredores.cerrarEscritor();
     }
+    
+    // ORDENACION    
+    public List<Runner> ordenar_dni(){
+        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+        Collections.sort(lista_ordenada);
+        return lista_ordenada;
+    }
+    
+    public List<Runner> ordenar_fecha_nac(){
+        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+        Collections.sort(lista_ordenada, new Runner.ComparadorFecha());
+        return lista_ordenada;
+    }
 
+    public List<Runner> ordenar_nombre(){
+        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+        Collections.sort(lista_ordenada, new Runner.ComparadorNombre());
+        return lista_ordenada;
+    }
+    
 }

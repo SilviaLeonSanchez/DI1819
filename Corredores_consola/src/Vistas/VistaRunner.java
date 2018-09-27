@@ -43,22 +43,24 @@ public class VistaRunner extends Vista {
         System.out.println("3. Modificacion");
         System.out.println("4. Ver corredores");
         System.out.println("5. Buscar corredor");
-        System.out.println("6. Salir");
+        System.out.println("6. Guardar");
+        System.out.println("7. Salir");
         System.out.println("------------------------------");
     }
 
     public void menu_principal() {
-        Runner r = null;
+        Runner runner = null;
         byte opcion = 1;
-        while (opcion != 6) {
+        while (opcion != 7) {
             ver_menu_principal();
             opcion = pedirByte("Introduce una opcion: ");
-            if (opcion < 1 | opcion > 6) {
+            if (opcion < 1 | opcion > 7) {
                 entrada_erronea();
             } else {
                 switch (opcion) {
                     case 1:
-                        if (logica.alta_corredor(pedir_dni(), pedir_nombre(), pedir_fecha_nac(), pedir_dir(), pedir_tfn())) {
+                        if (logica.alta_corredor(pedir_dni(), pedir_nombre(),
+                                pedir_fecha_nac(), pedir_dir(), pedir_tfn())) {
                             corredor_creado();
                         } else {
                             ya_existe();
@@ -72,29 +74,35 @@ public class VistaRunner extends Vista {
                         }
                         break;
                     case 3:
-                        r = logica.buscar_corredor(pedir_dni());
-                        if (r == null) {
+                        runner = logica.buscar_corredor(pedir_dni());
+                        if (runner == null) {
                             no_existe();
                         } else {
-                            ver_corredor(r);
-                            menu_modificar(r);
+                            ver_corredor(runner);
+                            menu_modificar(runner);
                         }
                         break;
                     case 4:
-                        menu_ordenar();
-                        break;
-                    case 5:
-                        r = logica.buscar_corredor(pedir_dni());
-                        if (r == null) {
-                            no_existe();
+                        if (this.logica.getCorredores().size() != 0) {
+                            menu_ordenar();
                         } else {
-                            ver_corredor(r);
+                            System.out.println("No hay corredores\n");
                         }
                         break;
+                    case 5:
+                        runner = logica.buscar_corredor(pedir_dni());
+                        if (runner == null) {
+                            no_existe();
+                        } else {
+                            ver_corredor(runner);
+                        }
+                        break;
+                    case 6:
+                        logica.volcar_a_csv();
                 }
             }
         }
-        //logica.volcar_a_csv();
+        logica.volcar_a_csv();
         salir_aplicacion();
     }
 
@@ -113,8 +121,8 @@ public class VistaRunner extends Vista {
         System.out.println("------------------------------");
     }
 
-    private void menu_modificar(Runner c) {
-        Runner c_mod = (Runner) c.clone();
+    private void menu_modificar(Runner runner) {
+        Runner runner_aux = (Runner) runner.clone();
         byte opcion = 1;
         while (opcion != 8) {
             ver_menu_modificar();
@@ -124,33 +132,33 @@ public class VistaRunner extends Vista {
             } else {
                 switch (opcion) {
                     case 1:
-                        if (logica.modificar_dni(c_mod, pedir_dni())) {
+                        if (logica.modificar_dni(runner_aux, pedir_dni())) {
                             corredor_modificado();
                         } else {
                             ya_existe();
                         }
                         break;
                     case 2:
-                        logica.modificar_nombre(c_mod, pedir_nombre());
+                        logica.modificar_nombre(runner_aux, pedir_nombre());
                         modificado_correctamente("nombre");
                         break;
                     case 3:
-                        logica.modificar_direccion(c_mod, pedir_dir());
+                        logica.modificar_direccion(runner_aux, pedir_dir());
                         modificado_correctamente("direccion");
                         break;
                     case 4:
-                        logica.modificar_tfn(c_mod, pedir_tfn());
+                        logica.modificar_tfn(runner_aux, pedir_tfn());
                         modificado_correctamente("telefono");
                         break;
                     case 5:
-                        logica.modificar_fecha_nac(c_mod, pedir_fecha_nac());
+                        logica.modificar_fecha_nac(runner_aux, pedir_fecha_nac());
                         modificado_correctamente("fecha de nacimiento");
                         break;
                     case 6:
-                        ver_corredor(c_mod);
+                        ver_corredor(runner_aux);
                         break;
                     case 7:
-                        logica.guardar_cambios(c, c_mod);
+                        logica.guardar_cambios(runner, runner_aux);
                         logica.volcar_a_csv();
                         cambios_guardados();
                 }
@@ -162,7 +170,7 @@ public class VistaRunner extends Vista {
     public void ver_menu_ordenar() {
         System.out.println();
         System.out.println("------------------------------");
-        System.out.println("ORDENAR:");
+        System.out.println("VER ORDENADOS POR:");
         System.out.println("1. Dni");
         System.out.println("2. Nombre");
         System.out.println("3. Fecha de nacimiento");
@@ -180,13 +188,13 @@ public class VistaRunner extends Vista {
             } else {
                 switch (opcion) {
                     case 1:
-
+                        ver_corredores(logica.ordenar_dni());
                         break;
                     case 2:
-                        ver_corredores(logica.getCorredores());
+                        ver_corredores(logica.ordenar_nombre());
                         break;
                     case 3:
-
+                        ver_corredores(logica.ordenar_fecha_nac());
                         break;
                 }
             }
@@ -215,11 +223,12 @@ public class VistaRunner extends Vista {
     }
 
     public String pedir_nombre() {
-        String nombre = pedirString("Introduce el nombre del corredor: ");
+        String nombre;
         while (true) {
+            nombre = pedirString("Introduce el nombre del corredor: ");
             try {
                 for (char letra : nombre.toCharArray()) {
-                    if (!es_letra(letra)) {
+                    if ((letra != ' ') & (!es_letra(letra))) {
                         throw new IllegalArgumentException("El nombre debe contener solo letras");
                     }
                 }

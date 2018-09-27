@@ -128,16 +128,8 @@ public class Runner implements Comparable<Runner>, Cloneable {
     public String getDni() {
         return dni;
     }
-
-    public class ComparadorDni implements Comparator<Runner> {
-
-        @Override
-        public int compare(Runner o1, Runner o2) {
-            return o1.getDni().compareTo(o2.getDni());
-        }
-    }
     
-    public class ComparadorFecha implements Comparator<Runner> {
+    public static class ComparadorFecha implements Comparator<Runner> {
 
         @Override
         public int compare(Runner o1, Runner o2) {
@@ -145,11 +137,11 @@ public class Runner implements Comparable<Runner>, Cloneable {
         }
     }
 
-    public class ComparadorNombre implements Comparator<Runner> {
+    public static class ComparadorNombre implements Comparator<Runner> {
 
         @Override
         public int compare(Runner o1, Runner o2) {
-            return o1.getFecha_nac().compareTo(o2.getFecha_nac());
+            return o1.getNombre().compareTo(o2.getNombre());
         }
     }
 
