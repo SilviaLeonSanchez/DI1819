@@ -12,12 +12,13 @@ package Interfaz;
 public class JDialogFormularioCarrera extends javax.swing.JDialog {
 
     /**
-     * Creates new form FormularioCarrera
+     * Creates new form FormularioCorredor
      */
     public JDialogFormularioCarrera(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,21 +29,208 @@ public class JDialogFormularioCarrera extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jPanelTitulo = new javax.swing.JPanel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jPanelBotones = new javax.swing.JPanel();
+        jButtonEnviar = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jPanelCampos = new javax.swing.JPanel();
+        jLabelNombreCarrera = new javax.swing.JLabel();
+        jTextFieldNombreCarrera = new javax.swing.JTextField();
+        jLabelPlazasCarrera = new javax.swing.JLabel();
+        jTextFieldPlazasCarrera = new javax.swing.JTextField();
+        jLabelLugarCarrera = new javax.swing.JLabel();
+        jTextFieldLugarCarrera = new javax.swing.JTextField();
+        jLabelFechaCarrera = new javax.swing.JLabel();
+        jSpinnerFechaCarrera = new javax.swing.JSpinner();
+        jLabelDireccionCarrera = new javax.swing.JLabel();
+        jTextFieldDireccionCarrera = new javax.swing.JTextField();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nuevo Corredor");
+        setForeground(java.awt.Color.darkGray);
+        setMinimumSize(new java.awt.Dimension(640, 480));
+        setModal(true);
+        setSize(new java.awt.Dimension(640, 480));
+
+        jPanelTitulo.setMinimumSize(new java.awt.Dimension(640, 90));
+        jPanelTitulo.setPreferredSize(new java.awt.Dimension(640, 90));
+
+        jLabelTitulo.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("Informacion de la carrera");
+        jLabelTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setMinimumSize(new java.awt.Dimension(400, 50));
+        jLabelTitulo.setPreferredSize(new java.awt.Dimension(400, 50));
+
+        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
+        jPanelTitulo.setLayout(jPanelTituloLayout);
+        jPanelTituloLayout.setHorizontalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                .addGap(133, 133, 133))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanelTituloLayout.setVerticalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        getContentPane().add(jPanelTitulo, java.awt.BorderLayout.PAGE_START);
+
+        jPanelBotones.setMinimumSize(new java.awt.Dimension(640, 100));
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(640, 100));
+
+        jButtonEnviar.setText("Enviar");
+        jButtonEnviar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEnviar.setMaximumSize(null);
+        jButtonEnviar.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonEnviar.setPreferredSize(new java.awt.Dimension(85, 40));
+
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.setMaximumSize(null);
+        jButtonLimpiar.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonLimpiar.setPreferredSize(new java.awt.Dimension(85, 40));
+
+        javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
+        jPanelBotones.setLayout(jPanelBotonesLayout);
+        jPanelBotonesLayout.setHorizontalGroup(
+            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addContainerGap(180, Short.MAX_VALUE)
+                .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
+        );
+
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonEnviar, jButtonLimpiar});
+
+        jPanelBotonesLayout.setVerticalGroup(
+            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonEnviar, jButtonLimpiar});
+
+        getContentPane().add(jPanelBotones, java.awt.BorderLayout.PAGE_END);
+
+        jPanelCampos.setMaximumSize(null);
+        jPanelCampos.setMinimumSize(new java.awt.Dimension(640, 130));
+        jPanelCampos.setPreferredSize(new java.awt.Dimension(640, 130));
+
+        jLabelNombreCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelNombreCarrera.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelNombreCarrera.setText("Nombre");
+
+        jTextFieldNombreCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldNombreCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNombreCarreraCarreraActionPerformed(evt);
+            }
+        });
+
+        jLabelPlazasCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelPlazasCarrera.setText("Plazas");
+        jLabelPlazasCarrera.setMinimumSize(new java.awt.Dimension(40, 12));
+        jLabelPlazasCarrera.setPreferredSize(new java.awt.Dimension(40, 12));
+
+        jTextFieldPlazasCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jLabelLugarCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelLugarCarrera.setText("Lugar");
+
+        jTextFieldLugarCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        jLabelFechaCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelFechaCarrera.setText("Fecha de la carrera");
+
+        jSpinnerFechaCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jSpinnerFechaCarrera.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
+
+        jLabelDireccionCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelDireccionCarrera.setText("Direccion");
+
+        jTextFieldDireccionCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+
+        javax.swing.GroupLayout jPanelCamposLayout = new javax.swing.GroupLayout(jPanelCampos);
+        jPanelCampos.setLayout(jPanelCamposLayout);
+        jPanelCamposLayout.setHorizontalGroup(
+            jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCamposLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelCamposLayout.createSequentialGroup()
+                        .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelDireccionCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDireccionCarrera)))
+                    .addComponent(jLabelFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelCamposLayout.createSequentialGroup()
+                        .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelPlazasCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                            .addComponent(jTextFieldPlazasCarrera)))
+                    .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
+        );
+
+        jPanelCamposLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldDireccionCarrera, jTextFieldLugarCarrera, jTextFieldNombreCarrera, jTextFieldPlazasCarrera});
+
+        jPanelCamposLayout.setVerticalGroup(
+            jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCamposLayout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelPlazasCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPlazasCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabelDireccionCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDireccionCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanelCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(47, 47, 47))
+        );
+
+        jPanelCamposLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDireccionCarrera, jLabelLugarCarrera, jTextFieldDireccionCarrera, jTextFieldLugarCarrera});
+
+        jPanelCamposLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelNombreCarrera, jLabelPlazasCarrera, jTextFieldNombreCarrera, jTextFieldPlazasCarrera});
+
+        jPanelCamposLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelFechaCarrera, jSpinnerFechaCarrera});
+
+        getContentPane().add(jPanelCampos, java.awt.BorderLayout.CENTER);
+        jPanelCampos.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextFieldNombreCarreraCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreCarreraCarreraActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNombreCarreraCarreraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -73,6 +261,10 @@ public class JDialogFormularioCarrera extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -90,5 +282,21 @@ public class JDialogFormularioCarrera extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonEnviar;
+    private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JLabel jLabelDireccionCarrera;
+    private javax.swing.JLabel jLabelFechaCarrera;
+    private javax.swing.JLabel jLabelLugarCarrera;
+    private javax.swing.JLabel jLabelNombreCarrera;
+    private javax.swing.JLabel jLabelPlazasCarrera;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JPanel jPanelBotones;
+    private javax.swing.JPanel jPanelCampos;
+    private javax.swing.JPanel jPanelTitulo;
+    private javax.swing.JSpinner jSpinnerFechaCarrera;
+    private javax.swing.JTextField jTextFieldDireccionCarrera;
+    private javax.swing.JTextField jTextFieldLugarCarrera;
+    private javax.swing.JTextField jTextFieldNombreCarrera;
+    private javax.swing.JTextField jTextFieldPlazasCarrera;
     // End of variables declaration//GEN-END:variables
 }
