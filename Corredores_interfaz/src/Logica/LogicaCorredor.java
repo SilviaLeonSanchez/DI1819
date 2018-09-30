@@ -5,7 +5,7 @@
  */
 package Logica;
 
-import Modelos.Runner;
+import Modelo.Runner;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -21,7 +21,7 @@ import java.util.StringTokenizer;
  *
  * @author silvia
  */
-public class LogicaAplicacion {
+public class LogicaCorredor {
 
     // ATRIBUTOS
     private HashMap<String, Runner> corredores;
@@ -29,17 +29,17 @@ public class LogicaAplicacion {
     private String separador;
 
     // METODOS
-    public LogicaAplicacion(File fichero, String separador) {
+    public LogicaCorredor(File fichero, String separador) throws IllegalArgumentException{
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
             this.fichero_corredores = new Fichero_csv(fichero);
         } else {
             throw new IllegalArgumentException("El fichero no es valido o no existe.");
         }
         this.separador = separador;
-        //volcar_de_csv();
+        volcar_de_csv();
     }
 
-    public LogicaAplicacion() throws IOException {
+    public LogicaCorredor() throws IOException {
         this.corredores = new HashMap<>();
         File fichero = new File("fichero_corredores.csv");
         if (!fichero.exists()) {
@@ -52,6 +52,14 @@ public class LogicaAplicacion {
     // COLECCION
     public List<Runner> getCorredores() {
         return new ArrayList(corredores.values());
+    }
+    
+    public String[] getStringCorredores() {
+        ArrayList<String> lista = new ArrayList<>();
+        for(Runner runner : this.corredores.values()){
+            lista.add(runner.toString());
+        }
+        return (String[]) lista.toArray();
     }
 
     public Runner buscar_corredor(String dni) {
