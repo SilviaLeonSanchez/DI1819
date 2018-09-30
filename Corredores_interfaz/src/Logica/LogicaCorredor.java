@@ -59,7 +59,7 @@ public class LogicaCorredor {
         for(Runner runner : this.corredores.values()){
             lista.add(runner.toString());
         }
-        return (String[]) lista.toArray();
+        return (String[]) lista.<String>toArray();
     }
 
     public Runner buscar_corredor(String dni) {
