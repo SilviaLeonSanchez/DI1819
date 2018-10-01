@@ -22,7 +22,7 @@ public class MarAppTon {
         VistaRunner vista;
         try {
             vista = new VistaRunner();
-            vista.menu_principal();
+            vista.menuPrincipal();
         } catch (IOException ex) {
             System.out.println("No se ha podido crear el fichero de almacenamiento");
         }

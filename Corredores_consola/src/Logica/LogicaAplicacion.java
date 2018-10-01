@@ -54,11 +54,11 @@ public class LogicaAplicacion {
         return new ArrayList(corredores.values());
     }
 
-    public Runner buscar_corredor(String dni) {
+    public Runner buscarCorredor(String dni) {
         return this.corredores.get(dni);
     }
 
-    public boolean alta_corredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
+    public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
         if (corredores.containsKey(dni)) {
             return false;
         } else {
@@ -67,11 +67,11 @@ public class LogicaAplicacion {
         }
     }
 
-    public boolean baja_corredor(String dni) {
-        return !(corredores.remove(dni) == null);
+    public boolean bajaCorredor(String dni) {
+        return corredores.remove(dni) != null;
     }
 
-    public boolean modificar_dni(Runner c, String nuevo_dni) {
+    public boolean modificarDni(Runner c, String nuevo_dni) {
         if (corredores.containsKey(nuevo_dni)) {
             return false;
         } else {
@@ -80,29 +80,29 @@ public class LogicaAplicacion {
         }
     }
 
-    public void modificar_nombre(Runner c, String nuevo_nombre) {
+    public void modificarNombre(Runner c, String nuevo_nombre) {
         c.setNombre(nuevo_nombre);
     }
 
-    public void modificar_direccion(Runner c, String nueva_dir) {
+    public void modificarDireccion(Runner c, String nueva_dir) {
         c.setDireccion(nueva_dir);
     }
 
-    public void modificar_tfn(Runner c, String nuevo_tfn) {
+    public void modificarTfn(Runner c, String nuevo_tfn) {
         c.setTelefono(nuevo_tfn);
     }
 
-    public void modificar_fecha_nac(Runner c, Date nueva_fecha) {
+    public void modificarFechaNac(Runner c, Date nueva_fecha) {
         c.setFecha_nac(nueva_fecha);
     }
 
-    public void guardar_cambios(Runner c, Runner c_modificado) {
+    public void guardarCambios(Runner c, Runner c_modificado) {
         corredores.remove(c.getDni());
         corredores.put(c_modificado.getDni(), c_modificado);
     }
 
     // FICHERO
-    public Runner linea_a_runner(String linea) {
+    public Runner toRunner(String linea) {
         if (linea == null) {
             throw new IllegalArgumentException("No se puede convertir a string un objeto null");
         }
@@ -122,7 +122,7 @@ public class LogicaAplicacion {
         return runner;
     }
 
-    public String runner_a_linea(Runner corredor) {
+    public String toStringCSV(Runner corredor) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
         String linea = corredor.getDni() + this.separador;
         linea += corredor.getNombre() + this.separador;
@@ -132,39 +132,39 @@ public class LogicaAplicacion {
         return linea;
     }
 
-    public void volcar_de_csv() {
+    public void leerCSV() {
         this.fichero_corredores.abrirLector();
         String linea = null;
         Runner runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
-            runner = linea_a_runner(linea);
+            runner = toRunner(linea);
             this.corredores.put(runner.getDni(), runner);
         }
         this.fichero_corredores.cerrarLector();
     }
 
-    public void volcar_a_csv() {
+    public void grabarCSV() {
         this.fichero_corredores.abrirEscritor(false);
         for (Runner runner : corredores.values()) {
-            fichero_corredores.println(runner_a_linea(runner));
+            fichero_corredores.println(toStringCSV(runner));
         }
         this.fichero_corredores.cerrarEscritor();
     }
     
     // ORDENACION    
-    public List<Runner> ordenar_dni(){
+    public List<Runner> ordenarDni(){
         ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
         Collections.sort(lista_ordenada);
         return lista_ordenada;
     }
     
-    public List<Runner> ordenar_fecha_nac(){
+    public List<Runner> ordenarFechaNac(){
         ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
         Collections.sort(lista_ordenada, new Runner.ComparadorFecha());
         return lista_ordenada;
     }
 
-    public List<Runner> ordenar_nombre(){
+    public List<Runner> ordenarNombre(){
         ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
         Collections.sort(lista_ordenada, new Runner.ComparadorNombre());
         return lista_ordenada;

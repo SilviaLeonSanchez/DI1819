@@ -30,7 +30,7 @@ public class Fichero_csv {
      * Crea un objeto de tipo FicheroDeTexto y asigna el parametro al atributo
      * fichero.
      *
-     * @param fichero Con este fichero se abrira el flujo de transferencia de
+     * @param fichero abre el flujo de transferencia de
      * caracteres para leer o grabar en el.
      */
     public Fichero_csv(File fichero) {

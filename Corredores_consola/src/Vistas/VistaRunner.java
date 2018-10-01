@@ -6,6 +6,7 @@
 package Vistas;
 
 import Logica.LogicaAplicacion;
+import Logica.Teclado;
 import Modelos.Runner;
 import java.io.File;
 import java.io.IOException;
@@ -18,23 +19,22 @@ import java.util.List;
  *
  * @author silvia
  */
-public class VistaRunner extends Vista {
+public class VistaRunner{
 
     private LogicaAplicacion logica;
 
     public VistaRunner(File fichero, String separador) {
         this.logica = new LogicaAplicacion(fichero, separador);
-        this.logica.volcar_de_csv();
+        this.logica.leerCSV();
     }
 
     public VistaRunner() throws IOException {
         this.logica = new LogicaAplicacion();
-        this.logica.volcar_de_csv();
+        this.logica.leerCSV();
     }
 
     // MENUS
-    @Override
-    public void ver_menu_principal() {
+    public void verMenuPrincipal() {
         System.out.println();
         System.out.println("------------------------------");
         System.out.println("MENU PRINCIPAL:");
@@ -48,65 +48,65 @@ public class VistaRunner extends Vista {
         System.out.println("------------------------------");
     }
 
-    public void menu_principal() {
+    public void menuPrincipal() {
         Runner runner = null;
         byte opcion = 1;
         while (opcion != 7) {
-            ver_menu_principal();
+            verMenuPrincipal();
             opcion = pedirByte("Introduce una opcion: ");
             if (opcion < 1 | opcion > 7) {
-                entrada_erronea();
+                entradaErronea();
             } else {
                 switch (opcion) {
                     case 1:
-                        if (logica.alta_corredor(pedir_dni(), pedir_nombre(),
-                                pedir_fecha_nac(), pedir_dir(), pedir_tfn())) {
-                            corredor_creado();
+                        if (logica.altaCorredor(pedirDni(), pedirNombre(),
+                                pedirFechaNac(), pedirDir(), pedirTfn())) {
+                            corredorCreado();
                         } else {
-                            ya_existe();
+                            yaExiste();
                         }
                         break;
                     case 2:
-                        if (logica.baja_corredor(pedir_dni())) {
-                            corredor_borrado();
+                        if (logica.bajaCorredor(pedirDni())) {
+                            corredorBorrado();
                         } else {
-                            no_existe();
+                            noExiste();
                         }
                         break;
                     case 3:
-                        runner = logica.buscar_corredor(pedir_dni());
+                        runner = logica.buscarCorredor(pedirDni());
                         if (runner == null) {
-                            no_existe();
+                            noExiste();
                         } else {
-                            ver_corredor(runner);
-                            menu_modificar(runner);
+                            verCorredor(runner);
+                            menuModificar(runner);
                         }
                         break;
                     case 4:
                         if (this.logica.getCorredores().size() != 0) {
-                            menu_ordenar();
+                            menuOrdenar();
                         } else {
                             System.out.println("No hay corredores\n");
                         }
                         break;
                     case 5:
-                        runner = logica.buscar_corredor(pedir_dni());
+                        runner = logica.buscarCorredor(pedirDni());
                         if (runner == null) {
-                            no_existe();
+                            noExiste();
                         } else {
-                            ver_corredor(runner);
+                            verCorredor(runner);
                         }
                         break;
                     case 6:
-                        logica.volcar_a_csv();
+                        logica.grabarCSV();
                 }
             }
         }
-        logica.volcar_a_csv();
-        salir_aplicacion();
+        logica.grabarCSV();
+        salirAplicacion();
     }
 
-    public void ver_menu_modificar() {
+    public void verMenuModificar() {
         System.out.println();
         System.out.println("------------------------------");
         System.out.println("MODIFICAR:");
@@ -121,53 +121,53 @@ public class VistaRunner extends Vista {
         System.out.println("------------------------------");
     }
 
-    private void menu_modificar(Runner runner) {
+    private void menuModificar(Runner runner) {
         Runner runner_aux = (Runner) runner.clone();
         byte opcion = 1;
         while (opcion != 8) {
-            ver_menu_modificar();
+            verMenuModificar();
             opcion = pedirByte("Introduce una opcion: ");
             if (opcion < 1 | opcion > 8) {
-                entrada_erronea();
+                entradaErronea();
             } else {
                 switch (opcion) {
                     case 1:
-                        if (logica.modificar_dni(runner_aux, pedir_dni())) {
+                        if (logica.modificarDni(runner_aux, pedirDni())) {
                             corredor_modificado();
                         } else {
-                            ya_existe();
+                            yaExiste();
                         }
                         break;
                     case 2:
-                        logica.modificar_nombre(runner_aux, pedir_nombre());
-                        modificado_correctamente("nombre");
+                        logica.modificarNombre(runner_aux, pedirNombre());
+                        modificadoCorrectamente("nombre");
                         break;
                     case 3:
-                        logica.modificar_direccion(runner_aux, pedir_dir());
-                        modificado_correctamente("direccion");
+                        logica.modificarDireccion(runner_aux, pedirDir());
+                        modificadoCorrectamente("direccion");
                         break;
                     case 4:
-                        logica.modificar_tfn(runner_aux, pedir_tfn());
-                        modificado_correctamente("telefono");
+                        logica.modificarTfn(runner_aux, pedirTfn());
+                        modificadoCorrectamente("telefono");
                         break;
                     case 5:
-                        logica.modificar_fecha_nac(runner_aux, pedir_fecha_nac());
-                        modificado_correctamente("fecha de nacimiento");
+                        logica.modificarFechaNac(runner_aux, pedirFechaNac());
+                        modificadoCorrectamente("fecha de nacimiento");
                         break;
                     case 6:
-                        ver_corredor(runner_aux);
+                        verCorredor(runner_aux);
                         break;
                     case 7:
-                        logica.guardar_cambios(runner, runner_aux);
-                        logica.volcar_a_csv();
-                        cambios_guardados();
+                        logica.guardarCambios(runner, runner_aux);
+                        logica.grabarCSV();
+                        cambiosGuardados();
                 }
             }
         }
-        salir_menu();
+        salirMenu();
     }
 
-    public void ver_menu_ordenar() {
+    public void verMenuOrdenar() {
         System.out.println();
         System.out.println("------------------------------");
         System.out.println("VER ORDENADOS POR:");
@@ -178,72 +178,72 @@ public class VistaRunner extends Vista {
         System.out.println("------------------------------");
     }
 
-    public void menu_ordenar() {
+    public void menuOrdenar() {
         byte opcion = 1;
         while (opcion != 4) {
-            ver_menu_ordenar();
+            verMenuOrdenar();
             opcion = pedirByte("Introduce una opcion: ");
             if (opcion < 1 | opcion > 4) {
-                entrada_erronea();
+                entradaErronea();
             } else {
                 switch (opcion) {
                     case 1:
-                        ver_corredores(logica.ordenar_dni());
+                        verCorredores(logica.ordenarDni());
                         break;
                     case 2:
-                        ver_corredores(logica.ordenar_nombre());
+                        verCorredores(logica.ordenarNombre());
                         break;
                     case 3:
-                        ver_corredores(logica.ordenar_fecha_nac());
+                        verCorredores(logica.ordenarFechaNac());
                         break;
                 }
             }
         }
-        salir_menu();
+        salirMenu();
     }
 
     // ENTRADA DATOS
-    public String pedir_dni() {
+    public String pedirDni() {
         while (true) {
             try {
                 String dni = pedirString("Introduce el Dni del corredor: ").toUpperCase();
-                if ((!es_letra(dni.charAt(dni.length() - 1))) | (dni.length() != 9)) {
+                if ((!esLetra(dni.charAt(dni.length() - 1))) | (dni.length() != 9)) {
                     throw new IllegalArgumentException();
                 }
                 for (byte i = 0; i <= 7; i++) {
-                    if (!es_num(dni.charAt(i))) {
+                    if (!esNum(dni.charAt(i))) {
                         throw new IllegalArgumentException();
                     }
                 }
                 return dni;
             } catch (IllegalArgumentException ex) {
-                entrada_erronea();
+                entradaErronea();
             }
         }
     }
 
-    public String pedir_nombre() {
+    public String pedirNombre() {
         String nombre;
         while (true) {
             nombre = pedirString("Introduce el nombre del corredor: ");
             try {
                 for (char letra : nombre.toCharArray()) {
-                    if ((letra != ' ') & (!es_letra(letra))) {
+                    if ((letra != ' ') & (!esLetra(letra))) {
                         throw new IllegalArgumentException("El nombre debe contener solo letras");
                     }
                 }
                 return nombre;
             } catch (IllegalArgumentException ex) {
-                entrada_erronea();
+                entradaErronea();
             }
         }
     }
 
-    public String pedir_dir() {
-        return super.pedirString("Introduce la direccion del corredor: ");
+    public String pedirDir() {
+        return pedirString("Introduce la direccion del corredor: ");
     }
 
-    public String pedir_tfn() {
+    public String pedirTfn() {
         while (true) {
             try {
                 String tfn = pedirString("Introduce el telefono del corredor: ");
@@ -251,40 +251,40 @@ public class VistaRunner extends Vista {
                     throw new IllegalArgumentException();
                 }
                 for (char c : tfn.toCharArray()) {
-                    if (!es_num(c)) {
+                    if (!esNum(c)) {
                         throw new IllegalArgumentException();
                     }
                 }
                 return tfn;
             } catch (IllegalArgumentException ex) {
-                entrada_erronea();
+                entradaErronea();
             }
         }
     }
 
-    public Date pedir_fecha_nac() {
+    public Date pedirFechaNac() {
         while (true) {
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
                 String f = pedirString("Introduce la fecha de nacimiento del corredor (dd/mm/aa): ");
                 return sdf.parse(f);
             } catch (ParseException ex) {
-                entrada_erronea();
+                entradaErronea();
             }
         }
     }
 
     // CHECK
-    public boolean es_num(char c) {
+    public boolean esNum(char c) {
         return (c >= 48 & c <= 57);
     }
 
-    public boolean es_letra(char c) {
+    public boolean esLetra(char c) {
         return ((c >= 97 & c <= 122) | (c >= 65 & c <= 90));
     }
 
     // VISTA CORREDOR
-    public void ver_corredor(Runner c) {
+    public void verCorredor(Runner c) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
             System.out.println();
@@ -298,14 +298,14 @@ public class VistaRunner extends Vista {
         }
     }
 
-    public void ver_corredores(List<Runner> corredores) {
+    public void verCorredores(List<Runner> corredores) {
         try {
             if (corredores.isEmpty()) {
                 throw new NullPointerException();
             }
             System.out.println("\nCORREDORES:");
             for (Runner c : corredores) {
-                ver_corredor(c);
+                verCorredor(c);
             }
         } catch (NullPointerException ex) {
             System.out.println("No hay corredores\n");
@@ -313,11 +313,11 @@ public class VistaRunner extends Vista {
     }
 
     // MENSAJES
-    public void corredor_creado() {
+    public void corredorCreado() {
         System.out.println("Corredor creado correctamente");
     }
 
-    public void corredor_borrado() {
+    public void corredorBorrado() {
         System.out.println("Se ha borrado correctamente el corredor");
     }
 
@@ -325,12 +325,49 @@ public class VistaRunner extends Vista {
         System.out.println("Corredor modificado correctamente");
     }
 
-    public void no_existe() {
+    public void noExiste() {
         System.out.println("No hay ningun corredor con esa informacion\n");
     }
 
-    public void ya_existe() {
+    public void yaExiste() {
         System.out.println("Ya hay un corredor con esa informacion\n");
     }
+    
+    public void entradaErronea() {
+        System.out.println("La informacion introducida no es correcta");
+    }
+
+    public void modificadoCorrectamente(String elemento) {
+        System.out.println("Modificacion correcta de " + elemento);
+    }
+
+    public void cambiosGuardados() {
+        System.out.println("Cambios guardados correctamente");
+    }
+
+    public void salirMenu() {
+        System.out.println("Saliendo del menu");
+    }
+
+    public void salirAplicacion() {
+        System.out.println("Saliendo de la aplicacion");
+    }
+    
+      // ENTRADA DATOS
+    public String pedirString(String mensaje) {
+        System.out.println(mensaje);
+        return Teclado.leerString();
+    }
+
+    public int pedirInt(String mensaje) {
+        System.out.println(mensaje);
+        return Teclado.leerInt();
+    }
+
+    public byte pedirByte(String mensaje) {
+        System.out.println(mensaje);
+        return Teclado.leerByte();
+    }
+
 
 }
