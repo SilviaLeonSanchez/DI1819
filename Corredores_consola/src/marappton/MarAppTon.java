@@ -5,7 +5,7 @@
  */
 package marappton;
 
-import Vistas.VistaRunner;
+import vista.VistaRunner;
 import java.io.IOException;
 
 /**

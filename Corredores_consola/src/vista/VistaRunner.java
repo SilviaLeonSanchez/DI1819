@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vistas;
+package vista;
 
-import Logica.LogicaAplicacion;
-import Logica.Teclado;
-import Modelos.Runner;
+import logica.LogicaAplicacion;
+import logica.Teclado;
+import modelo.Runner;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -133,7 +133,7 @@ public class VistaRunner{
                 switch (opcion) {
                     case 1:
                         if (logica.modificarDni(runner_aux, pedirDni())) {
-                            corredor_modificado();
+                            corredorModificado();
                         } else {
                             yaExiste();
                         }
@@ -321,7 +321,7 @@ public class VistaRunner{
         System.out.println("Se ha borrado correctamente el corredor");
     }
 
-    public void corredor_modificado() {
+    public void corredorModificado() {
         System.out.println("Corredor modificado correctamente");
     }
 

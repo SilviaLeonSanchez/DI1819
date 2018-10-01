@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Logica;
+package logica;
 
-import Modelos.Runner;
+import modelo.Runner;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
