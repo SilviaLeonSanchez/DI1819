@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Interfaz;
 
 import Logica.LogicaCorredor;
@@ -112,6 +107,11 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jPanelBotonesListaCorredores.setMinimumSize(new java.awt.Dimension(640, 100));
 
         jButtonVolver.setText("Volver");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBotonesListaCorredoresLayout = new javax.swing.GroupLayout(jPanelBotonesListaCorredores);
         jPanelBotonesListaCorredores.setLayout(jPanelBotonesListaCorredoresLayout);
@@ -134,6 +134,10 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButtonVolverActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonVolver;

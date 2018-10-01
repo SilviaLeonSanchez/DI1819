@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica;
 
 import Modelo.Runner;
@@ -16,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-import static jdk.nashorn.internal.objects.annotations.Where.INSTANCE;
 
 /**
  *
@@ -133,7 +127,7 @@ public class LogicaCorredor {
         while (st.hasMoreTokens()) {
             tokens.add(st.nextToken());
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         Runner runner = null;
         try {
             runner = new Runner(tokens.get(0), tokens.get(1),
@@ -145,7 +139,7 @@ public class LogicaCorredor {
     }
 
     public String toStringCSV(Runner corredor) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         String linea = corredor.getDni() + this.separador;
         linea += corredor.getNombre() + this.separador;
         linea += sdf.format(corredor.getFecha_nac()) + this.separador;

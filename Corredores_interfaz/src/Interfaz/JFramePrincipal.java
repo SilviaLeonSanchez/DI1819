@@ -5,6 +5,11 @@
  */
 package Interfaz;
 
+import Logica.LogicaCorredor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author silvia
@@ -96,6 +101,11 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jButtonSalir.setText("Salir");
         jButtonSalir.setHideActionText(true);
         jButtonSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
 
         jButtonNuevoCorredor1.setText("Nuevo Corredor");
         jButtonNuevoCorredor1.addActionListener(new java.awt.event.ActionListener() {
@@ -167,17 +177,25 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
     private void jButtonNuevoCorredor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredor1ActionPerformed
-        JDialogFormularioCorredor ventanaCorredor;
-        ventanaCorredor = new JDialogFormularioCorredor(this, true);
+        JDialogFormularioCorredor ventanaCorredor = new JDialogFormularioCorredor(this, true);
         ventanaCorredor.setVisible(true);
         // Si es modal las lineas siguientes se ejecutan al cerrar la ventana, 
         // porque vuelve al hilo principal y termina el metodo
-
+        
     }//GEN-LAST:event_jButtonNuevoCorredor1ActionPerformed
 
     private void jButtonVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCarrerasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVerCarrerasActionPerformed
+
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
+        try {
+            LogicaCorredor.getInstance().grabarCSV();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        this.dispose();
+    }//GEN-LAST:event_jButtonSalirActionPerformed
 
     /**
      * @param args the command line arguments

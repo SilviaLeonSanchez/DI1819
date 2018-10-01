@@ -259,6 +259,7 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+        this.dispose();
     }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

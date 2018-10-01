@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
@@ -43,7 +44,9 @@ public class Runner implements Comparable<Runner>, Cloneable {
 
     @Override
     public String toString() {
-        return "Corredor{" + "dni=" + dni + ", nombre=" + nombre + ", fecha_nacimiento=" + fecha_nac + ", direccion=" + direccion + ", telefono=" + telefono + '}';
+        return "Corredor{" + "dni=" + dni + ", nombre=" + nombre
+                + ", fecha_nacimiento=" + (new SimpleDateFormat("dd/MM/yy")).format(fecha_nac)
+                + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
 
     @Override
@@ -128,7 +131,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     public String getDni() {
         return dni;
     }
-    
+
     public static class ComparadorFecha implements Comparator<Runner> {
 
         @Override
@@ -145,5 +148,4 @@ public class Runner implements Comparable<Runner>, Cloneable {
         }
     }
 
-    
 }
