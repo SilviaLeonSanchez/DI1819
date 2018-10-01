@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Interfaz;
 
 import Logica.LogicaCorredor;
 import java.io.IOException;
@@ -19,14 +19,16 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
-     * @throws java.io.IOException
      */
-    public JDialogVerCorredores(java.awt.Frame parent, boolean modal) throws IOException {
+    public JDialogVerCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();
-        this.logicaCorredor = new LogicaCorredor();
-        this.jListCorredores.setListData(this.logicaCorredor.getStringCorredores());
-        this.setVisible(true);
+        try {
+            initComponents();
+            this.jListCorredores.setListData(LogicaCorredor.getInstance().getStringCorredores());
+            this.setVisible(true);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     /**
@@ -44,10 +46,10 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jScrollCorredores = new javax.swing.JScrollPane();
         jListCorredores = new javax.swing.JList<>();
         jPanelBotonesListaCorredores = new javax.swing.JPanel();
+        jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setPreferredSize(new java.awt.Dimension(640, 480));
         setSize(new java.awt.Dimension(640, 480));
 
         jPanelTituloVerCorredores.setMinimumSize(new java.awt.Dimension(640, 90));
@@ -63,10 +65,10 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jPanelTituloVerCorredores.setLayout(jPanelTituloVerCorredoresLayout);
         jPanelTituloVerCorredoresLayout.setHorizontalGroup(
             jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTituloVerCorredoresLayout.createSequentialGroup()
-                .addContainerGap(129, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloVerCorredoresLayout.createSequentialGroup()
+                .addContainerGap(121, Short.MAX_VALUE)
                 .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
         jPanelTituloVerCorredoresLayout.setVerticalGroup(
             jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,15 +111,23 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
 
         jPanelBotonesListaCorredores.setMinimumSize(new java.awt.Dimension(640, 100));
 
+        jButtonVolver.setText("Volver");
+
         javax.swing.GroupLayout jPanelBotonesListaCorredoresLayout = new javax.swing.GroupLayout(jPanelBotonesListaCorredores);
         jPanelBotonesListaCorredores.setLayout(jPanelBotonesListaCorredoresLayout);
         jPanelBotonesListaCorredoresLayout.setHorizontalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
+                .addGap(270, 270, 270)
+                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(269, Short.MAX_VALUE))
         );
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelBotonesListaCorredores, java.awt.BorderLayout.PAGE_END);
@@ -125,66 +135,8 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogVerCorredores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JDialogVerCorredores dialog = new JDialogVerCorredores(new javax.swing.JFrame(), true);
-                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
-                        }
-                    });
-                    dialog.setVisible(true);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        });
-    }
-
-    LogicaCorredor logicaCorredor;
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabelTituloVerCorredores;
     private javax.swing.JList<String> jListCorredores;
     private javax.swing.JPanel jPanelBotonesListaCorredores;

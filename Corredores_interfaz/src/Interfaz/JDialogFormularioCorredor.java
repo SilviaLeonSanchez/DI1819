@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Interfaz;
 
 import Logica.LogicaCorredor;
 import java.io.IOException;
@@ -20,12 +20,10 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
      *
      * @param parent
      * @param modal
-     * @throws java.io.IOException
      */
-    public JDialogFormularioCorredor(java.awt.Frame parent, boolean modal) throws IOException {
+    public JDialogFormularioCorredor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.logicaCorredor = new LogicaCorredor();
     }
 
     /**
@@ -249,68 +247,19 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonLimpiarCorredorActionPerformed
 
     private void jButtonEnviarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCorredorActionPerformed
-        this.logicaCorredor.alta_corredor(
-                this.jTextFieldDniCorredor.getText(),
-                this.jTextFieldNombreCorredor.getText(),
-                (Date)this.jSpinnerFechaNacimientoCorredor.getValue(),
-                this.jTextFieldDireccionCorredor.getText(), 
-                this.jTextFieldTelefonoCorredor.getText()
-        );
-        this.logicaCorredor.volcar_a_csv();
-        this.setVisible(false);
-        this.getContentPane().setVisible(true);
-    }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JDialogFormularioCorredor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            LogicaCorredor.getInstance().altaCorredor(
+                    this.jTextFieldDniCorredor.getText(),
+                    this.jTextFieldNombreCorredor.getText(),
+                    (Date) this.jSpinnerFechaNacimientoCorredor.getValue(),
+                    this.jTextFieldDireccionCorredor.getText(),
+                    this.jTextFieldTelefonoCorredor.getText()
+            );
+            LogicaCorredor.getInstance().grabarCSV();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JDialogFormularioCorredor dialog = new JDialogFormularioCorredor(new javax.swing.JFrame(), true);
-                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            System.exit(0);
-                        }
-                    });
-                    dialog.setVisible(true);
-                } catch (IOException ex) {
-                    System.out.println(ex.getMessage());
-                }
-            }
-        });
-    }
-
-    LogicaCorredor logicaCorredor;
+    }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEnviarCorredor;

@@ -3,11 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
-
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+package Interfaz;
 
 /**
  *
@@ -17,6 +13,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form PantallaInicial
+     *
      */
     public JFramePrincipal() {
         initComponents();
@@ -160,31 +157,22 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVerCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCorredoresActionPerformed
-        try {
-            this.setVisible(false);
-            JDialogVerCorredores ventanaCorredores;
-            ventanaCorredores = new JDialogVerCorredores(this, true);
-            ventanaCorredores.setVisible(true);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+        JDialogVerCorredores ventanaCorredores = new JDialogVerCorredores(this, true);
+        ventanaCorredores.setVisible(true);
     }//GEN-LAST:event_jButtonVerCorredoresActionPerformed
 
     private void jButtonNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaCarreraActionPerformed
-        this.setVisible(false);
         JDialogFormularioCarrera ventanaCarrera = new JDialogFormularioCarrera(this, true);
         ventanaCarrera.setVisible(true);
     }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
     private void jButtonNuevoCorredor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredor1ActionPerformed
-        this.setVisible(false);
         JDialogFormularioCorredor ventanaCorredor;
-        try {
-            ventanaCorredor = new JDialogFormularioCorredor(this, true);
-            ventanaCorredor.setVisible(true);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
+        ventanaCorredor = new JDialogFormularioCorredor(this, true);
+        ventanaCorredor.setVisible(true);
+        // Si es modal las lineas siguientes se ejecutan al cerrar la ventana, 
+        // porque vuelve al hilo principal y termina el metodo
+
     }//GEN-LAST:event_jButtonNuevoCorredor1ActionPerformed
 
     private void jButtonVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCarrerasActionPerformed
@@ -214,7 +202,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>

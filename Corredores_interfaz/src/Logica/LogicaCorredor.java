@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import static jdk.nashorn.internal.objects.annotations.Where.INSTANCE;
 
 /**
  *
@@ -23,23 +24,36 @@ import java.util.StringTokenizer;
  */
 public class LogicaCorredor {
 
+    // PATRON DE DISEÑO SINGLETON 
+    // Para que solo se pueda crear una instancia
+    private static LogicaCorredor INSTANCE;
+
+    // Constructor privado
+    public static LogicaCorredor getInstance() throws IOException {
+        if (INSTANCE == null) {
+            return new LogicaCorredor();
+        } else {
+            return INSTANCE;
+        }
+    }
+
     // ATRIBUTOS
     private HashMap<String, Runner> corredores;
     private Fichero_csv fichero_corredores;
-    private String separador;
+    private final String separador;
 
     // METODOS
-    public LogicaCorredor(File fichero, String separador) throws IllegalArgumentException{
+    private LogicaCorredor(File fichero, String separador) throws IllegalArgumentException {
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
             this.fichero_corredores = new Fichero_csv(fichero);
         } else {
             throw new IllegalArgumentException("El fichero no es valido o no existe.");
         }
         this.separador = separador;
-        volcar_de_csv();
+        leerCSV();
     }
 
-    public LogicaCorredor() throws IOException {
+    private LogicaCorredor() throws IOException {
         this.corredores = new HashMap<>();
         File fichero = new File("fichero_corredores.csv");
         if (!fichero.exists()) {
@@ -53,20 +67,20 @@ public class LogicaCorredor {
     public List<Runner> getCorredores() {
         return new ArrayList(corredores.values());
     }
-    
+
     public String[] getStringCorredores() {
         ArrayList<String> lista = new ArrayList<>();
-        for(Runner runner : this.corredores.values()){
+        for (Runner runner : this.corredores.values()) {
             lista.add(runner.toString());
         }
         return (String[]) lista.<String>toArray();
     }
 
-    public Runner buscar_corredor(String dni) {
+    public Runner buscarCorredor(String dni) {
         return this.corredores.get(dni);
     }
 
-    public boolean alta_corredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
+    public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
         if (corredores.containsKey(dni)) {
             return false;
         } else {
@@ -75,11 +89,11 @@ public class LogicaCorredor {
         }
     }
 
-    public boolean baja_corredor(String dni) {
+    public boolean bajaCorredor(String dni) {
         return !(corredores.remove(dni) == null);
     }
 
-    public boolean modificar_dni(Runner c, String nuevo_dni) {
+    public boolean modificarDni(Runner c, String nuevo_dni) {
         if (corredores.containsKey(nuevo_dni)) {
             return false;
         } else {
@@ -88,29 +102,29 @@ public class LogicaCorredor {
         }
     }
 
-    public void modificar_nombre(Runner c, String nuevo_nombre) {
+    public void modificarNombre(Runner c, String nuevo_nombre) {
         c.setNombre(nuevo_nombre);
     }
 
-    public void modificar_direccion(Runner c, String nueva_dir) {
+    public void modificarDireccion(Runner c, String nueva_dir) {
         c.setDireccion(nueva_dir);
     }
 
-    public void modificar_tfn(Runner c, String nuevo_tfn) {
+    public void modificarTfn(Runner c, String nuevo_tfn) {
         c.setTelefono(nuevo_tfn);
     }
 
-    public void modificar_fecha_nac(Runner c, Date nueva_fecha) {
+    public void modificarFechaNac(Runner c, Date nueva_fecha) {
         c.setFecha_nac(nueva_fecha);
     }
 
-    public void guardar_cambios(Runner c, Runner c_modificado) {
+    public void guardarCambios(Runner c, Runner c_modificado) {
         corredores.remove(c.getDni());
         corredores.put(c_modificado.getDni(), c_modificado);
     }
 
     // FICHERO
-    public Runner linea_a_runner(String linea) {
+    public Runner toRunner(String linea) {
         if (linea == null) {
             throw new IllegalArgumentException("No se puede convertir a string un objeto null");
         }
@@ -130,7 +144,7 @@ public class LogicaCorredor {
         return runner;
     }
 
-    public String runner_a_linea(Runner corredor) {
+    public String toStringCSV(Runner corredor) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
         String linea = corredor.getDni() + this.separador;
         linea += corredor.getNombre() + this.separador;
@@ -140,42 +154,42 @@ public class LogicaCorredor {
         return linea;
     }
 
-    public void volcar_de_csv() {
+    public void leerCSV() {
         this.fichero_corredores.abrirLector();
         String linea = null;
         Runner runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
-            runner = linea_a_runner(linea);
+            runner = toRunner(linea);
             this.corredores.put(runner.getDni(), runner);
         }
         this.fichero_corredores.cerrarLector();
     }
 
-    public void volcar_a_csv() {
+    public void grabarCSV() {
         this.fichero_corredores.abrirEscritor(false);
         for (Runner runner : corredores.values()) {
-            fichero_corredores.println(runner_a_linea(runner));
+            fichero_corredores.println(toStringCSV(runner));
         }
         this.fichero_corredores.cerrarEscritor();
     }
-    
+
     // ORDENACION    
-    public List<Runner> ordenar_dni(){
-        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+    public List<Runner> ordenarDni() {
+        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
         Collections.sort(lista_ordenada);
         return lista_ordenada;
     }
-    
-    public List<Runner> ordenar_fecha_nac(){
-        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+
+    public List<Runner> ordenarFechaNac() {
+        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
         Collections.sort(lista_ordenada, new Runner.ComparadorFecha());
         return lista_ordenada;
     }
 
-    public List<Runner> ordenar_nombre(){
-        ArrayList<Runner> lista_ordenada =  new ArrayList(corredores.values());
+    public List<Runner> ordenarNombre() {
+        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
         Collections.sort(lista_ordenada, new Runner.ComparadorNombre());
         return lista_ordenada;
     }
-    
+
 }
