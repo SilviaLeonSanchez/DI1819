@@ -111,7 +111,7 @@ public class LogicaAplicacion {
         while (st.hasMoreTokens()) {
             tokens.add(st.nextToken());
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         Runner runner = null;
         try {
             runner = new Runner(tokens.get(0), tokens.get(1),
@@ -123,7 +123,7 @@ public class LogicaAplicacion {
     }
 
     public String toStringCSV(Runner corredor) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         String linea = corredor.getDni() + this.separador;
         linea += corredor.getNombre() + this.separador;
         linea += sdf.format(corredor.getFecha_nac()) + this.separador;
