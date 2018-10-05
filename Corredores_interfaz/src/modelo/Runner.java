@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Modelo;
+package modelo;
 
+import utiles.Utiles;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
@@ -22,6 +23,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     private Date fecha_nac;
     private String direccion;
     private String telefono;
+    public static final String[] DATOS = {"DNI","NOMBRE","FECHA DE NACIMIENTO","DIRECCION","TELEFONO"};
 
     // METODOS
     public Runner(String dni, String nombre, Date fecha_nac, String direccion, String telefono) {
@@ -86,6 +88,11 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     // GETTER Y SETTER
+    public String[] getCorredor(){
+        String[] datos = {dni, nombre, Utiles.Sdf.format(fecha_nac),direccion, telefono};
+        return datos;
+    }
+    
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }

@@ -1,6 +1,6 @@
-package Interfaz;
+package interfaz;
 
-import Logica.LogicaCorredor;
+import logica.LogicaCorredor;
 import java.io.IOException;
 
 /**
@@ -19,7 +19,7 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         super(parent, modal);
         try {
             initComponents();
-            this.jListCorredores.setListData(LogicaCorredor.getInstance().getStringCorredores());
+            this.jListCorredores.set;
             this.setVisible(true);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

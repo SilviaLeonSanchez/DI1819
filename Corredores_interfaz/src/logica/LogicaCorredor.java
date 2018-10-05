@@ -1,6 +1,6 @@
-package Logica;
+package logica;
 
-import Modelo.Runner;
+import modelo.Runner;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -60,14 +60,6 @@ public class LogicaCorredor {
     // COLECCION
     public List<Runner> getCorredores() {
         return new ArrayList(corredores.values());
-    }
-
-    public String[] getStringCorredores() {
-        ArrayList<String> lista = new ArrayList<>();
-        for (Runner runner : this.corredores.values()) {
-            lista.add(runner.toString());
-        }
-        return (String[]) lista.<String>toArray();
     }
 
     public Runner buscarCorredor(String dni) {
