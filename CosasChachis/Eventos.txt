@@ -1,0 +1,26 @@
+
+
+class JButton {
+
+    List<ActionListener> interfaz;      ->  Interface ActionListener (lista de eventos a los que reacciona)
+
+    if (click *){   -> Evento al que queramos que reaccione
+
+        // detecta todos los eventos
+
+        if (interfaz!=null){
+            interfaz.metodoInterface(Evento evt);     ->  metodo actionPerformed( informacion sobre el evento ) implementado
+        }
+
+    }
+
+    this.interfaz.addListener(interfaz){
+        // añadimos más listener con los eventos a los que queremos que reaccione e implementados los metodos que queremos que lleve a cabo el componente
+    }
+
+    
+
+
+
+
+}

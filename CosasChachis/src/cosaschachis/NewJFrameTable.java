@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author silvia
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class NewJFrameTable extends javax.swing.JFrame {
 
     ArrayList<Alumno> listaAlumnos;
     JTable jTableAlumnos;
@@ -24,7 +24,7 @@ public class NewJFrame extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public NewJFrame() {
+    public NewJFrameTable() {
         initComponents();
     }
 
@@ -70,20 +70,21 @@ public class NewJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrameTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrameTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrameTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrameTable.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new NewJFrameTable().setVisible(true);
             }
         });
     }
@@ -121,16 +122,16 @@ public class NewJFrame extends javax.swing.JFrame {
 
     public class TableModelAlumnos extends AbstractTableModel{
 
-        private final List listaAlumnos;
+        private final ArrayList listaAlumnos;
         private final String[] columnas = {"Nombre", "Curso"};
 
-        public TableModelAlumnos(List listaAlumnos) {
+        public TableModelAlumnos(ArrayList listaAlumnos) {
             this.listaAlumnos = listaAlumnos;
         }
         
         @Override
         public int getRowCount() {
-            return listaAlumnos.getS;
+            return listaAlumnos.size();
         }
 
         @Override
@@ -140,7 +141,8 @@ public class NewJFrame extends javax.swing.JFrame {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return (columnIndex == 0)?(listaAlumnos.get(rowIndex).getNombre()):(listaAlumnos.get(rowIndex).getCurso());
+            //return (columnIndex == 0)?(listaAlumnos.get(rowIndex).getNombre()):(listaAlumnos.get(rowIndex).getCurso());
+            return null;
         }
         
     }
