@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interfaz.tableModels;
+package interfaz.tableModels;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -17,10 +17,14 @@ import utiles.Utiles.Sdf;
 public class TableModelCorredor extends AbstractTableModel {
 
     private final List<Runner> listaCorredores;
-    private final String[] columnas = Runner.DATOS;
 
     public TableModelCorredor(List<Runner> listaCorredores) {
         this.listaCorredores = listaCorredores;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return Runner.DATOS[column];
     }
 
     @Override
@@ -30,9 +34,9 @@ public class TableModelCorredor extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return columnas.length;
+        return Runner.DATOS.length;
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {

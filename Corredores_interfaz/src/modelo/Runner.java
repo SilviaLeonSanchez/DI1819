@@ -5,7 +5,6 @@
  */
 package modelo;
 
-import utiles.Utiles;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
@@ -23,7 +22,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     private Date fecha_nac;
     private String direccion;
     private String telefono;
-    public static final String[] DATOS = {"DNI","NOMBRE","FECHA DE NACIMIENTO","DIRECCION","TELEFONO"};
+    public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO"};
 
     // METODOS
     public Runner(String dni, String nombre, Date fecha_nac, String direccion, String telefono) {
@@ -88,11 +87,11 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     // GETTER Y SETTER
-    public String[] getCorredor(){
-        String[] datos = {dni, nombre, Sdf.format(fecha_nac),direccion, telefono};
+    public String[] getCorredor() {
+        String[] datos = {dni, nombre, Sdf.format(fecha_nac), direccion, telefono};
         return datos;
     }
-    
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }

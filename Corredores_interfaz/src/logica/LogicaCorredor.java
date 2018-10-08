@@ -56,6 +56,7 @@ public class LogicaCorredor {
         }
         this.fichero_corredores = new Fichero_csv(fichero);
         this.separadorCSV = ";";
+        leerCSV();
     }
 
     // COLECCION
@@ -105,7 +106,7 @@ public class LogicaCorredor {
         c.setFecha_nac(nueva_fecha);
     }
 
-    public void guardarCambios(Runner c, Runner c_modificado) {
+    public void guardarCambiosEnColeccion(Runner c, Runner c_modificado) {
         corredores.remove(c.getDni());
         corredores.put(c_modificado.getDni(), c_modificado);
     }

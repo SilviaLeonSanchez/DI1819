@@ -37,7 +37,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         jButtonVerCorredores = new javax.swing.JButton();
         jButtonNuevaCarrera = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
-        jButtonNuevoCorredor1 = new javax.swing.JButton();
+        jButtonNuevoCorredor = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,7 +52,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
         jLabelTitulo.setBackground(new java.awt.Color(51, 51, 51));
         jLabelTitulo.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 153));
+        jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("MarAppTon");
         jLabelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -105,10 +105,10 @@ public class JFramePrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonNuevoCorredor1.setText("Nuevo Corredor");
-        jButtonNuevoCorredor1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNuevoCorredor.setText("Nuevo Corredor");
+        jButtonNuevoCorredor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevoCorredor1ActionPerformed(evt);
+                jButtonNuevoCorredorActionPerformed(evt);
             }
         });
 
@@ -126,7 +126,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
             .addGroup(jPanelBotonesLayout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButtonNuevoCorredor1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -139,7 +139,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor1, jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor, jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +147,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonVerCorredores)
-                    .addComponent(jButtonNuevoCorredor1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonNuevaCarrera)
@@ -157,7 +157,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor1, jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor, jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
         getContentPane().add(jPanelBotones);
 
@@ -174,13 +174,13 @@ public class JFramePrincipal extends javax.swing.JFrame {
         ventanaCarrera.setVisible(true);
     }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
-    private void jButtonNuevoCorredor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredor1ActionPerformed
+    private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
         JDialogFormularioCorredor ventanaCorredor = new JDialogFormularioCorredor(this, true);
         ventanaCorredor.setVisible(true);
         // Si es modal las lineas siguientes se ejecutan al cerrar la ventana, 
         // porque vuelve al hilo principal y termina el metodo
-        
-    }//GEN-LAST:event_jButtonNuevoCorredor1ActionPerformed
+
+    }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
     private void jButtonVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCarrerasActionPerformed
         // TODO add your handling code here:
@@ -193,6 +193,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
             System.out.println(ex.getMessage());
         }
         this.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
     /**
@@ -226,6 +227,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+
             @Override
             public void run() {
                 new JFramePrincipal().setVisible(true);
@@ -235,7 +237,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonNuevaCarrera;
-    private javax.swing.JButton jButtonNuevoCorredor1;
+    private javax.swing.JButton jButtonNuevoCorredor;
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonVerCarreras;
     private javax.swing.JButton jButtonVerCorredores;

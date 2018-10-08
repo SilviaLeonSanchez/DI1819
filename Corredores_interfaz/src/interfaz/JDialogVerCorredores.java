@@ -1,14 +1,11 @@
 package interfaz;
 
-import Interfaz.tableModels.TableModelCorredor;
+import interfaz.tableModels.TableModelCorredor;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.TableModel;
 import logica.LogicaCorredor;
+import modelo.Runner;
 
 /**
  *
@@ -24,23 +21,29 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
      */
     public JDialogVerCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        rellenarTablaCorredores();
+        rellenarComboBoxOrden();
+    }
+
+    private boolean rellenarTablaCorredores() {
         try {
-            initComponents();
-            this.setVisible(true);
-            this.jTableCorredores = new JTable(nuevoTableModelCorredor());
-            this.jComboBoxOrdenCorredores = new JComboBox<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores());
+            this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
+            return true;
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se ha podido cargar la informacion de corredores", "Problemas al caragar corredores", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores en la tabla", "Problemas al cargar JTable", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 
-    private TableModel nuevoTableModelCorredor() {
+    private boolean rellenarComboBoxOrden() {
         try {
-            return (new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
+            this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
+            return true;
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores", "Problema con lista de corredores", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar JCombobox", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
-        return null;
     }
 
     /**
