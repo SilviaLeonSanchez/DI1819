@@ -8,6 +8,7 @@ package Interfaz.tableModels;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import modelo.Runner;
+import utiles.Utiles.Sdf;
 
 /**
  *
@@ -15,16 +16,16 @@ import modelo.Runner;
  */
 public class TableModelCorredor extends AbstractTableModel {
 
-    private final List<Runner> listaAlumnos;
+    private final List<Runner> listaCorredores;
     private final String[] columnas = Runner.DATOS;
 
-    public TableModelCorredor(List<Runner> listaAlumnos) {
-        this.listaAlumnos = listaAlumnos;
+    public TableModelCorredor(List<Runner> listaCorredores) {
+        this.listaCorredores = listaCorredores;
     }
 
     @Override
     public int getRowCount() {
-        return listaAlumnos.size();
+        return listaCorredores.size();
     }
 
     @Override
@@ -34,15 +35,20 @@ public class TableModelCorredor extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        switch(columnIndex){
+        switch (columnIndex) {
             case 0:
-                li
+                return listaCorredores.get(rowIndex).getDni();
+            case 1:
+                return listaCorredores.get(rowIndex).getNombre();
+            case 2:
+                return Sdf.format(listaCorredores.get(rowIndex).getFecha_nac());
+            case 3:
+                return listaCorredores.get(rowIndex).getDireccion();
+            case 4:
+                return listaCorredores.get(rowIndex).getTelefono();
+            default:
+                return null;
         }
-        
-        
-        
-        
-        
     }
 
 }

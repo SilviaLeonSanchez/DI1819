@@ -6,10 +6,10 @@
 package modelo;
 
 import utiles.Utiles;
-import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
+import utiles.Utiles.Sdf;
 
 /**
  *
@@ -47,7 +47,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     @Override
     public String toString() {
         return "Corredor{" + "dni=" + dni + ", nombre=" + nombre
-                + ", fecha_nacimiento=" + (new SimpleDateFormat("dd/MM/yy")).format(fecha_nac)
+                + ", fecha_nacimiento=" + Sdf.format(fecha_nac)
                 + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
 
@@ -89,7 +89,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
 
     // GETTER Y SETTER
     public String[] getCorredor(){
-        String[] datos = {dni, nombre, Utiles.Sdf.format(fecha_nac),direccion, telefono};
+        String[] datos = {dni, nombre, Sdf.format(fecha_nac),direccion, telefono};
         return datos;
     }
     

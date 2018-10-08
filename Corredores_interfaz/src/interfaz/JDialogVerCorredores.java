@@ -1,7 +1,11 @@
 package interfaz;
 
-import logica.LogicaCorredor;
+import Interfaz.tableModels.TableModelCorredor;
 import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
+import logica.LogicaCorredor;
 
 /**
  *
@@ -17,13 +21,18 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
      */
     public JDialogVerCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        this.jTableCorredores = new JTable(nuevaTablaAlumnoModel());
+        this.setVisible(true);
+    }
+
+    private TableModel nuevaTablaAlumnoModel() {
         try {
-            initComponents();
-            this.jListCorredores.set;
-            this.setVisible(true);
+            return (new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores", "Problema con lista de corredores", JOptionPane.ERROR_MESSAGE);
         }
+        return null;
     }
 
     /**
@@ -38,8 +47,8 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jPanelTituloVerCorredores = new javax.swing.JPanel();
         jLabelTituloVerCorredores = new javax.swing.JLabel();
         jPanelListaCorredores = new javax.swing.JPanel();
-        jScrollCorredores = new javax.swing.JScrollPane();
-        jListCorredores = new javax.swing.JList<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCorredores = new javax.swing.JTable();
         jPanelBotonesListaCorredores = new javax.swing.JPanel();
         jButtonVolver = new javax.swing.JButton();
 
@@ -75,31 +84,30 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
 
         getContentPane().add(jPanelTituloVerCorredores, java.awt.BorderLayout.PAGE_START);
 
-        jScrollCorredores.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-
-        jListCorredores.setModel(jListCorredores.getModel());
-        jListCorredores.setMaximumSize(null);
-        jScrollCorredores.setViewportView(jListCorredores);
+        jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableCorredores);
 
         javax.swing.GroupLayout jPanelListaCorredoresLayout = new javax.swing.GroupLayout(jPanelListaCorredores);
         jPanelListaCorredores.setLayout(jPanelListaCorredoresLayout);
         jPanelListaCorredoresLayout.setHorizontalGroup(
             jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
-            .addGroup(jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
         jPanelListaCorredoresLayout.setVerticalGroup(
             jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 192, Short.MAX_VALUE)
-            .addGroup(jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jScrollCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                    .addContainerGap()))
+            .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelListaCorredores, java.awt.BorderLayout.CENTER);
@@ -142,10 +150,10 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabelTituloVerCorredores;
-    private javax.swing.JList<String> jListCorredores;
     private javax.swing.JPanel jPanelBotonesListaCorredores;
     private javax.swing.JPanel jPanelListaCorredores;
     private javax.swing.JPanel jPanelTituloVerCorredores;
-    private javax.swing.JScrollPane jScrollCorredores;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCorredores;
     // End of variables declaration//GEN-END:variables
 }
