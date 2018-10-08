@@ -34,16 +34,17 @@ public class LogicaCorredor {
     // ATRIBUTOS
     private HashMap<String, Runner> corredores;
     private Fichero_csv fichero_corredores;
-    private final String separador;
+    private final String separadorCSV;
+    private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
 
     // METODOS
-    private LogicaCorredor(File fichero, String separador) throws IllegalArgumentException {
+    private LogicaCorredor(File fichero, String separadorCSV) throws IllegalArgumentException {
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
             this.fichero_corredores = new Fichero_csv(fichero);
         } else {
             throw new IllegalArgumentException("El fichero no es valido o no existe.");
         }
-        this.separador = separador;
+        this.separadorCSV = separadorCSV;
         leerCSV();
     }
 
@@ -54,7 +55,7 @@ public class LogicaCorredor {
             fichero.createNewFile();
         }
         this.fichero_corredores = new Fichero_csv(fichero);
-        this.separador = ";";
+        this.separadorCSV = ";";
     }
 
     // COLECCION
@@ -114,7 +115,7 @@ public class LogicaCorredor {
         if (linea == null) {
             throw new IllegalArgumentException("No se puede convertir a string un objeto null");
         }
-        StringTokenizer st = new StringTokenizer(linea, this.separador);
+        StringTokenizer st = new StringTokenizer(linea, this.separadorCSV);
         ArrayList<String> tokens = new ArrayList<>();
         while (st.hasMoreTokens()) {
             tokens.add(st.nextToken());
@@ -132,11 +133,11 @@ public class LogicaCorredor {
 
     public String toStringCSV(Runner corredor) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
-        String linea = corredor.getDni() + this.separador;
-        linea += corredor.getNombre() + this.separador;
-        linea += sdf.format(corredor.getFecha_nac()) + this.separador;
-        linea += corredor.getDireccion() + this.separador;
-        linea += corredor.getTelefono() + this.separador;
+        String linea = corredor.getDni() + this.separadorCSV;
+        linea += corredor.getNombre() + this.separadorCSV;
+        linea += sdf.format(corredor.getFecha_nac()) + this.separadorCSV;
+        linea += corredor.getDireccion() + this.separadorCSV;
+        linea += corredor.getTelefono() + this.separadorCSV;
         return linea;
     }
 
@@ -160,6 +161,10 @@ public class LogicaCorredor {
     }
 
     // ORDENACION    
+    public String[] getOpcionesOrdenCorredores() {
+        return opcionesOrdenCorredores;
+    }
+    
     public List<Runner> ordenarDni() {
         ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
         Collections.sort(lista_ordenada);
@@ -177,5 +182,6 @@ public class LogicaCorredor {
         Collections.sort(lista_ordenada, new Runner.ComparadorNombre());
         return lista_ordenada;
     }
+    
 
 }
