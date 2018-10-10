@@ -8,6 +8,7 @@ package interfaz;
 import logica.LogicaCorredor;
 import java.io.IOException;
 import java.util.Date;
+import utiles.Utiles;
 
 /**
  *
@@ -35,6 +36,8 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jEditorPane1 = new javax.swing.JEditorPane();
         jPanelTituloCorredor = new javax.swing.JPanel();
         jLabelTituloCorredor = new javax.swing.JLabel();
         jPanelBotonesCorredor = new javax.swing.JPanel();
@@ -51,6 +54,8 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         jSpinnerFechaNacimientoCorredor = new javax.swing.JSpinner();
         jLabelDireccionCorredor = new javax.swing.JLabel();
         jTextFieldDireccionCorredor = new javax.swing.JTextField();
+
+        jScrollPane1.setViewportView(jEditorPane1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Corredor");
@@ -248,6 +253,15 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
 
     private void jButtonEnviarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCorredorActionPerformed
         try {
+            
+            // SOUTBUG
+            System.out.println(this.jTextFieldDniCorredor.getText()+"\n"+
+                    this.jTextFieldNombreCorredor.getText()+"\n"+
+                    Utiles.Sdf.format((Date) this.jSpinnerFechaNacimientoCorredor.getValue())+"\n"+
+                    this.jTextFieldDireccionCorredor.getText()+"\n"+
+                    this.jTextFieldTelefonoCorredor.getText());
+            
+            
             LogicaCorredor.getInstance().altaCorredor(
                     this.jTextFieldDniCorredor.getText(),
                     this.jTextFieldNombreCorredor.getText(),
@@ -265,6 +279,7 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonEnviarCorredor;
     private javax.swing.JButton jButtonLimpiarCorredor;
+    private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabelDireccionCorredor;
     private javax.swing.JLabel jLabelDniCorredor;
     private javax.swing.JLabel jLabelFechaNacimientoCorredor;
@@ -274,6 +289,7 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelBotonesCorredor;
     private javax.swing.JPanel jPanelCamposCorredor;
     private javax.swing.JPanel jPanelTituloCorredor;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerFechaNacimientoCorredor;
     private javax.swing.JTextField jTextFieldDireccionCorredor;
     private javax.swing.JTextField jTextFieldDniCorredor;

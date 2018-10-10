@@ -69,12 +69,12 @@ public class LogicaCorredor {
     }
 
     public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
-        if (corredores.containsKey(dni)) {
-            return false;
-        } else {
+        //if (corredores.containsKey(dni)) {
+        //    return false;
+        //} else {
             corredores.put(dni, new Runner(dni, nombre, fecha_nac, dir, tfn));
             return true;
-        }
+        //}
     }
 
     public boolean bajaCorredor(String dni) {
@@ -154,7 +154,7 @@ public class LogicaCorredor {
     }
 
     public void grabarCSV() {
-        this.fichero_corredores.abrirEscritor(false);
+        this.fichero_corredores.abrirEscritor(true);
         for (Runner runner : corredores.values()) {
             fichero_corredores.println(toStringCSV(runner));
         }
