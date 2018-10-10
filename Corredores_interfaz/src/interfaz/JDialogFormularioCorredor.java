@@ -43,6 +43,7 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         jPanelBotonesCorredor = new javax.swing.JPanel();
         jButtonEnviarCorredor = new javax.swing.JButton();
         jButtonLimpiarCorredor = new javax.swing.JButton();
+        jButtonCancelarCorredor = new javax.swing.JButton();
         jPanelCamposCorredor = new javax.swing.JPanel();
         jLabelNombreCorredor = new javax.swing.JLabel();
         jTextFieldNombreCorredor = new javax.swing.JTextField();
@@ -117,31 +118,43 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
             }
         });
 
+        jButtonCancelarCorredor.setText("Cancelar");
+        jButtonCancelarCorredor.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonCancelarCorredor.setPreferredSize(new java.awt.Dimension(85, 40));
+        jButtonCancelarCorredor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarCorredorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBotonesCorredorLayout = new javax.swing.GroupLayout(jPanelBotonesCorredor);
         jPanelBotonesCorredor.setLayout(jPanelBotonesCorredorLayout);
         jPanelBotonesCorredorLayout.setHorizontalGroup(
             jPanelBotonesCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesCorredorLayout.createSequentialGroup()
-                .addContainerGap(161, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesCorredorLayout.createSequentialGroup()
+                .addContainerGap(127, Short.MAX_VALUE)
                 .addComponent(jButtonEnviarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addGap(50, 50, 50)
                 .addComponent(jButtonLimpiarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(jButtonCancelarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
-        jPanelBotonesCorredorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonEnviarCorredor, jButtonLimpiarCorredor});
+        jPanelBotonesCorredorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCancelarCorredor, jButtonEnviarCorredor, jButtonLimpiarCorredor});
 
         jPanelBotonesCorredorLayout.setVerticalGroup(
             jPanelBotonesCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesCorredorLayout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addGroup(jPanelBotonesCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(15, 15, 15)
+                .addGroup(jPanelBotonesCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButtonEnviarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLimpiarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEnviarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(jButtonCancelarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jPanelBotonesCorredorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonEnviarCorredor, jButtonLimpiarCorredor});
+        jPanelBotonesCorredorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCancelarCorredor, jButtonEnviarCorredor, jButtonLimpiarCorredor});
 
         getContentPane().add(jPanelBotonesCorredor, java.awt.BorderLayout.PAGE_END);
 
@@ -213,19 +226,19 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         jPanelCamposCorredorLayout.setVerticalGroup(
             jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelNombreCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNombreCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -253,15 +266,6 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
 
     private void jButtonEnviarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCorredorActionPerformed
         try {
-            
-            // SOUTBUG
-            System.out.println(this.jTextFieldDniCorredor.getText()+"\n"+
-                    this.jTextFieldNombreCorredor.getText()+"\n"+
-                    Utiles.Sdf.format((Date) this.jSpinnerFechaNacimientoCorredor.getValue())+"\n"+
-                    this.jTextFieldDireccionCorredor.getText()+"\n"+
-                    this.jTextFieldTelefonoCorredor.getText());
-            
-            
             LogicaCorredor.getInstance().altaCorredor(
                     this.jTextFieldDniCorredor.getText(),
                     this.jTextFieldNombreCorredor.getText(),
@@ -276,7 +280,12 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
 
+    private void jButtonCancelarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCorredorActionPerformed
+        Utiles.salirSinGuardar(this);
+    }//GEN-LAST:event_jButtonCancelarCorredorActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCancelarCorredor;
     private javax.swing.JButton jButtonEnviarCorredor;
     private javax.swing.JButton jButtonLimpiarCorredor;
     private javax.swing.JEditorPane jEditorPane1;

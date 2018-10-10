@@ -5,8 +5,13 @@
  */
 package interfaz;
 
+import java.awt.Container;
+import java.awt.Window;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import logica.LogicaCorredor;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +25,17 @@ public class JFramePrincipal extends javax.swing.JFrame {
      */
     public JFramePrincipal() {
         initComponents();
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e); 
+                try {
+                    LogicaCorredor.getInstance().grabarCSV();
+                } catch (IOException ex) {
+                    System.out.println(ex.getMessage());
+                }
+            }
+});
     }
 
     /**
@@ -196,6 +212,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

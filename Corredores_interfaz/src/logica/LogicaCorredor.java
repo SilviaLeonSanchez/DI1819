@@ -24,11 +24,10 @@ public class LogicaCorredor {
 
     // Constructor privado
     public static LogicaCorredor getInstance() throws IOException {
-        if (INSTANCE == null) {
-            return new LogicaCorredor();
-        } else {
+        if (INSTANCE == null)
+            INSTANCE = new LogicaCorredor();
+        
             return INSTANCE;
-        }
     }
 
     // ATRIBUTOS
@@ -81,6 +80,8 @@ public class LogicaCorredor {
         return !(corredores.remove(dni) == null);
     }
 
+    
+    // CAMBIAR POR UN SOLO METODO --------------------
     public boolean modificarDni(Runner c, String nuevo_dni) {
         if (corredores.containsKey(nuevo_dni)) {
             return false;
@@ -110,7 +111,9 @@ public class LogicaCorredor {
         corredores.remove(c.getDni());
         corredores.put(c_modificado.getDni(), c_modificado);
     }
-
+    //-----------------------------------------------
+    
+    
     // FICHERO
     public Runner toRunner(String linea) {
         if (linea == null) {

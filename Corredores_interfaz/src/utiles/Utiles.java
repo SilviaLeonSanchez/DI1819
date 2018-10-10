@@ -5,9 +5,11 @@
  */
 package utiles;
 
+import java.awt.Window;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,6 +30,14 @@ public class Utiles {
             return SDF.parse(fecha);
         }
         
+    }
+    
+    // Ejemplo de llamada a un JOptionPane desde otra clase 
+    public static void salirSinGuardar(Window w){
+        int result = JOptionPane.showConfirmDialog(w, "Los cambios no se guardarán. ¿Salir?", "Salir sin guardar", JOptionPane.YES_NO_CANCEL_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            w.dispose();
+        }
     }
     
 }
