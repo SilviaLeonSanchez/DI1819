@@ -68,12 +68,12 @@ public class LogicaCorredor {
     }
 
     public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
-        //if (corredores.containsKey(dni)) {
-        //    return false;
-        //} else {
+        if (corredores.containsKey(dni)) {
+            return false;
+        } else {
             corredores.put(dni, new Runner(dni, nombre, fecha_nac, dir, tfn));
             return true;
-        //}
+        }
     }
 
     public boolean bajaCorredor(String dni) {
