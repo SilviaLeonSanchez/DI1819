@@ -6,7 +6,7 @@
 package gui.tableModels;
 
 import javax.swing.table.AbstractTableModel;
-import utiles.Utiles.Sdf;
+import utils.Utiles.Sdf;
 
 /**
  *

@@ -1,12 +1,12 @@
-package utiles;
+package utils;
 
 import java.io.*;
 
 /**
- * Clase que gestiona la transferencia de objetos hacia o desde un fichero de
- * bytes. Hay que abrir el flujo antes y cerrarlo despues de usarlo con sendos
- * metodos. Abre un flujo de bytes con File(Input/Output)Stream que envuelve con
- * un Object(Input/Output)Stream, segun el metodo sea de lectura o escritura,
+ * Gestiona la transferencia de objetos hacia o desde un fichero de bytes. 
+ * Hay que abrir el flujo antes y cerrarlo despues de usarlo con sendos metodos.
+ * Abre un flujo de bytes con File(Input/Output)Stream que envuelve con un
+ * Object(Input/Output)Stream, segun el metodo sea de lectura o escritura,
  * transformando los bytes a objetos de tipo Object.
  *
  * @author erizo

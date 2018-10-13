@@ -2,10 +2,8 @@ package gui;
 
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import logica.LogicaCarrera;
-import utiles.Utiles;
+import logic.LogicaCarrera;
+import utils.Utiles;
 
 /**
  *
@@ -266,12 +264,12 @@ public class FormularioCarreras extends javax.swing.JDialog {
     private void jButtonEnviarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCarreraActionPerformed
         try {
             LogicaCarrera.getInstance().altaCarrera(
-                    jTextFieldNombreCarrera.getText(), 
-                    (Date) jSpinnerFechaCarrera.getValue(), 
-                    jTextFieldLugarCarrera.getText(), 
+                    jTextFieldNombreCarrera.getText(),
+                    (Date) jSpinnerFechaCarrera.getValue(),
+                    jTextFieldLugarCarrera.getText(),
                     Integer.parseInt(jTextFieldPlazasCarrera.getText())
             );
-            
+
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }

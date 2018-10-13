@@ -4,7 +4,7 @@ import gui.tableModels.TableModelCorredor;
 import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import logica.LogicaCorredor;
+import logic.LogicaCorredor;
 
 /**
  *
@@ -13,7 +13,7 @@ import logica.LogicaCorredor;
 public class VistaCorredores extends javax.swing.JDialog {
 
     PantallaPrincipal pantallaPrincipal;
-    
+
     /**
      * Creates new form PantallaCorredor
      *
@@ -195,7 +195,7 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-        
+
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed

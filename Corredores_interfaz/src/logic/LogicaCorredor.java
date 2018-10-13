@@ -1,7 +1,7 @@
-package logica;
+package logic;
 
-import utiles.FicheroTexto;
-import modelo.Corredor;
+import utils.FicheroTexto;
+import dto.Corredor;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-import utiles.ExcepcionesPropias;
+import utils.ExcepcionesPropias;
 
 /**
  *
@@ -85,35 +85,35 @@ public class LogicaCorredor {
     }
 
     public boolean modificarCorredor(Corredor c_original, Corredor c_modificado) throws ExcepcionesPropias.CorredorRepetido, ExcepcionesPropias.CorredorNoEsta {
-        if (!corredores.containsKey(c_original)){
+        if (!corredores.containsKey(c_original.getDni())) {
             throw new ExcepcionesPropias.CorredorNoEsta();
-        }else if (c_original.equals(c_modificado)) {
+        } else if (c_original.equals(c_modificado)) {
             return corredores.replace(c_original.getDni(), c_original, c_modificado);
-        }else if (corredores.containsKey(c_modificado.getDni())){
+        } else if (corredores.containsKey(c_modificado.getDni())) {
             throw new ExcepcionesPropias.CorredorRepetido();
-        }else{
-            corredores.remove(c_original);
+        } else {
+            corredores.remove(c_original.getDni());
             return (corredores.put(c_modificado.getDni(), c_modificado) == null);
         }
     }
-    
+
     // PERSISTENCIA
-    public void guardarCorredores(boolean usarFichero){
-        if (usarFichero){
+    public void guardarCorredores(boolean usarFichero) {
+        if (usarFichero) {
             guardarCSV();
-        }else{
+        } else {
             // BASE DE DATOS
         }
     }
-    
-    public void leerCorredores(boolean usarFichero){
-        if (usarFichero){
+
+    public void leerCorredores(boolean usarFichero) {
+        if (usarFichero) {
             leerCSV();
-        }else{
+        } else {
             // BASE DE DATOS
         }
     }
-    
+
     // FICHERO
     private Corredor toRunner(String linea) {
         if (linea == null) {
@@ -163,10 +163,8 @@ public class LogicaCorredor {
         }
         this.fichero_corredores.cerrarEscritor();
     }
-    
-    // BBDD
-    
 
+    // BBDD
     // ORDENACION    
     public String[] getOpcionesOrdenCorredores() {
         return opcionesOrdenCorredores;

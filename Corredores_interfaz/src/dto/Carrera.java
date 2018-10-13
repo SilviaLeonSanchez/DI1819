@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package dto;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
-import utiles.ExcepcionesPropias;
-import utiles.Utiles;
+import utils.ExcepcionesPropias;
+import utils.Utiles;
 
 /**
  *
@@ -83,16 +83,16 @@ public class Carrera {
     }
 
     // SETTER
-    public void setLugar(String lugar){
-            this.lugar = lugar;
+    public void setLugar(String lugar) {
+        this.lugar = lugar;
     }
 
     public void setFecha(Date fecha) {
-            this.fecha = fecha;
+        this.fecha = fecha;
     }
 
-    public void setNombre(String nombre)  {
-            this.nombre = nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public void setMaxCorredores(int maxCorredores) {
@@ -100,12 +100,12 @@ public class Carrera {
             throw new IllegalArgumentException("El numero máximo de corredores tiene que ser mayor que 0.");
         } else if (maxCorredores < this.listaCorredores.size()) {
             throw new IllegalArgumentException("El numero actual de corredores es mayor. Borra corredores o indica un numero más alto.");
-        } 
+        }
         this.maxCorredores = maxCorredores;
     }
 
-    public void cerrarCarrera()  {
-            this.carreraCerrada = true;
+    public void cerrarCarrera() {
+        this.carreraCerrada = true;
     }
 
     // GETTER
@@ -166,7 +166,5 @@ public class Carrera {
             return this.listaCorredores.remove(corredor);
         }
     }
-
- 
 
 }

@@ -5,14 +5,12 @@
  */
 package gui;
 
-import logica.LogicaCorredor;
+import logic.LogicaCorredor;
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import utiles.ExcepcionesPropias;
-import utiles.Utiles;
+import utils.ExcepcionesPropias;
+import utils.Utiles;
 
 /**
  *

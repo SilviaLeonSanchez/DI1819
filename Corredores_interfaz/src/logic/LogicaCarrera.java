@@ -3,22 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package logic;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import modelo.Carrera;
-import modelo.Corredor;
-import utiles.ExcepcionesPropias;
-import utiles.FicheroObjetos;
-import utiles.FicheroTexto;
+import dto.Carrera;
+import dto.Corredor;
+import utils.ExcepcionesPropias;
+import utils.FicheroObjetos;
 
 /**
  *
@@ -90,8 +88,6 @@ public class LogicaCarrera {
         carreras.remove(c_original);
         return carreras.add(c_modificada);
     }
-    
-    
 
     // PERSISTENCIA
     public void guardarCarreras(boolean usarFichero) {

@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package dto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javafx.util.Duration;
-import utiles.ExcepcionesPropias;
 
 /**
  *
  * @author silvia
  */
 public class CorredorCarrera {
-    
+
     // ATRIBUTOS
     private Carrera carrera;
     private Corredor corredor;
@@ -41,7 +40,7 @@ public class CorredorCarrera {
     @Override
     public String toString() {
         String corredorCarrera = "CorredorCarrera{" + "carrera=" + carrera + ", corredor=" + corredor + ", dorsal=" + dorsal + ", tiempos=";
-        for (Duration tiempo : tiempos){
+        for (Duration tiempo : tiempos) {
             corredorCarrera = corredorCarrera.concat("\n\t" + tiempo.toString());
         }
         return corredorCarrera + "\n}";
@@ -62,10 +61,7 @@ public class CorredorCarrera {
         if (!Objects.equals(this.carrera, other.carrera)) {
             return false;
         }
-        if (!Objects.equals(this.corredor, other.corredor)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.corredor, other.corredor);
     }
 
     @Override
@@ -92,9 +88,6 @@ public class CorredorCarrera {
     public Carrera getCarrera() {
         return carrera;
     }
-    
+
     // SETTER
-    
-    
-    
 }

@@ -7,7 +7,7 @@ package gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import logica.LogicaCorredor;
+import logic.LogicaCorredor;
 import java.io.IOException;
 
 /**
@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author silvia
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-    
+
     private boolean guardadoCSV = true;
 
     /**
@@ -25,16 +25,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal() {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
+
             @Override
             public void windowClosing(WindowEvent e) {
-                super.windowClosing(e); 
+                super.windowClosing(e);
                 try {
                     LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
-});
+        });
     }
 
     /**
@@ -211,7 +212,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -246,12 +246,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                new PantallaPrincipal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new PantallaPrincipal().setVisible(true);
         });
     }
 

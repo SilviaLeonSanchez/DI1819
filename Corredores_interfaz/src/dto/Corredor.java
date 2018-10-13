@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package modelo;
+package dto;
 
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
-import utiles.ExcepcionesPropias;
-import utiles.Utiles;
-import utiles.Utiles.Sdf;
+import utils.Utiles;
+import utils.Utiles.Sdf;
 
 /**
  *
@@ -46,8 +44,8 @@ public class Corredor implements Comparable<Corredor>, Cloneable {
                 + ", fecha_nacimiento=" + Sdf.format(fecha_nac)
                 + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
-    
-     public String[] toArray() {
+
+    public String[] toArray() {
         String array[] = new String[5];
         array[0] = this.dni;
         array[1] = this.nombre;
@@ -69,10 +67,7 @@ public class Corredor implements Comparable<Corredor>, Cloneable {
             return false;
         }
         final Corredor other = (Corredor) obj;
-        if (!Objects.equals(this.dni, other.dni)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.dni, other.dni);
     }
 
     @Override
@@ -83,7 +78,7 @@ public class Corredor implements Comparable<Corredor>, Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         Object clon = null;
         try {
             clon = super.clone();
@@ -138,7 +133,5 @@ public class Corredor implements Comparable<Corredor>, Cloneable {
     public String getDni() {
         return this.dni;
     }
-
-    
 
 }

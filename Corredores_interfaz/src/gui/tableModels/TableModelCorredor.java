@@ -7,8 +7,8 @@ package gui.tableModels;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import modelo.Corredor;
-import utiles.Utiles.Sdf;
+import dto.Corredor;
+import utils.Utiles.Sdf;
 
 /**
  *
@@ -36,7 +36,7 @@ public class TableModelCorredor extends AbstractTableModel {
     public int getColumnCount() {
         return Corredor.DATOS.length;
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         switch (columnIndex) {
