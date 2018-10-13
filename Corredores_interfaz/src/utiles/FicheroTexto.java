@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logica;
+package utiles;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +17,7 @@ import java.io.PrintWriter;
  *
  * @author silvia
  */
-public class Fichero_csv {
+public class FicheroTexto {
 
     // ATRIBUTOS
     private File fichero;
@@ -33,7 +33,7 @@ public class Fichero_csv {
      * @param fichero Con este fichero se abrira el flujo de transferencia de
      * caracteres para leer o grabar en el.
      */
-    public Fichero_csv(File fichero) {
+    public FicheroTexto(File fichero) {
         this.fichero = fichero;
     }
 

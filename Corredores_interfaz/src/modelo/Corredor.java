@@ -8,13 +8,15 @@ package modelo;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
+import utiles.ExcepcionesPropias;
+import utiles.Utiles;
 import utiles.Utiles.Sdf;
 
 /**
  *
  * @author silvia
  */
-public class Runner implements Comparable<Runner>, Cloneable {
+public class Corredor implements Comparable<Corredor>, Cloneable {
 
     // ATRIBUTOS
     private String dni;
@@ -25,12 +27,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO"};
 
     // METODOS
-    public Runner(String dni, String nombre, Date fecha_nac, String direccion, String telefono) {
-        if (dni == null) {
-            throw new IllegalArgumentException("El dni no puede ser null");
-        } else if (fecha_nac == null) {
-            throw new IllegalArgumentException("La fecha no puede ser null");
-        }
+    public Corredor(String dni, String nombre, Date fecha_nac, String direccion, String telefono) {
         this.dni = dni;
         this.nombre = nombre;
         this.fecha_nac = fecha_nac;
@@ -39,7 +36,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     @Override
-    public int compareTo(Runner o) {
+    public int compareTo(Corredor o) {
         return this.dni.compareToIgnoreCase(o.getDni());
     }
 
@@ -48,6 +45,16 @@ public class Runner implements Comparable<Runner>, Cloneable {
         return "Corredor{" + "dni=" + dni + ", nombre=" + nombre
                 + ", fecha_nacimiento=" + Sdf.format(fecha_nac)
                 + ", direccion=" + direccion + ", telefono=" + telefono + '}';
+    }
+    
+     public String[] toArray() {
+        String array[] = new String[5];
+        array[0] = this.dni;
+        array[1] = this.nombre;
+        array[2] = Utiles.Sdf.format(this.fecha_nac);
+        array[3] = this.direccion;
+        array[4] = this.telefono;
+        return array;
     }
 
     @Override
@@ -61,7 +68,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Runner other = (Runner) obj;
+        final Corredor other = (Corredor) obj;
         if (!Objects.equals(this.dni, other.dni)) {
             return false;
         }
@@ -88,7 +95,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
 
     // GETTER Y SETTER
     public String[] getCorredor() {
-        String[] datos = {dni, nombre, Sdf.format(fecha_nac), direccion, telefono};
+        String[] datos = {this.dni, this.nombre, Sdf.format(this.fecha_nac), this.direccion, this.telefono};
         return datos;
     }
 
@@ -97,7 +104,7 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
     public void setDireccion(String direccion) {
@@ -105,18 +112,15 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     public String getDireccion() {
-        return direccion;
+        return this.direccion;
     }
 
     public void setFecha_nac(Date fecha_nac) {
-        if (fecha_nac == null) {
-            throw new IllegalArgumentException("La fecha no puede ser null");
-        }
         this.fecha_nac = fecha_nac;
     }
 
     public Date getFecha_nac() {
-        return fecha_nac;
+        return this.fecha_nac;
     }
 
     public void setNombre(String nombre) {
@@ -124,34 +128,17 @@ public class Runner implements Comparable<Runner>, Cloneable {
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setDni(String dni) {
-        if (dni == null) {
-            throw new IllegalArgumentException("El dni no puede ser null");
-        }
         this.dni = dni;
     }
 
     public String getDni() {
-        return dni;
+        return this.dni;
     }
 
-    public static class ComparadorFecha implements Comparator<Runner> {
-
-        @Override
-        public int compare(Runner o1, Runner o2) {
-            return o1.getFecha_nac().compareTo(o2.getFecha_nac());
-        }
-    }
-
-    public static class ComparadorNombre implements Comparator<Runner> {
-
-        @Override
-        public int compare(Runner o1, Runner o2) {
-            return o1.getNombre().compareTo(o2.getNombre());
-        }
-    }
+    
 
 }

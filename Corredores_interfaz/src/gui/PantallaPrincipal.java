@@ -3,34 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaz;
+package gui;
 
-import java.awt.Container;
-import java.awt.Window;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import logica.LogicaCorredor;
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author silvia
  */
-public class JFramePrincipal extends javax.swing.JFrame {
+public class PantallaPrincipal extends javax.swing.JFrame {
+    
+    private boolean guardadoCSV = true;
 
     /**
      * Creates new form PantallaInicial
      *
      */
-    public JFramePrincipal() {
+    public PantallaPrincipal() {
         initComponents();
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e); 
                 try {
-                    LogicaCorredor.getInstance().grabarCSV();
+                    LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -181,17 +180,17 @@ public class JFramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVerCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCorredoresActionPerformed
-        JDialogVerCorredores ventanaCorredores = new JDialogVerCorredores(this, true);
+        VistaCorredores ventanaCorredores = new VistaCorredores(this, true);
         ventanaCorredores.setVisible(true);
     }//GEN-LAST:event_jButtonVerCorredoresActionPerformed
 
     private void jButtonNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaCarreraActionPerformed
-        JDialogFormularioCarrera ventanaCarrera = new JDialogFormularioCarrera(this, true);
+        FormularioCarreras ventanaCarrera = new FormularioCarreras(this, true);
         ventanaCarrera.setVisible(true);
     }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
-        JDialogFormularioCorredor ventanaCorredor = new JDialogFormularioCorredor(this, true);
+        FormularioCorredores ventanaCorredor = new FormularioCorredores(this, true);
         ventanaCorredor.setVisible(true);
         // Si es modal las lineas siguientes se ejecutan al cerrar la ventana, 
         // porque vuelve al hilo principal y termina el metodo
@@ -204,7 +203,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
         try {
-            LogicaCorredor.getInstance().grabarCSV();
+            LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -230,8 +229,12 @@ public class JFramePrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFramePrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PantallaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -247,7 +250,7 @@ public class JFramePrincipal extends javax.swing.JFrame {
 
             @Override
             public void run() {
-                new JFramePrincipal().setVisible(true);
+                new PantallaPrincipal().setVisible(true);
             }
         });
     }

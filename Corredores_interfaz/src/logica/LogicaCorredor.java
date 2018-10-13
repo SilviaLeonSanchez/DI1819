@@ -1,6 +1,7 @@
 package logica;
 
-import modelo.Runner;
+import utiles.FicheroTexto;
+import modelo.Corredor;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
+import utiles.ExcepcionesPropias;
 
 /**
  *
@@ -24,27 +26,27 @@ public class LogicaCorredor {
 
     // Constructor privado
     public static LogicaCorredor getInstance() throws IOException {
-        if (INSTANCE == null)
+        if (INSTANCE == null) {
             INSTANCE = new LogicaCorredor();
-        
-            return INSTANCE;
+        }
+        return INSTANCE;
     }
 
     // ATRIBUTOS
-    private HashMap<String, Runner> corredores;
-    private Fichero_csv fichero_corredores;
+    private HashMap<String, Corredor> corredores;
+    private FicheroTexto fichero_corredores;
     private final String separadorCSV;
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
 
     // METODOS
-    private LogicaCorredor(File fichero, String separadorCSV) throws IllegalArgumentException {
+    private LogicaCorredor(File fichero, String separadorCSV, boolean usarFichero) throws IllegalArgumentException {
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
-            this.fichero_corredores = new Fichero_csv(fichero);
+            this.fichero_corredores = new FicheroTexto(fichero);
         } else {
             throw new IllegalArgumentException("El fichero no es valido o no existe.");
         }
         this.separadorCSV = separadorCSV;
-        leerCSV();
+        leerCorredores(usarFichero);
     }
 
     private LogicaCorredor() throws IOException {
@@ -53,69 +55,67 @@ public class LogicaCorredor {
         if (!fichero.exists()) {
             fichero.createNewFile();
         }
-        this.fichero_corredores = new Fichero_csv(fichero);
+        this.fichero_corredores = new FicheroTexto(fichero);
         this.separadorCSV = ";";
-        leerCSV();
+        leerCorredores(true);
     }
 
     // COLECCION
-    public List<Runner> getCorredores() {
+    public List<Corredor> getCorredores() {
         return new ArrayList(corredores.values());
     }
 
-    public Runner buscarCorredor(String dni) {
+    public Corredor buscarCorredor(String dni) {
         return this.corredores.get(dni);
     }
 
-    public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) {
-        if (corredores.containsKey(dni)) {
-            return false;
-        } else {
-            corredores.put(dni, new Runner(dni, nombre, fecha_nac, dir, tfn));
+    public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) throws ExcepcionesPropias.CorredorRepetido {
+        if (corredores.putIfAbsent(dni, new Corredor(dni, nombre, fecha_nac, dir, tfn)) == null) {
             return true;
+        } else {
+            throw new ExcepcionesPropias.CorredorRepetido();
         }
     }
 
-    public boolean bajaCorredor(String dni) {
+    public boolean bajaCorredor(String dni) throws ExcepcionesPropias.CorredorNoEsta {
+        if (!corredores.containsKey(dni)) {
+            throw new ExcepcionesPropias.CorredorNoEsta();
+        }
         return !(corredores.remove(dni) == null);
     }
 
-    
-    // CAMBIAR POR UN SOLO METODO --------------------
-    public boolean modificarDni(Runner c, String nuevo_dni) {
-        if (corredores.containsKey(nuevo_dni)) {
-            return false;
-        } else {
-            c.setDni(nuevo_dni);
-            return true;
+    public boolean modificarCorredor(Corredor c_original, Corredor c_modificado) throws ExcepcionesPropias.CorredorRepetido, ExcepcionesPropias.CorredorNoEsta {
+        if (!corredores.containsKey(c_original)){
+            throw new ExcepcionesPropias.CorredorNoEsta();
+        }else if (c_original.equals(c_modificado)) {
+            return corredores.replace(c_original.getDni(), c_original, c_modificado);
+        }else if (corredores.containsKey(c_modificado.getDni())){
+            throw new ExcepcionesPropias.CorredorRepetido();
+        }else{
+            corredores.remove(c_original);
+            return (corredores.put(c_modificado.getDni(), c_modificado) == null);
         }
     }
-
-    public void modificarNombre(Runner c, String nuevo_nombre) {
-        c.setNombre(nuevo_nombre);
-    }
-
-    public void modificarDireccion(Runner c, String nueva_dir) {
-        c.setDireccion(nueva_dir);
-    }
-
-    public void modificarTfn(Runner c, String nuevo_tfn) {
-        c.setTelefono(nuevo_tfn);
-    }
-
-    public void modificarFechaNac(Runner c, Date nueva_fecha) {
-        c.setFecha_nac(nueva_fecha);
-    }
-
-    public void guardarCambiosEnColeccion(Runner c, Runner c_modificado) {
-        corredores.remove(c.getDni());
-        corredores.put(c_modificado.getDni(), c_modificado);
-    }
-    //-----------------------------------------------
     
+    // PERSISTENCIA
+    public void guardarCorredores(boolean usarFichero){
+        if (usarFichero){
+            guardarCSV();
+        }else{
+            // BASE DE DATOS
+        }
+    }
+    
+    public void leerCorredores(boolean usarFichero){
+        if (usarFichero){
+            leerCSV();
+        }else{
+            // BASE DE DATOS
+        }
+    }
     
     // FICHERO
-    public Runner toRunner(String linea) {
+    private Corredor toRunner(String linea) {
         if (linea == null) {
             throw new IllegalArgumentException("No se puede convertir a string un objeto null");
         }
@@ -125,9 +125,9 @@ public class LogicaCorredor {
             tokens.add(st.nextToken());
         }
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
-        Runner runner = null;
+        Corredor runner = null;
         try {
-            runner = new Runner(tokens.get(0), tokens.get(1),
+            runner = new Corredor(tokens.get(0), tokens.get(1),
                     sdf.parse(tokens.get(2)), tokens.get(3), tokens.get(4));
         } catch (ParseException ex) {
             System.out.println("Error al transformar la fecha del fichero");
@@ -135,7 +135,7 @@ public class LogicaCorredor {
         return runner;
     }
 
-    public String toStringCSV(Runner corredor) {
+    private String toStringCSV(Corredor corredor) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         String linea = corredor.getDni() + this.separadorCSV;
         linea += corredor.getNombre() + this.separadorCSV;
@@ -145,10 +145,10 @@ public class LogicaCorredor {
         return linea;
     }
 
-    public void leerCSV() {
+    private void leerCSV() {
         this.fichero_corredores.abrirLector();
         String linea = null;
-        Runner runner = null;
+        Corredor runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
             runner = toRunner(linea);
             this.corredores.put(runner.getDni(), runner);
@@ -156,36 +156,38 @@ public class LogicaCorredor {
         this.fichero_corredores.cerrarLector();
     }
 
-    public void grabarCSV() {
+    private void guardarCSV() {
         this.fichero_corredores.abrirEscritor(true);
-        for (Runner runner : corredores.values()) {
+        for (Corredor runner : corredores.values()) {
             fichero_corredores.println(toStringCSV(runner));
         }
         this.fichero_corredores.cerrarEscritor();
     }
+    
+    // BBDD
+    
 
     // ORDENACION    
     public String[] getOpcionesOrdenCorredores() {
         return opcionesOrdenCorredores;
     }
-    
-    public List<Runner> ordenarDni() {
-        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
+
+    public List<Corredor> ordenarDni() {
+        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
         Collections.sort(lista_ordenada);
         return lista_ordenada;
     }
 
-    public List<Runner> ordenarFechaNac() {
-        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
-        Collections.sort(lista_ordenada, new Runner.ComparadorFecha());
+    public List<Corredor> ordenarFechaNac() {
+        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
+        Collections.sort(lista_ordenada, (Corredor c1, Corredor c2) -> c1.getFecha_nac().compareTo(c2.getFecha_nac()));
         return lista_ordenada;
     }
 
-    public List<Runner> ordenarNombre() {
-        ArrayList<Runner> lista_ordenada = new ArrayList(corredores.values());
-        Collections.sort(lista_ordenada, new Runner.ComparadorNombre());
+    public List<Corredor> ordenarNombre() {
+        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
+        Collections.sort(lista_ordenada, (Corredor c1, Corredor c2) -> c1.getNombre().compareToIgnoreCase(c2.getNombre()));
         return lista_ordenada;
     }
-    
 
 }

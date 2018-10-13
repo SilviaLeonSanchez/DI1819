@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaz.tableModels;
+package gui.tableModels;
 
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import modelo.Runner;
+import modelo.Corredor;
 import utiles.Utiles.Sdf;
 
 /**
@@ -16,15 +16,15 @@ import utiles.Utiles.Sdf;
  */
 public class TableModelCorredor extends AbstractTableModel {
 
-    private final List<Runner> listaCorredores;
+    private final List<Corredor> listaCorredores;
 
-    public TableModelCorredor(List<Runner> listaCorredores) {
+    public TableModelCorredor(List<Corredor> listaCorredores) {
         this.listaCorredores = listaCorredores;
     }
 
     @Override
     public String getColumnName(int column) {
-        return Runner.DATOS[column];
+        return Corredor.DATOS[column];
     }
 
     @Override
@@ -34,7 +34,7 @@ public class TableModelCorredor extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return Runner.DATOS.length;
+        return Corredor.DATOS.length;
     }
     
     @Override

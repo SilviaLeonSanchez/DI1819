@@ -1,26 +1,28 @@
-package interfaz;
+package gui;
 
-import interfaz.tableModels.TableModelCorredor;
+import gui.tableModels.TableModelCorredor;
 import java.io.IOException;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import logica.LogicaCorredor;
-import modelo.Runner;
 
 /**
  *
  * @author silvia
  */
-public class JDialogVerCorredores extends javax.swing.JDialog {
+public class VistaCorredores extends javax.swing.JDialog {
 
+    PantallaPrincipal pantallaPrincipal;
+    
     /**
      * Creates new form PantallaCorredor
      *
      * @param parent
      * @param modal
      */
-    public JDialogVerCorredores(java.awt.Frame parent, boolean modal) {
+    public VistaCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
         rellenarTablaCorredores();
         rellenarComboBoxOrden();
@@ -64,6 +66,7 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jLabelOrdenCorredores = new javax.swing.JLabel();
         jPanelBotonesListaCorredores = new javax.swing.JPanel();
         jButtonVolver = new javax.swing.JButton();
+        jButtonNuevoCorredor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -111,6 +114,12 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTableCorredores);
 
         jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxOrdenCorredores.setToolTipText("");
+        jComboBoxOrdenCorredores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxOrdenCorredoresActionPerformed(evt);
+            }
+        });
 
         jLabelOrdenCorredores.setText("Orden");
 
@@ -148,20 +157,31 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
             }
         });
 
+        jButtonNuevoCorredor.setText("Nuevo");
+        jButtonNuevoCorredor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoCorredorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBotonesListaCorredoresLayout = new javax.swing.GroupLayout(jPanelBotonesListaCorredores);
         jPanelBotonesListaCorredores.setLayout(jPanelBotonesListaCorredoresLayout);
         jPanelBotonesListaCorredoresLayout.setHorizontalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap(270, Short.MAX_VALUE)
+                .addContainerGap(193, Short.MAX_VALUE)
+                .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(269, Short.MAX_VALUE))
+                .addContainerGap(193, Short.MAX_VALUE))
         );
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
-                .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
@@ -174,7 +194,18 @@ public class JDialogVerCorredores extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
+    private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
+        
+    }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
+
+    private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
+        FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true);
+        ventanaCorredor.setVisible(true);
+        rellenarTablaCorredores();
+    }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonNuevoCorredor;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxOrdenCorredores;
     private javax.swing.JLabel jLabelOrdenCorredores;

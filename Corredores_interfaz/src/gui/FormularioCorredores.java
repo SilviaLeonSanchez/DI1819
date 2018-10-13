@@ -3,18 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaz;
+package gui;
 
 import logica.LogicaCorredor;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import utiles.ExcepcionesPropias;
 import utiles.Utiles;
 
 /**
  *
  * @author silvia
  */
-public class JDialogFormularioCorredor extends javax.swing.JDialog {
+public class FormularioCorredores extends javax.swing.JDialog {
 
     /**
      * Creates new form FormularioCorredor
@@ -22,7 +26,7 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
      * @param parent
      * @param modal
      */
-    public JDialogFormularioCorredor(java.awt.Frame parent, boolean modal) {
+    public FormularioCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -226,19 +230,19 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
         jPanelCamposCorredorLayout.setVerticalGroup(
             jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelNombreCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNombreCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -273,9 +277,11 @@ public class JDialogFormularioCorredor extends javax.swing.JDialog {
                     this.jTextFieldDireccionCorredor.getText(),
                     this.jTextFieldTelefonoCorredor.getText()
             );
-            LogicaCorredor.getInstance().grabarCSV();
+            LogicaCorredor.getInstance().guardarCorredores(true);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
         }
         this.dispose();
     }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed

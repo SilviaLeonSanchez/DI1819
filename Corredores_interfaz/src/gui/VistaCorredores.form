@@ -148,7 +148,11 @@
                 <StringItem index="3" value="Item 4"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxOrdenCorredoresActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -176,9 +180,11 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="270" max="32767" attributes="0"/>
+                  <EmptySpace pref="193" max="32767" attributes="0"/>
+                  <Component id="jButtonNuevoCorredor" min="-2" pref="101" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   <Component id="jButtonVolver" min="-2" pref="101" max="-2" attributes="0"/>
-                  <EmptySpace pref="269" max="32767" attributes="0"/>
+                  <EmptySpace pref="193" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -186,7 +192,10 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="26" max="32767" attributes="0"/>
-                  <Component id="jButtonVolver" min="-2" pref="40" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonVolver" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jButtonNuevoCorredor" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="34" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -199,6 +208,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVolverActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonNuevoCorredor">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Nuevo"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoCorredorActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
