@@ -8,11 +8,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
+import javax.swing.table.AbstractTableModel;
 import utils.ExcepcionesPropias;
+import utils.Utiles;
 
 /**
  *
@@ -25,7 +29,7 @@ public class LogicaCorredor {
     private static LogicaCorredor INSTANCE;
 
     // Constructor privado
-    public static LogicaCorredor getInstance() throws IOException {
+    public static LogicaCorredor getInstance() throws IOException, ExcepcionesPropias.CorredorRepetido {
         if (INSTANCE == null) {
             INSTANCE = new LogicaCorredor();
         }
@@ -33,13 +37,13 @@ public class LogicaCorredor {
     }
 
     // ATRIBUTOS
-    private HashMap<String, Corredor> corredores;
+    private ArrayList<Corredor> corredores;
     private FicheroTexto fichero_corredores;
     private final String separadorCSV;
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
 
     // METODOS
-    private LogicaCorredor(File fichero, String separadorCSV, boolean usarFichero) throws IllegalArgumentException {
+    private LogicaCorredor(File fichero, String separadorCSV, boolean usarFichero) throws IllegalArgumentException, ExcepcionesPropias.CorredorRepetido {
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
             this.fichero_corredores = new FicheroTexto(fichero);
         } else {
@@ -49,8 +53,8 @@ public class LogicaCorredor {
         leerCorredores(usarFichero);
     }
 
-    private LogicaCorredor() throws IOException {
-        this.corredores = new HashMap<>();
+    private LogicaCorredor() throws IOException, ExcepcionesPropias.CorredorRepetido {
+        this.corredores = new ArrayList<>();
         File fichero = new File("fichero_corredores.csv");
         if (!fichero.exists()) {
             fichero.createNewFile();
@@ -62,39 +66,33 @@ public class LogicaCorredor {
 
     // COLECCION
     public List<Corredor> getCorredores() {
-        return new ArrayList(corredores.values());
+        return corredores;
     }
 
-    public Corredor buscarCorredor(String dni) {
-        return this.corredores.get(dni);
+    public Corredor buscarCorredor(Corredor c) {
+        return this.corredores.get(this.corredores.indexOf(c));
     }
 
     public boolean altaCorredor(String dni, String nombre, Date fecha_nac, String dir, String tfn) throws ExcepcionesPropias.CorredorRepetido {
-        if (corredores.putIfAbsent(dni, new Corredor(dni, nombre, fecha_nac, dir, tfn)) == null) {
+        Corredor c = new Corredor(dni, nombre, fecha_nac, dir, tfn);
+        if (!this.corredores.contains(c)) {
+            corredores.add(c);
             return true;
         } else {
             throw new ExcepcionesPropias.CorredorRepetido();
         }
     }
 
-    public boolean bajaCorredor(String dni) throws ExcepcionesPropias.CorredorNoEsta {
-        if (!corredores.containsKey(dni)) {
+    public boolean bajaCorredor(Corredor c) throws ExcepcionesPropias.CorredorNoEsta {
+        if (!corredores.contains(c)) {
             throw new ExcepcionesPropias.CorredorNoEsta();
         }
-        return !(corredores.remove(dni) == null);
+        return corredores.remove(c);
     }
 
-    public boolean modificarCorredor(Corredor c_original, Corredor c_modificado) throws ExcepcionesPropias.CorredorRepetido, ExcepcionesPropias.CorredorNoEsta {
-        if (!corredores.containsKey(c_original.getDni())) {
-            throw new ExcepcionesPropias.CorredorNoEsta();
-        } else if (c_original.equals(c_modificado)) {
-            return corredores.replace(c_original.getDni(), c_original, c_modificado);
-        } else if (corredores.containsKey(c_modificado.getDni())) {
-            throw new ExcepcionesPropias.CorredorRepetido();
-        } else {
-            corredores.remove(c_original.getDni());
-            return (corredores.put(c_modificado.getDni(), c_modificado) == null);
-        }
+    public void modificarCorredor(Corredor c_original, Corredor c_modificado) {
+        corredores.remove(c_original);
+        corredores.add(c_modificado);
     }
 
     // PERSISTENCIA
@@ -106,7 +104,7 @@ public class LogicaCorredor {
         }
     }
 
-    public void leerCorredores(boolean usarFichero) {
+    public void leerCorredores(boolean usarFichero) throws ExcepcionesPropias.CorredorRepetido {
         if (usarFichero) {
             leerCSV();
         } else {
@@ -145,20 +143,24 @@ public class LogicaCorredor {
         return linea;
     }
 
-    private void leerCSV() {
+    private void leerCSV() throws ExcepcionesPropias.CorredorRepetido {
         this.fichero_corredores.abrirLector();
         String linea = null;
         Corredor runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
             runner = toRunner(linea);
-            this.corredores.put(runner.getDni(), runner);
+            if (!this.corredores.contains(runner)) {
+                this.corredores.add(runner);
+            } else {
+                throw new ExcepcionesPropias.CorredorRepetido();
+            }
         }
         this.fichero_corredores.cerrarLector();
     }
 
     private void guardarCSV() {
-        this.fichero_corredores.abrirEscritor(true);
-        for (Corredor runner : corredores.values()) {
+        this.fichero_corredores.abrirEscritor(false);
+        for (Corredor runner : corredores) {
             fichero_corredores.println(toStringCSV(runner));
         }
         this.fichero_corredores.cerrarEscritor();
@@ -170,22 +172,59 @@ public class LogicaCorredor {
         return opcionesOrdenCorredores;
     }
 
-    public List<Corredor> ordenarDni() {
-        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
-        Collections.sort(lista_ordenada);
-        return lista_ordenada;
+    public void ordenarDni() {
+        Collections.sort(this.corredores);
     }
 
-    public List<Corredor> ordenarFechaNac() {
-        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
-        Collections.sort(lista_ordenada, (Corredor c1, Corredor c2) -> c1.getFecha_nac().compareTo(c2.getFecha_nac()));
-        return lista_ordenada;
+    public void ordenarFechaNac() {
+        Collections.sort(corredores, (Corredor o1, Corredor o2) -> o1.getFecha_nac().compareTo(o2.getFecha_nac()));
     }
 
-    public List<Corredor> ordenarNombre() {
-        ArrayList<Corredor> lista_ordenada = new ArrayList(corredores.values());
-        Collections.sort(lista_ordenada, (Corredor c1, Corredor c2) -> c1.getNombre().compareToIgnoreCase(c2.getNombre()));
-        return lista_ordenada;
+    public void ordenarNombre() {
+        Collections.sort(corredores, (Corredor o1, Corredor o2) -> o1.getNombre().compareTo(o2.getNombre()));
+    }
+
+    public static class TableModelCorredor extends AbstractTableModel {
+
+        private final List<Corredor> listaCorredores;
+
+        public TableModelCorredor(List<Corredor> listaCorredores) {
+            this.listaCorredores = listaCorredores;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return Corredor.DATOS[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return listaCorredores.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return Corredor.DATOS.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return listaCorredores.get(rowIndex).getDni();
+                case 1:
+                    return listaCorredores.get(rowIndex).getNombre();
+                case 2:
+                    return Utiles.Sdf.format(listaCorredores.get(rowIndex).getFecha_nac());
+                case 3:
+                    return listaCorredores.get(rowIndex).getDireccion();
+                case 4:
+                    return listaCorredores.get(rowIndex).getTelefono();
+                default:
+                    return null;
+            }
+        }
+
     }
 
 }

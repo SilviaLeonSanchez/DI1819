@@ -1,10 +1,13 @@
 package gui;
 
-import gui.tableModels.TableModelCorredor;
+import dto.Corredor;
 import java.io.IOException;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import logic.LogicaCorredor;
+import logic.LogicaCorredor.TableModelCorredor;
+import utils.ExcepcionesPropias;
 
 /**
  *
@@ -31,21 +34,23 @@ public class VistaCorredores extends javax.swing.JDialog {
     private boolean rellenarTablaCorredores() {
         try {
             this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
-            return true;
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores en la tabla", "Problemas al cargar JTable", JOptionPane.ERROR_MESSAGE);
-            return false;
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
         }
+        return true;
     }
 
     private boolean rellenarComboBoxOrden() {
         try {
             this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
-            return true;
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar JCombobox", JOptionPane.ERROR_MESSAGE);
-            return false;
+            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar datos", JOptionPane.ERROR_MESSAGE);
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
         }
+        return true;
     }
 
     /**
@@ -67,6 +72,8 @@ public class VistaCorredores extends javax.swing.JDialog {
         jPanelBotonesListaCorredores = new javax.swing.JPanel();
         jButtonVolver = new javax.swing.JButton();
         jButtonNuevoCorredor = new javax.swing.JButton();
+        jButtonModificar = new javax.swing.JButton();
+        jButtonBorrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
@@ -164,26 +171,51 @@ public class VistaCorredores extends javax.swing.JDialog {
             }
         });
 
+        jButtonModificar.setText("Modificar");
+        jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificarActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrar.setText("Borrar");
+        jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBotonesListaCorredoresLayout = new javax.swing.GroupLayout(jPanelBotonesListaCorredores);
         jPanelBotonesListaCorredores.setLayout(jPanelBotonesListaCorredoresLayout);
         jPanelBotonesListaCorredoresLayout.setHorizontalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap(193, Short.MAX_VALUE)
+                .addContainerGap(109, Short.MAX_VALUE)
                 .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBorrar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(193, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
+
+        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
+
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
                 .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonBorrar))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
+
+        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
 
         getContentPane().add(jPanelBotonesListaCorredores, java.awt.BorderLayout.PAGE_END);
 
@@ -195,7 +227,25 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-
+        List<Corredor> lista;
+        try {
+            switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
+                case 0:
+                    LogicaCorredor.getInstance().ordenarDni();
+                    break;
+                case 1:
+                    LogicaCorredor.getInstance().ordenarNombre();
+                    break;
+                case 2:
+                    LogicaCorredor.getInstance().ordenarFechaNac();
+                    break;
+            }
+            rellenarTablaCorredores();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
@@ -204,7 +254,36 @@ public class VistaCorredores extends javax.swing.JDialog {
         rellenarTablaCorredores();
     }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
+    private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
+
+        try {
+            int selectedRow = jTableCorredores.getSelectedRow();
+            Corredor c = LogicaCorredor.getInstance().getCorredores().get(selectedRow);
+            FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true, c);
+            ventanaCorredor.setVisible(true);
+            rellenarTablaCorredores();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonModificarActionPerformed
+
+    private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
+        int selectedRow = jTableCorredores.getSelectedRow();
+        try {
+            LogicaCorredor.getInstance().getCorredores().remove(selectedRow);
+            rellenarTablaCorredores();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonBorrarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonBorrar;
+    private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevoCorredor;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxOrdenCorredores;

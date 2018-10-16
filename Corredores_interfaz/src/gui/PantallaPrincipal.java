@@ -9,6 +9,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import logic.LogicaCorredor;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import utils.ExcepcionesPropias;
 
 /**
  *
@@ -31,9 +35,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 super.windowClosing(e);
                 try {
                     LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
-                } catch (IOException ex) {
+                } catch (IOException | ExcepcionesPropias.CorredorRepetido ex) {
                     System.out.println(ex.getMessage());
-                }
+                } 
             }
         });
     }
@@ -207,6 +211,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CorredorRepetido ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
         }
         this.dispose();
         System.exit(0);

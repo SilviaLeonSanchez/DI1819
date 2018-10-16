@@ -5,45 +5,61 @@
  */
 package dto;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import javafx.util.Duration;
+import javax.xml.datatype.Duration;
 
 /**
  *
  * @author silvia
  */
-public class CorredorCarrera {
+public class TiemposCorredor {
 
     // ATRIBUTOS
-    private Carrera carrera;
-    private Corredor corredor;
     private String dorsal;
-    private List<Duration> tiempos;
+    private LinkedList<Duration> tiempos;
 
     // METODOS
-    public CorredorCarrera(Carrera carrera, Corredor corredor) {
-        this.carrera = carrera;
-        this.corredor = corredor;
-        this.tiempos = new ArrayList<>();
-    }
-
-    public void setCorredor(Corredor corredor) {
-        this.corredor = corredor;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
+    public TiemposCorredor(String dorsal) {
+        this.tiempos = new LinkedList<>();
     }
 
     @Override
     public String toString() {
-        String corredorCarrera = "CorredorCarrera{" + "carrera=" + carrera + ", corredor=" + corredor + ", dorsal=" + dorsal + ", tiempos=";
+        String corredorCarrera = "CorredorCarrera{"+" dorsal=" + dorsal + ", tiempos=";
         for (Duration tiempo : tiempos) {
-            corredorCarrera = corredorCarrera.concat("\n\t" + tiempo.toString());
+            corredorCarrera = corredorCarrera.concat("\n\t" + tiempo.getHours()+":"+tiempo.getMinutes()+":"+tiempo.getSeconds());
         }
         return corredorCarrera + "\n}";
+    }
+
+
+    // GETTER
+    public List<Duration> getTiempos() {
+        return tiempos;
+    }
+
+    public String getDorsal() {
+        return dorsal;
+    }
+
+
+    // SETTER
+
+    public void setTiempos(LinkedList<Duration> tiempos) {
+        this.tiempos = tiempos;
+    }
+    
+    public void addTiempo(Duration tiempo){
+        this.tiempos.add(tiempo);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + Objects.hashCode(this.dorsal);
+        return hash;
     }
 
     @Override
@@ -57,37 +73,12 @@ public class CorredorCarrera {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final CorredorCarrera other = (CorredorCarrera) obj;
-        if (!Objects.equals(this.carrera, other.carrera)) {
+        final TiemposCorredor other = (TiemposCorredor) obj;
+        if (!Objects.equals(this.dorsal, other.dorsal)) {
             return false;
         }
-        return Objects.equals(this.corredor, other.corredor);
+        return true;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.carrera);
-        hash = 83 * hash + Objects.hashCode(this.corredor);
-        return hash;
-    }
-
-    // GETTER
-    public List<Duration> getTiempos() {
-        return tiempos;
-    }
-
-    public String getDorsal() {
-        return dorsal;
-    }
-
-    public Corredor getCorredor() {
-        return corredor;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    // SETTER
+    
+    
 }

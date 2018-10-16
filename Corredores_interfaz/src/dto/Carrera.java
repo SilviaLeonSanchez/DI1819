@@ -6,9 +6,8 @@
 package dto;
 
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Objects;
-import utils.ExcepcionesPropias;
 import utils.Utiles;
 
 /**
@@ -23,7 +22,7 @@ public class Carrera {
     private Date fecha;
     private String lugar;
     private int maxCorredores;
-    private HashSet<Corredor> listaCorredores;
+    private HashMap<Corredor,TiemposCorredor> listaCorredores;
 
     private boolean carreraCerrada;
     private int contadorDorsales;
@@ -65,8 +64,9 @@ public class Carrera {
     @Override
     public String toString() {
         String carrera = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + Utiles.Sdf.format(fecha) + ", lugar=" + lugar + ", max_corredores=" + maxCorredores + ", terminada=" + carreraCerrada + '}';
-        for (Corredor corredor : listaCorredores) {
+        for (Corredor corredor : listaCorredores.keySet()) {
             carrera = carrera.concat("\t" + corredor.toString() + "\n");
+            carrera = carrera.concat(listaCorredores.get(corredor).toString());
         }
         return carrera;
     }
@@ -109,7 +109,7 @@ public class Carrera {
     }
 
     // GETTER
-    public HashSet<Corredor> getListaCorredores() {
+    public HashMap<Corredor,TiemposCorredor> getListaCorredores() {
         return listaCorredores;
     }
 
@@ -140,31 +140,35 @@ public class Carrera {
     public boolean isCarreraCerrada() {
         return carreraCerrada;
     }
-
+    /*
     // CORREDORES
-    public boolean addCorredor(Corredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
-        if (corredor == null) {
-            throw new IllegalArgumentException("El corredor no puede ser null");
-        } else if (this.listaCorredores.contains(corredor)) {
-            throw new ExcepcionesPropias.CorredorRepetido();
-        } else if (this.carreraCerrada) {
-            throw new ExcepcionesPropias.CarreraCerrada();
-        } else if (this.listaCorredores.size() == this.maxCorredores) {
-            throw new ExcepcionesPropias.DemasiadosCorredores();
-        } else if (this.listaCorredores.add(corredor)) {
-            this.contadorDorsales++;
-        }
-        return true;
+    public boolean addCorredor(Corredor corredor,TiemposCorredor tiempos) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+    if (corredor == null) {
+    throw new IllegalArgumentException("El corredor no puede ser null");
+    } else if (this.listaCorredores.containsKey(corredor)) {
+    throw new ExcepcionesPropias.CorredorRepetido();
+    } else if (this.carreraCerrada) {
+    throw new ExcepcionesPropias.CarreraCerrada();
+    } else if (this.listaCorredores.size() == this.maxCorredores) {
+    throw new ExcepcionesPropias.DemasiadosCorredores();
+    } else if (this.listaCorredores.(corredor)) {
+    this.contadorDorsales++;
     }
-
+    return true;
+    }
+    
     public boolean delCorredor(Corredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
-        if (!this.listaCorredores.contains(corredor)) {
-            throw new ExcepcionesPropias.CorredorNoEsta();
-        } else if (this.carreraCerrada) {
-            throw new ExcepcionesPropias.CarreraCerrada();
-        } else {
-            return this.listaCorredores.remove(corredor);
-        }
+    if (!this.listaCorredores.contains(corredor)) {
+    throw new ExcepcionesPropias.CorredorNoEsta();
+    } else if (this.carreraCerrada) {
+    throw new ExcepcionesPropias.CarreraCerrada();
+    } else {
+    return this.listaCorredores.remove(corredor);
     }
+    }
+    
+    */
+    
+    
 
 }
