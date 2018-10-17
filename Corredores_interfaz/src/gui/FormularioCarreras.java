@@ -1,8 +1,12 @@
 package gui;
 
+import dto.Carrera;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.LogicaCarrera;
+import utils.ExcepcionesPropias;
 import utils.Utiles;
 
 /**
@@ -10,6 +14,9 @@ import utils.Utiles;
  * @author silvia
  */
 public class FormularioCarreras extends javax.swing.JDialog {
+
+    private boolean modificar;
+    private Carrera c_original;
 
     /**
      * Creates new form FormularioCorredor
@@ -20,6 +27,18 @@ public class FormularioCarreras extends javax.swing.JDialog {
     public FormularioCarreras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        modificar = false;
+    }
+
+    public FormularioCarreras(java.awt.Frame parent, boolean modal, Carrera carrera) {
+        super(parent, modal);
+        initComponents();
+        c_original = carrera;
+        jTextFieldNombreCarrera.setText(carrera.getNombre());
+        jTextFieldLugarCarrera.setText(carrera.getLugar());
+        jTextFieldPlazasCarrera.setText(Integer.toString(carrera.getMaxCorredores()));
+        jSpinnerFechaCarrera.setValue(carrera.getFecha());
+        modificar = true;
     }
 
     /**
@@ -34,9 +53,9 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jPanelTituloCarrera = new javax.swing.JPanel();
         jLabelTituloCarrera = new javax.swing.JLabel();
         jPanelBotonesCarrera = new javax.swing.JPanel();
-        jButtonEnviarCarrera = new javax.swing.JButton();
-        jButtonLimpiarCarrera = new javax.swing.JButton();
-        jButtonCancelarCorredor = new javax.swing.JButton();
+        jButtonEnviar = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         jPanelCamposCarrera = new javax.swing.JPanel();
         jLabelNombreCarrera = new javax.swing.JLabel();
         jTextFieldNombreCarrera = new javax.swing.JTextField();
@@ -89,33 +108,33 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jPanelBotonesCarrera.setMinimumSize(new java.awt.Dimension(640, 100));
         jPanelBotonesCarrera.setPreferredSize(new java.awt.Dimension(640, 100));
 
-        jButtonEnviarCarrera.setText("Enviar");
-        jButtonEnviarCarrera.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonEnviarCarrera.setMaximumSize(null);
-        jButtonEnviarCarrera.setMinimumSize(new java.awt.Dimension(85, 40));
-        jButtonEnviarCarrera.setPreferredSize(new java.awt.Dimension(85, 40));
-        jButtonEnviarCarrera.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEnviar.setText("Enviar");
+        jButtonEnviar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEnviar.setMaximumSize(null);
+        jButtonEnviar.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonEnviar.setPreferredSize(new java.awt.Dimension(85, 40));
+        jButtonEnviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEnviarCarreraActionPerformed(evt);
+                jButtonEnviarActionPerformed(evt);
             }
         });
 
-        jButtonLimpiarCarrera.setText("Limpiar");
-        jButtonLimpiarCarrera.setMaximumSize(null);
-        jButtonLimpiarCarrera.setMinimumSize(new java.awt.Dimension(85, 40));
-        jButtonLimpiarCarrera.setPreferredSize(new java.awt.Dimension(85, 40));
-        jButtonLimpiarCarrera.addActionListener(new java.awt.event.ActionListener() {
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.setMaximumSize(null);
+        jButtonLimpiar.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonLimpiar.setPreferredSize(new java.awt.Dimension(85, 40));
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarCarreraActionPerformed(evt);
+                jButtonLimpiarActionPerformed(evt);
             }
         });
 
-        jButtonCancelarCorredor.setText("Cancelar");
-        jButtonCancelarCorredor.setMinimumSize(new java.awt.Dimension(85, 40));
-        jButtonCancelarCorredor.setPreferredSize(new java.awt.Dimension(85, 40));
-        jButtonCancelarCorredor.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setMinimumSize(new java.awt.Dimension(85, 40));
+        jButtonCancelar.setPreferredSize(new java.awt.Dimension(85, 40));
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarCorredorActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
 
@@ -125,15 +144,15 @@ public class FormularioCarreras extends javax.swing.JDialog {
             jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesCarreraLayout.createSequentialGroup()
                 .addContainerGap(122, Short.MAX_VALUE)
-                .addComponent(jButtonEnviarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jButtonLimpiarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(jButtonCancelarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
 
-        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCancelarCorredor, jButtonEnviarCarrera, jButtonLimpiarCarrera});
+        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCancelar, jButtonEnviar, jButtonLimpiar});
 
         jPanelBotonesCarreraLayout.setVerticalGroup(
             jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,13 +160,13 @@ public class FormularioCarreras extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                        .addComponent(jButtonEnviarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonLimpiarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButtonCancelarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCancelarCorredor, jButtonEnviarCarrera, jButtonLimpiarCarrera});
+        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCancelar, jButtonEnviar, jButtonLimpiar});
 
         getContentPane().add(jPanelBotonesCarrera, java.awt.BorderLayout.PAGE_END);
 
@@ -250,35 +269,35 @@ public class FormularioCarreras extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonLimpiarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarCarreraActionPerformed
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
         this.jTextFieldDireccionCarrera.setText("");
         this.jTextFieldLugarCarrera.setText("");
         this.jTextFieldNombreCarrera.setText("");
         this.jTextFieldPlazasCarrera.setText("");
-    }//GEN-LAST:event_jButtonLimpiarCarreraActionPerformed
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
-    private void jButtonCancelarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCorredorActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         Utiles.salirSinGuardar(this);
-    }//GEN-LAST:event_jButtonCancelarCorredorActionPerformed
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
-    private void jButtonEnviarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCarreraActionPerformed
+    private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         try {
-            LogicaCarrera.getInstance().altaCarrera(
+            LogicaCarrera.getInstance().altaCarrera(new Carrera(
                     jTextFieldNombreCarrera.getText(),
                     (Date) jSpinnerFechaCarrera.getValue(),
                     jTextFieldLugarCarrera.getText(),
-                    Integer.parseInt(jTextFieldPlazasCarrera.getText())
-            );
-
+                    Integer.parseInt(jTextFieldPlazasCarrera.getText())));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CarreraRepetida ex) {
+            Logger.getLogger(FormularioCarreras.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButtonEnviarCarreraActionPerformed
+    }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonCancelarCorredor;
-    private javax.swing.JButton jButtonEnviarCarrera;
-    private javax.swing.JButton jButtonLimpiarCarrera;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonEnviar;
+    private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JLabel jLabelDireccionCarrera;
     private javax.swing.JLabel jLabelFechaCarrera;
     private javax.swing.JLabel jLabelLugarCarrera;

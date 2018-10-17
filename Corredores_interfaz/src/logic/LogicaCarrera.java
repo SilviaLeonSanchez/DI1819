@@ -9,14 +9,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import dto.Carrera;
-import dto.Corredor;
+import javax.swing.table.AbstractTableModel;
 import utils.ExcepcionesPropias;
 import utils.FicheroObjetos;
+import utils.Utiles;
 
 /**
  *
@@ -27,7 +26,7 @@ public class LogicaCarrera {
     private static LogicaCarrera INSTANCE;
 
     // Constructor privado
-    public static LogicaCarrera getInstance() throws IOException {
+    public static LogicaCarrera getInstance() throws IOException, ExcepcionesPropias.CarreraRepetida {
         if (INSTANCE == null) {
             INSTANCE = new LogicaCarrera();
         }
@@ -35,12 +34,12 @@ public class LogicaCarrera {
     }
 
     // ATRIBUTOS
-    private HashSet<Carrera> carreras;
+    private List<Carrera> carreras;
     private FicheroObjetos ficheroCarreras;
     private final String[] opcionesOrdenCarreras = {"Fecha", "Limite participantes", "Numero participantes"};
 
     // METODOS
-    private LogicaCarrera(File fichero, boolean usarFichero) throws IllegalArgumentException {
+    private LogicaCarrera(File fichero, boolean usarFichero) throws IllegalArgumentException, ExcepcionesPropias.CarreraRepetida {
         if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
             this.ficheroCarreras = new FicheroObjetos(fichero);
         } else {
@@ -49,9 +48,9 @@ public class LogicaCarrera {
         leerCarreras(usarFichero);
     }
 
-    private LogicaCarrera() throws IOException {
-        this.carreras = new HashSet<>();
-        File fichero = new File("fichero_corredores.csv");
+    private LogicaCarrera() throws IOException, ExcepcionesPropias.CarreraRepetida {
+        this.carreras = new ArrayList<>();
+        File fichero = new File("fichero_carreras.dat");
         if (!fichero.exists()) {
             fichero.createNewFile();
         }
@@ -60,12 +59,16 @@ public class LogicaCarrera {
     }
 
     // COLECCION
-    public List<Corredor> getCarreras() {
-        return new ArrayList(carreras);
+    public List<Carrera> getCarreras() {
+        return carreras;
     }
 
-    public boolean altaCarrera(String nombre, Date fecha, String lugar, int maxCorredores) {
-        return carreras.add(new Carrera(nombre, fecha, lugar, maxCorredores));
+    public boolean altaCarrera(Carrera c) throws ExcepcionesPropias.CarreraRepetida, IOException {
+        if (!LogicaCarrera.getInstance().getCarreras().contains(c)) {
+            return LogicaCarrera.getInstance().altaCarrera(c);
+        } else {
+            throw new ExcepcionesPropias.CarreraRepetida();
+        }
     }
 
     public boolean bajaCarrera(Carrera carrera) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraNoEsta {
@@ -98,7 +101,7 @@ public class LogicaCarrera {
         }
     }
 
-    public void leerCarreras(boolean usarFichero) {
+    public void leerCarreras(boolean usarFichero) throws ExcepcionesPropias.CarreraRepetida {
         if (usarFichero) {
             leerDeFichero();
         } else {
@@ -117,11 +120,15 @@ public class LogicaCarrera {
         ficheroCarreras.cerrarEscritor();
     }
 
-    private void leerDeFichero() {
+    private void leerDeFichero() throws ExcepcionesPropias.CarreraRepetida {
         ficheroCarreras.abrirLector();
         Carrera c;
         while ((c = (Carrera) ficheroCarreras.leerObjeto()) != null) {
-            carreras.add(c);
+            if (!carreras.contains(c)) {
+                carreras.add(c);
+            } else {
+                throw new ExcepcionesPropias.CarreraRepetida();
+            }
         }
         ficheroCarreras.cerrarLector();
     }
@@ -131,22 +138,61 @@ public class LogicaCarrera {
         return opcionesOrdenCarreras;
     }
 
-    public List<Carrera> ordenarFecha() {
-        List<Carrera> lista_ordenada = new ArrayList(carreras);
-        Collections.sort(lista_ordenada, (Carrera o1, Carrera o2) -> o1.getFecha().compareTo(o2.getFecha()));
-        return lista_ordenada;
+    public void ordenarFecha() {
+        Collections.sort(carreras, (Carrera o1, Carrera o2) -> o1.getFecha().compareTo(o2.getFecha()));
     }
 
-    public List<Carrera> ordenarMaxCorredores() {
-        List<Carrera> lista_ordenada = new ArrayList(carreras);
-        Collections.sort(lista_ordenada, (Carrera o1, Carrera o2) -> Integer.compare(o1.getMaxCorredores(), o2.getMaxCorredores()));
-        return lista_ordenada;
+    public void ordenarMaxCorredores() {
+        Collections.sort(carreras, (Carrera o1, Carrera o2) -> Integer.compare(o1.getMaxCorredores(), o2.getMaxCorredores()));
     }
 
-    public List<Carrera> ordenarNumCorredores() {
-        List<Carrera> lista_ordenada = new ArrayList(carreras);
-        Collections.sort(lista_ordenada, (Carrera o1, Carrera o2) -> Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size()));
-        return lista_ordenada;
+    public void ordenarNumCorredores() {
+        Collections.sort(carreras, (Carrera o1, Carrera o2) -> Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size()));
+    }
+
+    public static class TableModelCarrera extends AbstractTableModel {
+
+        private final List<Carrera> listaCarreras;
+
+        public TableModelCarrera(List<Carrera> listaCarreras) {
+            this.listaCarreras = listaCarreras;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return Carrera.DATOS[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return listaCarreras.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return Carrera.DATOS.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return listaCarreras.get(rowIndex).getId();
+                case 1:
+                    return listaCarreras.get(rowIndex).getNombre();
+                case 2:
+                    return Utiles.Sdf.format(listaCarreras.get(rowIndex).getFecha());
+                case 3:
+                    return listaCarreras.get(rowIndex).getLugar();
+                case 4:
+                    return listaCarreras.get(rowIndex).getMaxCorredores();
+                case 5:
+                    return (listaCarreras.get(rowIndex).isCarreraCerrada()) ? ("SI") : ("NO");
+                default:
+                    return null;
+            }
+        }
+
     }
 
 }

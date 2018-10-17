@@ -22,7 +22,7 @@ public class Carrera {
     private Date fecha;
     private String lugar;
     private int maxCorredores;
-    private HashMap<Corredor,TiemposCorredor> listaCorredores;
+    private HashMap<Corredor, TiemposCorredor> listaCorredores;
 
     private boolean carreraCerrada;
     private int contadorDorsales;
@@ -109,7 +109,7 @@ public class Carrera {
     }
 
     // GETTER
-    public HashMap<Corredor,TiemposCorredor> getListaCorredores() {
+    public HashMap<Corredor, TiemposCorredor> getListaCorredores() {
         return listaCorredores;
     }
 
@@ -140,34 +140,39 @@ public class Carrera {
     public boolean isCarreraCerrada() {
         return carreraCerrada;
     }
+
     /*
     // CORREDORES
-    public boolean addCorredor(Corredor corredor,TiemposCorredor tiempos) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
-    if (corredor == null) {
-    throw new IllegalArgumentException("El corredor no puede ser null");
-    } else if (this.listaCorredores.containsKey(corredor)) {
-    throw new ExcepcionesPropias.CorredorRepetido();
-    } else if (this.carreraCerrada) {
-    throw new ExcepcionesPropias.CarreraCerrada();
-    } else if (this.listaCorredores.size() == this.maxCorredores) {
-    throw new ExcepcionesPropias.DemasiadosCorredores();
-    } else if (this.listaCorredores.(corredor)) {
-    this.contadorDorsales++;
+    public boolean addCorredor(Corredor corredor, TiemposCorredor tiempos) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+        if (corredor == null) {
+            throw new IllegalArgumentException("El corredor no puede ser null");
+        } else if (this.listaCorredores.containsKey(corredor)) {
+            throw new ExcepcionesPropias.CorredorRepetido();
+        } else if (this.carreraCerrada) {
+            throw new ExcepcionesPropias.CarreraCerrada();
+        } else if (this.listaCorredores.size() >= this.maxCorredores) {
+            throw new ExcepcionesPropias.DemasiadosCorredores();
+        }
+        if (this.listaCorredores.putIfAbsent(corredor, tiempos) == null) {
+            this.contadorDorsales++;
+            return true;
+        } else {
+            return false;
+        }
     }
-    return true;
-    }
-    
+
     public boolean delCorredor(Corredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
-    if (!this.listaCorredores.contains(corredor)) {
-    throw new ExcepcionesPropias.CorredorNoEsta();
-    } else if (this.carreraCerrada) {
-    throw new ExcepcionesPropias.CarreraCerrada();
-    } else {
-    return this.listaCorredores.remove(corredor);
+        if (!this.listaCorredores.contains(corredor)) {
+            throw new ExcepcionesPropias.CorredorNoEsta();
+        } else if (this.carreraCerrada) {
+            throw new ExcepcionesPropias.CarreraCerrada();
+        } else {
+            return this.listaCorredores.remove(corredor);
+        }
     }
-    }
-    
-    */
+*/
+
+
     
     
 

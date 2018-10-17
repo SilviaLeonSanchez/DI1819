@@ -9,8 +9,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import logic.LogicaCorredor;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.ExcepcionesPropias;
 
@@ -203,7 +201,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
     private void jButtonVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCarrerasActionPerformed
-        // TODO add your handling code here:
+        VistaCarreras ventanaCarreras = new VistaCarreras(this, true);
+        ventanaCarreras.setVisible(true);
     }//GEN-LAST:event_jButtonVerCarrerasActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
