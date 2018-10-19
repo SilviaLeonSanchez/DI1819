@@ -5,6 +5,7 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
@@ -14,10 +15,10 @@ import utils.Utiles;
  *
  * @author silvia
  */
-public class Carrera {
+public class Carrera implements Serializable{
 
     // ATRIBUTOS
-    private String id;
+    private Integer id;
     private String nombre;
     private Date fecha;
     private String lugar;
@@ -31,7 +32,7 @@ public class Carrera {
 
     //  METODOS
     public Carrera(String nombre, Date fecha, String lugar, int maxCorredores) {
-        this.id = Integer.toString(++contadorCarreras);
+        this.id = ++contadorCarreras;
         this.nombre = nombre;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -73,7 +74,7 @@ public class Carrera {
 
     public String[] toArray() {
         String array[] = new String[6];
-        array[0] = this.id;
+        array[0] = Integer.toString(this.id);
         array[1] = this.nombre;
         array[2] = Utiles.Sdf.format(this.fecha);
         array[3] = this.lugar;
@@ -129,7 +130,7 @@ public class Carrera {
         return nombre;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -171,6 +172,10 @@ public class Carrera {
         }
     }
 */
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
 
     

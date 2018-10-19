@@ -3,8 +3,6 @@ package gui;
 import dto.Carrera;
 import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logic.LogicaCarrera;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
@@ -282,16 +280,19 @@ public class FormularioCarreras extends javax.swing.JDialog {
 
     private void jButtonEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarActionPerformed
         try {
+            if (modificar) {
+                LogicaCarrera.getInstance().getCarreras().remove(c_original);
+            }
             LogicaCarrera.getInstance().altaCarrera(new Carrera(
                     jTextFieldNombreCarrera.getText(),
                     (Date) jSpinnerFechaCarrera.getValue(),
                     jTextFieldLugarCarrera.getText(),
                     Integer.parseInt(jTextFieldPlazasCarrera.getText())));
-        } catch (IOException ex) {
+            LogicaCarrera.getInstance().guardarCarreras(true);
+        } catch (IOException | ExcepcionesPropias.CarreraRepetida ex) {
             System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            Logger.getLogger(FormularioCarreras.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
     }//GEN-LAST:event_jButtonEnviarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

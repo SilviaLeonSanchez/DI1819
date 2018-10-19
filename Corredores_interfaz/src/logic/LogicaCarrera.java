@@ -7,11 +7,12 @@ package logic;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import dto.Carrera;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.table.AbstractTableModel;
 import utils.ExcepcionesPropias;
 import utils.FicheroObjetos;
@@ -34,7 +35,7 @@ public class LogicaCarrera {
     }
 
     // ATRIBUTOS
-    private List<Carrera> carreras;
+    private Map<Integer,Carrera> carreras;
     private FicheroObjetos ficheroCarreras;
     private final String[] opcionesOrdenCarreras = {"Fecha", "Limite participantes", "Numero participantes"};
 
@@ -49,47 +50,50 @@ public class LogicaCarrera {
     }
 
     private LogicaCarrera() throws IOException, ExcepcionesPropias.CarreraRepetida {
-        this.carreras = new ArrayList<>();
+        this.carreras = new TreeMap<>();
         File fichero = new File("fichero_carreras.dat");
-        if (!fichero.exists()) {
-            fichero.createNewFile();
-        }
         this.ficheroCarreras = new FicheroObjetos(fichero);
-        leerCarreras(true);
+        if (!fichero.exists() || fichero.length()==0) {
+            fichero.createNewFile();
+        } else {
+            leerCarreras(true);
+        }
+
     }
 
     // COLECCION
-    public List<Carrera> getCarreras() {
+    public Map<Integer,Carrera> getCarreras() {
         return carreras;
     }
 
     public boolean altaCarrera(Carrera c) throws ExcepcionesPropias.CarreraRepetida, IOException {
-        if (!LogicaCarrera.getInstance().getCarreras().contains(c)) {
-            return LogicaCarrera.getInstance().altaCarrera(c);
+        if (this.carreras.putIfAbsent(c.getId(),c)==null) {
+            return true;
         } else {
             throw new ExcepcionesPropias.CarreraRepetida();
         }
     }
 
     public boolean bajaCarrera(Carrera carrera) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraNoEsta {
-        if (!carreras.contains(carrera)) {
+        if (carreras.remove(carrera.getId())==null) {
             throw new ExcepcionesPropias.CarreraNoEsta();
         }
-        return carreras.remove(carrera);
+        return true;
     }
 
     public boolean modificarCarrera(Carrera c_original, Carrera c_modificada) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.CarreraNoEsta, ExcepcionesPropias.CarreraRepetida {
         if (c_original.isCarreraCerrada()) {
             throw new ExcepcionesPropias.CarreraCerrada();
 
-        } else if (!carreras.contains(c_original)) {
+        } else if (!carreras.containsKey(c_original.getId())) {
             throw new ExcepcionesPropias.CarreraNoEsta();
 
-        } else if ((!c_original.equals(c_modificada)) && carreras.contains(c_modificada)) {
+        } else if ((!c_original.equals(c_modificada)) && carreras.containsKey(c_modificada.getId())) {
             throw new ExcepcionesPropias.CarreraRepetida();
         }
         carreras.remove(c_original);
-        return carreras.add(c_modificada);
+        carreras.put(c_modificada.getId(), c_modificada);
+        return true;
     }
 
     // PERSISTENCIA
@@ -112,7 +116,7 @@ public class LogicaCarrera {
     // FICHERO
     private void guardarEnFichero() {
         ficheroCarreras.abrirEscritor(false);
-        Iterator it = carreras.iterator();
+        Iterator it = carreras.values().iterator();
         ficheroCarreras.grabarPrimerObjeto(it.next());
         while (it.hasNext()) {
             ficheroCarreras.grabarObjeto(it.next());
@@ -124,8 +128,8 @@ public class LogicaCarrera {
         ficheroCarreras.abrirLector();
         Carrera c;
         while ((c = (Carrera) ficheroCarreras.leerObjeto()) != null) {
-            if (!carreras.contains(c)) {
-                carreras.add(c);
+            if (!carreras.containsKey(c.getId())) {
+                carreras.put(c.getId(), c);
             } else {
                 throw new ExcepcionesPropias.CarreraRepetida();
             }

@@ -27,7 +27,7 @@ public class VistaCorredores extends javax.swing.JDialog {
         pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
         rellenarTablaCorredores();
-        rellenarComboBoxOrden();
+        rellenarComboBoxOrdenCorredores();
     }
 
     private boolean rellenarTablaCorredores() {
@@ -41,7 +41,7 @@ public class VistaCorredores extends javax.swing.JDialog {
         return true;
     }
 
-    private boolean rellenarComboBoxOrden() {
+    private boolean rellenarComboBoxOrdenCorredores() {
         try {
             this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
         } catch (IOException ex) {
@@ -117,11 +117,6 @@ public class VistaCorredores extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTableCorredores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableCorredoresMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(jTableCorredores);
 
         jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -283,10 +278,6 @@ public class VistaCorredores extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
-
-    private void jTableCorredoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCorredoresMouseClicked
-        habilitar boton
-    }//GEN-LAST:event_jTableCorredoresMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBorrar;
