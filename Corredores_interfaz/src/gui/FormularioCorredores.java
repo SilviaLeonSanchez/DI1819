@@ -9,6 +9,8 @@ import dto.Corredor;
 import logic.LogicaCorredor;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
@@ -21,7 +23,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
 
     private boolean modificar;
     private Corredor c_original;
-    
+
     /**
      * Creates new form FormularioCorredor
      *
@@ -33,7 +35,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
         initComponents();
         modificar = false;
     }
-    
+
     public FormularioCorredores(java.awt.Frame parent, boolean modal, Corredor corredor) {
         super(parent, modal);
         initComponents();
@@ -46,7 +48,6 @@ public class FormularioCorredores extends javax.swing.JDialog {
         modificar = true;
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,8 +278,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
+
     private void jButtonLimpiarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarCorredorActionPerformed
         this.jTextFieldDireccionCorredor.setText("");
         this.jTextFieldDniCorredor.setText("");
@@ -287,14 +287,14 @@ public class FormularioCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonLimpiarCorredorActionPerformed
 
     private void jButtonEnviarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCorredorActionPerformed
-        if (!modificar){
+        if (!modificar) {
             enviar();
-        }else{
+        } else {
             enviarParaModificar();
         }
     }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
 
-    private void enviar(){
+    private void enviar() {
         try {
             LogicaCorredor.getInstance().altaCorredor(
                     this.jTextFieldDniCorredor.getText(),
@@ -304,15 +304,13 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     this.jTextFieldTelefonoCorredor.getText()
             );
             LogicaCorredor.getInstance().guardarCorredores(true);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
         }
-        this.dispose();
     }
-    
-    private void enviarParaModificar(){
+
+    private void enviarParaModificar() {
         try {
             LogicaCorredor.getInstance().bajaCorredor(c_original);
             LogicaCorredor.getInstance().altaCorredor(
@@ -323,17 +321,15 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     this.jTextFieldTelefonoCorredor.getText()
             );
             LogicaCorredor.getInstance().guardarCorredores(true);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+            this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
         } catch (ExcepcionesPropias.CorredorNoEsta ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor no exite", JOptionPane.ERROR_MESSAGE);
-        }
-        this.dispose();
+        } 
     }
-    
-    
+
+
     private void jButtonCancelarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCorredorActionPerformed
         Utiles.salirSinGuardar(this);
     }//GEN-LAST:event_jButtonCancelarCorredorActionPerformed

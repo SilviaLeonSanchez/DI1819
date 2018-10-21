@@ -2,6 +2,8 @@ package gui;
 
 import dto.Corredor;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import logic.LogicaCorredor;
@@ -26,30 +28,16 @@ public class VistaCorredores extends javax.swing.JDialog {
         super(parent, modal);
         pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
-        rellenarTablaCorredores();
+        refrescarTablaCorredores();
         rellenarComboBoxOrdenCorredores();
     }
 
-    private boolean rellenarTablaCorredores() {
-        try {
-            this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores en la tabla", "Problemas al cargar JTable", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+    private void refrescarTablaCorredores() {
+       this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
     }
 
-    private boolean rellenarComboBoxOrdenCorredores() {
-        try {
-            this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar datos", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+    private void rellenarComboBoxOrdenCorredores() {
+        this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
     }
 
     /**
@@ -226,7 +214,6 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-        try {
             switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
                 case 0:
                     LogicaCorredor.getInstance().ordenarDni();
@@ -238,44 +225,28 @@ public class VistaCorredores extends javax.swing.JDialog {
                     LogicaCorredor.getInstance().ordenarFechaNac();
                     break;
             }
-            rellenarTablaCorredores();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
+            refrescarTablaCorredores();
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
         FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true);
         ventanaCorredor.setVisible(true);
-        rellenarTablaCorredores();
+        refrescarTablaCorredores();
     }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
-
-        try {
-            int selectedRow = jTableCorredores.getSelectedRow();
-            Corredor c = LogicaCorredor.getInstance().getCorredores().get(selectedRow);
-            FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true, c);
+            Corredor corredor = LogicaCorredor.getInstance().getCorredores().get( jTableCorredores.getSelectedRow());
+            FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true, corredor);
             ventanaCorredor.setVisible(true);
-            rellenarTablaCorredores();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
+            refrescarTablaCorredores();
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
-        int selectedRow = jTableCorredores.getSelectedRow();
         try {
-            LogicaCorredor.getInstance().getCorredores().remove(selectedRow);
-            rellenarTablaCorredores();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
+            LogicaCorredor.getInstance().bajaCorredor(LogicaCorredor.getInstance().getCorredores().get(jTableCorredores.getSelectedRow()));
+            refrescarTablaCorredores();
+        } catch (ExcepcionesPropias.CorredorNoEsta ex) {
+            JOptionPane.showMessageDialog(this, "El corredor no existe", "Corredor no existe", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
