@@ -27,6 +27,8 @@ public class VistaCarreras extends javax.swing.JDialog {
         super(parent, modal);
         this.pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
+        setTitle("Carreras");
+        setLocationRelativeTo(null);
         refrescarTablaCarreras();
         rellenarComboBoxOrdenCarreras();
         refrescarTablaCorredores();
@@ -79,7 +81,9 @@ public class VistaCarreras extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setSize(new java.awt.Dimension(640, 480));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 600));
 
         jPanelTituloVerCarreras.setMinimumSize(new java.awt.Dimension(640, 90));
         jPanelTituloVerCarreras.setPreferredSize(new java.awt.Dimension(640, 90));
@@ -95,9 +99,9 @@ public class VistaCarreras extends javax.swing.JDialog {
         jPanelTituloVerCarrerasLayout.setHorizontalGroup(
             jPanelTituloVerCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloVerCarrerasLayout.createSequentialGroup()
-                .addContainerGap(238, Short.MAX_VALUE)
+                .addContainerGap(200, Short.MAX_VALUE)
                 .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(200, Short.MAX_VALUE))
         );
         jPanelTituloVerCarrerasLayout.setVerticalGroup(
             jPanelTituloVerCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,6 +112,8 @@ public class VistaCarreras extends javax.swing.JDialog {
         );
 
         getContentPane().add(jPanelTituloVerCarreras, java.awt.BorderLayout.PAGE_START);
+
+        jPanelTablas.setPreferredSize(new java.awt.Dimension(774, 600));
 
         jTableCarreras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,7 +146,9 @@ public class VistaCarreras extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelComboBoxOrdenCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelOrdenCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxOrdenCarreras, 0, 83, Short.MAX_VALUE))
+                    .addGroup(jPanelComboBoxOrdenCarrerasLayout.createSequentialGroup()
+                        .addComponent(jComboBoxOrdenCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 8, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelComboBoxOrdenCarrerasLayout.setVerticalGroup(
@@ -184,7 +192,9 @@ public class VistaCarreras extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelComboBoxOrdenCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxOrdenCorredores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelComboBoxOrdenCorredoresLayout.createSequentialGroup()
+                        .addComponent(jComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelComboBoxOrdenCorredoresLayout.setVerticalGroup(
@@ -194,7 +204,7 @@ public class VistaCarreras extends javax.swing.JDialog {
                 .addComponent(jLabelOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanelTablasLayout = new javax.swing.GroupLayout(jPanelTablas);
@@ -204,13 +214,12 @@ public class VistaCarreras extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneCarreras))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPaneCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneCorredores))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanelComboBoxOrdenCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanelTablasLayout.setVerticalGroup(
             jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,7 +271,7 @@ public class VistaCarreras extends javax.swing.JDialog {
         jPanelBotonesListaCarrerasLayout.setHorizontalGroup(
             jPanelBotonesListaCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCarrerasLayout.createSequentialGroup()
-                .addContainerGap(227, Short.MAX_VALUE)
+                .addContainerGap(189, Short.MAX_VALUE)
                 .addComponent(jButtonNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonModificar)
@@ -270,7 +279,7 @@ public class VistaCarreras extends javax.swing.JDialog {
                 .addComponent(jButtonBorrar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(227, Short.MAX_VALUE))
+                .addContainerGap(189, Short.MAX_VALUE))
         );
 
         jPanelBotonesListaCarrerasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNueva});

@@ -11,6 +11,10 @@
       <Dimension value="[640, 480]"/>
     </Property>
     <Property name="modal" type="boolean" value="true"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[640, 480]"/>
+    </Property>
+    <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[640, 480]"/>
     </Property>
@@ -29,7 +33,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,37,0,0,2,-128"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,109,0,0,2,-128"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -111,11 +115,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="122" max="32767" attributes="0"/>
-                  <Component id="jButtonEnviar" linkSize="9" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jButtonEnviarCarrera" linkSize="9" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="jButtonLimpiar" linkSize="9" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="jButtonLimpiarCarrera" linkSize="9" min="-2" pref="100" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                  <Component id="jButtonCancelar" linkSize="9" min="-2" pref="97" max="-2" attributes="0"/>
+                  <Component id="jButtonCancelarCarrera" linkSize="9" min="-2" pref="97" max="-2" attributes="0"/>
                   <EmptySpace pref="118" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -126,10 +130,10 @@
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jButtonEnviar" linkSize="10" alignment="2" min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="jButtonLimpiar" linkSize="10" alignment="2" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="jButtonEnviarCarrera" linkSize="10" alignment="2" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="jButtonLimpiarCarrera" linkSize="10" alignment="2" min="-2" pref="50" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jButtonCancelar" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonCancelarCarrera" linkSize="10" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="35" max="32767" attributes="0"/>
               </Group>
@@ -137,7 +141,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButtonEnviar">
+        <Component class="javax.swing.JButton" name="jButtonEnviarCarrera">
           <Properties>
             <Property name="text" type="java.lang.String" value="Enviar"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -152,10 +156,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEnviarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEnviarCarreraActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonLimpiar">
+        <Component class="javax.swing.JButton" name="jButtonLimpiarCarrera">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpiar"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -169,10 +173,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLimpiarCarreraActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonCancelar">
+        <Component class="javax.swing.JButton" name="jButtonCancelarCarrera">
           <Properties>
             <Property name="text" type="java.lang.String" value="Cancelar"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -183,7 +187,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarCarreraActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -220,53 +224,52 @@
                   </Group>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNombreCarrera" min="-2" pref="178" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jTextFieldNombreCarrera" min="-2" pref="192" max="-2" attributes="0"/>
+                              <Component id="jSpinnerFechaCarrera" min="-2" pref="194" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabelLugarCarrera" pref="103" max="32767" attributes="0"/>
+                              <Component id="jLabelPlazasCarrera" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jTextFieldLugarCarrera" linkSize="6" pref="167" max="32767" attributes="0"/>
+                              <Component id="jTextFieldPlazasCarrera" linkSize="6" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jSpinnerFechaCarrera" min="-2" pref="194" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+                          <Component id="validationPanel" min="-2" pref="291" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabelLugarCarrera" pref="103" max="32767" attributes="0"/>
-                      <Component id="jLabelPlazasCarrera" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jTextFieldLugarCarrera" linkSize="6" pref="167" max="32767" attributes="0"/>
-                      <Component id="jTextFieldPlazasCarrera" linkSize="6" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="139" max="32767" attributes="0"/>
-                  <Component id="validationPanel" min="-2" pref="372" max="-2" attributes="0"/>
-                  <EmptySpace pref="129" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="83" max="32767" attributes="0"/>
+                  <EmptySpace pref="12" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jLabelNombreCarrera" linkSize="2" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jTextFieldNombreCarrera" linkSize="2" alignment="2" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="jLabelPlazasCarrera" linkSize="2" alignment="2" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="jTextFieldPlazasCarrera" linkSize="2" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="84" max="32767" attributes="0"/>
+                  <EmptySpace pref="13" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
                       <Component id="jTextFieldLugarCarrera" linkSize="1" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jLabelFechaCarrera" linkSize="3" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jLabelLugarCarrera" linkSize="1" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                       <Component id="jSpinnerFechaCarrera" linkSize="3" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="validationPanel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
