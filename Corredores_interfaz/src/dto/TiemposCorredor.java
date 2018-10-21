@@ -5,6 +5,7 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,7 @@ import javax.xml.datatype.Duration;
  *
  * @author silvia
  */
-public class TiemposCorredor {
+public class TiemposCorredor implements Serializable{
 
     // ATRIBUTOS
     private String dorsal;

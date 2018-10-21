@@ -1,10 +1,13 @@
 package gui;
 
 import dto.Carrera;
-import java.io.IOException;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import logic.LogicaCarrera;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
 
@@ -26,7 +29,8 @@ public class FormularioCarreras extends javax.swing.JDialog {
     public FormularioCarreras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        modificar = false;
+        inicializarValidador();
+        jButtonEnviar.setEnabled(false);
     }
 
     public FormularioCarreras(java.awt.Frame parent, boolean modal, Carrera carrera) {
@@ -38,6 +42,20 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jTextFieldPlazasCarrera.setText(Integer.toString(carrera.getMaxCorredores()));
         jSpinnerFechaCarrera.setValue(carrera.getFecha());
         modificar = true;
+    }
+    
+    private void inicializarValidador(){
+        ValidationGroup grupoValidacion = validationPanel.getValidationGroup();
+        grupoValidacion.add(jTextFieldNombreCarrera, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        grupoValidacion.add(jTextFieldPlazasCarrera, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
+        grupoValidacion.add(jTextFieldLugarCarrera, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        validationPanel.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                jButtonEnviar.setEnabled(validationPanel.getProblem() == null);
+            }
+        });
+        modificar = false;
     }
 
     /**
@@ -64,8 +82,7 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jTextFieldLugarCarrera = new javax.swing.JTextField();
         jLabelFechaCarrera = new javax.swing.JLabel();
         jSpinnerFechaCarrera = new javax.swing.JSpinner();
-        jLabelDireccionCarrera = new javax.swing.JLabel();
-        jTextFieldDireccionCarrera = new javax.swing.JTextField();
+        validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Corredor");
@@ -178,6 +195,7 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jLabelNombreCarrera.setText("Nombre");
 
         jTextFieldNombreCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldNombreCarrera.setName(jLabelNombreCarrera.getText());
 
         jLabelPlazasCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabelPlazasCarrera.setText("Plazas");
@@ -185,78 +203,75 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jLabelPlazasCarrera.setPreferredSize(new java.awt.Dimension(40, 12));
 
         jTextFieldPlazasCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldPlazasCarrera.setName(jLabelPlazasCarrera.getText());
 
         jLabelLugarCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabelLugarCarrera.setText("Lugar");
 
         jTextFieldLugarCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jTextFieldLugarCarrera.setName(jLabelLugarCarrera.getText());
 
         jLabelFechaCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabelFechaCarrera.setText("Fecha de la carrera");
+        jLabelFechaCarrera.setText("Fecha");
 
         jSpinnerFechaCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jSpinnerFechaCarrera.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), new java.util.Date(), null, java.util.Calendar.DAY_OF_MONTH));
-
-        jLabelDireccionCarrera.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabelDireccionCarrera.setText("Direccion");
-
-        jTextFieldDireccionCarrera.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanelCamposCarreraLayout = new javax.swing.GroupLayout(jPanelCamposCarrera);
         jPanelCamposCarrera.setLayout(jPanelCamposCarreraLayout);
         jPanelCamposCarreraLayout.setHorizontalGroup(
             jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCamposCarreraLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(17, 17, 17)
+                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                        .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelDireccionCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                        .addGap(20, 20, 20)
+                        .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCamposCarreraLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jTextFieldDireccionCarrera)))
-                    .addComponent(jLabelFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                        .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                        .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelPlazasCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
-                            .addComponent(jTextFieldPlazasCarrera)))
-                    .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                    .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                    .addComponent(jLabelPlazasCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPlazasCarrera))
+                .addGap(18, 18, 18))
+            .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
+                .addContainerGap(139, Short.MAX_VALUE)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
-        jPanelCamposCarreraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldDireccionCarrera, jTextFieldLugarCarrera, jTextFieldNombreCarrera, jTextFieldPlazasCarrera});
+        jPanelCamposCarreraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextFieldLugarCarrera, jTextFieldPlazasCarrera});
 
         jPanelCamposCarreraLayout.setVerticalGroup(
             jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
+                .addContainerGap(83, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelPlazasCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPlazasCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                 .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabelDireccionCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDireccionCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
-                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelLugarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFechaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47))
+                .addGap(46, 46, 46)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
         );
 
-        jPanelCamposCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDireccionCarrera, jLabelLugarCarrera, jTextFieldDireccionCarrera, jTextFieldLugarCarrera});
+        jPanelCamposCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelLugarCarrera, jTextFieldLugarCarrera});
 
         jPanelCamposCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelNombreCarrera, jLabelPlazasCarrera, jTextFieldNombreCarrera, jTextFieldPlazasCarrera});
 
@@ -269,7 +284,6 @@ public class FormularioCarreras extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-        this.jTextFieldDireccionCarrera.setText("");
         this.jTextFieldLugarCarrera.setText("");
         this.jTextFieldNombreCarrera.setText("");
         this.jTextFieldPlazasCarrera.setText("");
@@ -284,12 +298,12 @@ public class FormularioCarreras extends javax.swing.JDialog {
             if (modificar) {
                 LogicaCarrera.getInstance().getCarreras().remove(c_original);
             }
-            LogicaCarrera.getInstance().altaCarrera(new Carrera(
+            LogicaCarrera.getInstance().altaCarrera(
                     jTextFieldNombreCarrera.getText(),
                     (Date) jSpinnerFechaCarrera.getValue(),
                     jTextFieldLugarCarrera.getText(),
-                    Integer.parseInt(jTextFieldPlazasCarrera.getText())));
-            LogicaCarrera.getInstance().guardarCarreras(true);
+                    Integer.parseInt(jTextFieldPlazasCarrera.getText()));
+            LogicaCarrera.getInstance().guardarCarreras();
         } catch (ExcepcionesPropias.CarreraRepetida ex) {
             JOptionPane.showMessageDialog(this, "Ya hay una carrera con ese identidicador", "Carrera repetida", JOptionPane.ERROR_MESSAGE);
         }
@@ -300,7 +314,6 @@ public class FormularioCarreras extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEnviar;
     private javax.swing.JButton jButtonLimpiar;
-    private javax.swing.JLabel jLabelDireccionCarrera;
     private javax.swing.JLabel jLabelFechaCarrera;
     private javax.swing.JLabel jLabelLugarCarrera;
     private javax.swing.JLabel jLabelNombreCarrera;
@@ -310,9 +323,9 @@ public class FormularioCarreras extends javax.swing.JDialog {
     private javax.swing.JPanel jPanelCamposCarrera;
     private javax.swing.JPanel jPanelTituloCarrera;
     private javax.swing.JSpinner jSpinnerFechaCarrera;
-    private javax.swing.JTextField jTextFieldDireccionCarrera;
     private javax.swing.JTextField jTextFieldLugarCarrera;
     private javax.swing.JTextField jTextFieldNombreCarrera;
     private javax.swing.JTextField jTextFieldPlazasCarrera;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
 }

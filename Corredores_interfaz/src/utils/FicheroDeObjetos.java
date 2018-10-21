@@ -3,15 +3,16 @@ package utils;
 import java.io.*;
 
 /**
- * Gestiona la transferencia de objetos hacia o desde un fichero de bytes. 
- * Hay que abrir el flujo antes y cerrarlo despues de usarlo con sendos metodos.
- * Abre un flujo de bytes con File(Input/Output)Stream que envuelve con un
- * Object(Input/Output)Stream, segun el metodo sea de lectura o escritura,
- * transformando los bytes a objetos de tipo Object.
+ * Clase que gestiona la transferencia de objetos hacia o desde un fichero de
+ * bytes. Hay que abrir el flujo antes y cerrarlo despues de usarlo con sendos
+ * metodos. Al ser de tipo generico devuelve los objetos del tipo indicado.
+ * <p>
+ * Importante implementar el interface Serializable en la clase que se quiera
+ * grabar y leer.
  *
  * @author erizo
  */
-public class FicheroObjetos<T extends Object> {
+public class FicheroDeObjetos<T extends Object> {
 
     // ATRIBUTOS
     private File fichero;
@@ -29,7 +30,7 @@ public class FicheroObjetos<T extends Object> {
      * @param fichero Con este fichero se abrira el flujo de transferencia de
      * objetos para leer o grabar en el.
      */
-    public FicheroObjetos(File fichero) {
+    public FicheroDeObjetos(File fichero) {
         this.fichero = fichero;
     }
 
@@ -156,9 +157,9 @@ public class FicheroObjetos<T extends Object> {
      * del fichero entrada
      */
     public void TransferirObjetos(File entrada, File salida) {
-        FicheroObjetos<T> lector = new FicheroObjetos<>(entrada);
+        FicheroDeObjetos<T> lector = new FicheroDeObjetos<>(entrada);
         lector.abrirLector();
-        FicheroObjetos<T> escritor = new FicheroObjetos<>(salida);
+        FicheroDeObjetos<T> escritor = new FicheroDeObjetos<>(salida);
         escritor.abrirEscritor(false);
         T ob = lector.leerObjeto();
         if (ob != null) {

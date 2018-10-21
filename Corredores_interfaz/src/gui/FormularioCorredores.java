@@ -7,10 +7,7 @@ package gui;
 
 import dto.Corredor;
 import logic.LogicaCorredor;
-import java.io.IOException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
@@ -303,7 +300,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     this.jTextFieldDireccionCorredor.getText(),
                     this.jTextFieldTelefonoCorredor.getText()
             );
-            LogicaCorredor.getInstance().guardarCorredores(true);
+            LogicaCorredor.getInstance().guardarCorredores();
             this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
@@ -320,7 +317,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     this.jTextFieldDireccionCorredor.getText(),
                     this.jTextFieldTelefonoCorredor.getText()
             );
-            LogicaCorredor.getInstance().guardarCorredores(true);
+            LogicaCorredor.getInstance().guardarCorredores();
             this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);

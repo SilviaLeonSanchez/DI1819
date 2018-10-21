@@ -8,10 +8,9 @@ package gui;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import logic.LogicaCorredor;
-import java.io.IOException;
+import java.util.Locale;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import utils.ExcepcionesPropias;
+import logic.LogicaCarrera;
 
 /**
  *
@@ -19,7 +18,6 @@ import utils.ExcepcionesPropias;
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
 
-    private boolean guardadoCSV = true;
     private static final String RUTA_LOGO = "/img/icono.jpeg";
         
         
@@ -35,7 +33,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
+                LogicaCorredor.getInstance().guardarCorredores();
+                LogicaCarrera.getInstance().guardarCarreras();
             }
         });
         jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
@@ -214,7 +213,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVerCarrerasActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
+        LogicaCorredor.getInstance().guardarCorredores();
+        LogicaCarrera.getInstance().guardarCarreras();
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
@@ -253,8 +253,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
-            new PantallaPrincipal().setVisible(true);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                Locale.setDefault(new Locale("es", "ES"));
+                new PantallaPrincipal().setVisible(true);
+            }
         });
     }
 

@@ -7,7 +7,6 @@ package dto;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import utils.Utiles;
@@ -23,17 +22,16 @@ public class Carrera implements Serializable, Comparable<Carrera>{
     private String nombre;
     private Date fecha;
     private String lugar;
+    private boolean carreraCerrada;
+    
     private int maxCorredores;
     private Map<Corredor, TiemposCorredor> listaCorredores;
-
-    private boolean carreraCerrada;
-    private int contadorDorsales;
-    private static int contadorCarreras;
+    
     public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "CERRADA"};
 
     //  METODOS
-    public Carrera(String nombre, Date fecha, String lugar, int maxCorredores) {
-        this.id = ++contadorCarreras;
+    public Carrera(int id, String nombre, Date fecha, String lugar, int maxCorredores) {
+        this.id = id;
         this.nombre = nombre;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -141,13 +139,11 @@ public class Carrera implements Serializable, Comparable<Carrera>{
         return id;
     }
 
-    public static int getContadorCarreras() {
-        return contadorCarreras;
-    }
-
     public boolean isCarreraCerrada() {
         return carreraCerrada;
     }
+    
+    
 
     /*
     // CORREDORES
@@ -180,9 +176,6 @@ public class Carrera implements Serializable, Comparable<Carrera>{
     }
 */
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     

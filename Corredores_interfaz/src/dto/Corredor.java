@@ -5,6 +5,7 @@
  */
 package dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import utils.Utiles;
@@ -14,7 +15,7 @@ import utils.Utiles.Sdf;
  *
  * @author silvia
  */
-public class Corredor implements Comparable<Corredor>, Cloneable {
+public class Corredor implements Serializable, Comparable<Corredor>, Cloneable {
 
     // ATRIBUTOS
     private String dni;

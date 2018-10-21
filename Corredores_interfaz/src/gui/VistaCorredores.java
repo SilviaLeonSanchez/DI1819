@@ -1,9 +1,6 @@
 package gui;
 
 import dto.Corredor;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import logic.LogicaCorredor;
@@ -33,7 +30,7 @@ public class VistaCorredores extends javax.swing.JDialog {
     }
 
     private void refrescarTablaCorredores() {
-       this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
+        this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
     }
 
     private void rellenarComboBoxOrdenCorredores() {
@@ -214,18 +211,18 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-            switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
-                case 0:
-                    LogicaCorredor.getInstance().ordenarDni();
-                    break;
-                case 1:
-                    LogicaCorredor.getInstance().ordenarNombre();
-                    break;
-                case 2:
-                    LogicaCorredor.getInstance().ordenarFechaNac();
-                    break;
-            }
-            refrescarTablaCorredores();
+        switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
+            case 0:
+                LogicaCorredor.getInstance().ordenarDni();
+                break;
+            case 1:
+                LogicaCorredor.getInstance().ordenarNombre();
+                break;
+            case 2:
+                LogicaCorredor.getInstance().ordenarFechaNac();
+                break;
+        }
+        refrescarTablaCorredores();
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
@@ -235,18 +232,28 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
-            Corredor corredor = LogicaCorredor.getInstance().getCorredores().get( jTableCorredores.getSelectedRow());
+        int seleccionado = jTableCorredores.getSelectedRow();
+        if (seleccionado != -1) {
+            Corredor corredor = LogicaCorredor.getInstance().getCorredores().get(seleccionado);
             FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true, corredor);
             ventanaCorredor.setVisible(true);
             refrescarTablaCorredores();
+        } else {
+            JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Selecciona corredor", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
-        try {
-            LogicaCorredor.getInstance().bajaCorredor(LogicaCorredor.getInstance().getCorredores().get(jTableCorredores.getSelectedRow()));
-            refrescarTablaCorredores();
-        } catch (ExcepcionesPropias.CorredorNoEsta ex) {
-            JOptionPane.showMessageDialog(this, "El corredor no existe", "Corredor no existe", JOptionPane.ERROR_MESSAGE);
+        int seleccionado = jTableCorredores.getSelectedRow();
+        if (seleccionado != -1) {
+            try {
+                LogicaCorredor.getInstance().bajaCorredor(LogicaCorredor.getInstance().getCorredores().get(seleccionado));
+                refrescarTablaCorredores();
+            } catch (ExcepcionesPropias.CorredorNoEsta ex) {
+                JOptionPane.showMessageDialog(this, "El corredor no existe", "Corredor no existe", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Selecciona corredor", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 

@@ -1,20 +1,18 @@
 package logic;
 
-import utils.FicheroTexto;
 import dto.Corredor;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
+import org.openide.util.Exceptions;
 import utils.ExcepcionesPropias;
+import utils.FicheroDeTexto;
 import utils.Utiles;
 
 /**
@@ -27,10 +25,12 @@ public class LogicaCorredor {
 
     // ATRIBUTOS
     private List<Corredor> corredores;
-    private FicheroTexto fichero_corredores;
-    private final String separadorCSV;
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
-    private final boolean persistenciaEnFichero = true;
+
+    private final boolean usarFichero = true;
+    private final String separadorCSV = ";";
+    private final File fichero = new File("fichero_corredores.csv");
+    private final FicheroDeTexto fichero_corredores;
 
     // METODOS
     public static LogicaCorredor getInstance() {
@@ -41,18 +41,16 @@ public class LogicaCorredor {
     }
 
     private LogicaCorredor() {
-        this.separadorCSV = ";";
         this.corredores = new ArrayList<>();
-        File fichero = new File("fichero_corredores.csv");
-        try {
-            if (!fichero.exists()) {
+        if (!fichero.exists()) {
+            try {
                 fichero.createNewFile();
+            } catch (IOException ex) {
+                Exceptions.printStackTrace(ex);
             }
-            this.fichero_corredores = new FicheroTexto(fichero);
-            leerCorredores(true);
-        } catch (IOException | ExcepcionesPropias.CorredorRepetido ex) {
-            System.out.println(ex.getMessage());
         }
+        this.fichero_corredores = new FicheroDeTexto(fichero);
+        leerCorredores();
     }
 
     // COLECCION
@@ -87,7 +85,7 @@ public class LogicaCorredor {
     }
 
     // PERSISTENCIA
-    public void guardarCorredores(boolean usarFichero) {
+    public void guardarCorredores() {
         if (usarFichero) {
             guardarCSV();
         } else {
@@ -95,7 +93,7 @@ public class LogicaCorredor {
         }
     }
 
-    public void leerCorredores(boolean usarFichero) throws ExcepcionesPropias.CorredorRepetido {
+    public void leerCorredores() {
         if (usarFichero) {
             leerCSV();
         } else {

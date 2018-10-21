@@ -327,7 +327,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace pref="227" max="32767" attributes="0"/>
-                  <Component id="jButtonNuevo" linkSize="1" min="-2" pref="101" max="-2" attributes="0"/>
+                  <Component id="jButtonNueva" linkSize="1" min="-2" pref="101" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButtonModificar" linkSize="1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -344,7 +344,7 @@
                   <EmptySpace pref="26" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonVolver" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jButtonNuevo" linkSize="2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jButtonNueva" linkSize="2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jButtonModificar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonBorrar" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -362,12 +362,12 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVolverActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonNuevo">
+        <Component class="javax.swing.JButton" name="jButtonNueva">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="text" type="java.lang.String" value="Nueva"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevoActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNuevaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButtonModificar">
