@@ -2,6 +2,9 @@ package gui;
 
 import dto.Carrera;
 import java.io.IOException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import logic.LogicaCarrera;
@@ -25,56 +28,28 @@ public class VistaCarreras extends javax.swing.JDialog {
      */
     public VistaCarreras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        pantallaPrincipal = (PantallaPrincipal) parent;
+        this.pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
-        rellenarTablaCarreras();
+        refrescarTablaCarreras();
         rellenarComboBoxOrdenCarreras();
-        rellenarTablaCorredores();
+        refrescarTablaCorredores();
         rellenarComboBoxOrdenCorredores();
     }
 
-    private boolean rellenarTablaCarreras() {
-        try {
-            this.jTableCarreras.setModel(new TableModelCarrera(LogicaCarrera.getInstance().getCarreras()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de las carreras en la tabla", "Problemas al cargar JTable", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Carrera repetida", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+    private void refrescarTablaCarreras() {
+        this.jTableCarreras.setModel(new TableModelCarrera((List<Carrera>) LogicaCarrera.getInstance().getCarreras().values()));
     }
 
-    private boolean rellenarComboBoxOrdenCarreras() {
-        try {
-            this.jComboBoxOrdenCarreras.setModel(new DefaultComboBoxModel<>(LogicaCarrera.getInstance().getOpcionesOrdenCarreras()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar datos", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Carrera repetida", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+    private void rellenarComboBoxOrdenCarreras() {
+        this.jComboBoxOrdenCarreras.setModel(new DefaultComboBoxModel<>(LogicaCarrera.getInstance().getOpcionesOrdenCarreras()));
     }
-    
-    private boolean rellenarTablaCorredores() {
-        try {
-            this.jTableCorredores.setModel(new LogicaCorredor.TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar los datos de los corredores en la tabla", "Problemas al cargar JTable", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+
+    private void refrescarTablaCorredores() {
+        this.jTableCorredores.setModel(new LogicaCorredor.TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
     }
-    
-    private boolean rellenarComboBoxOrdenCorredores() {
-        try {
-            this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se han podido cargar las opciones de ordenación de la tabla", "Problemas al cargar datos", JOptionPane.ERROR_MESSAGE);
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
-        return true;
+
+    private void rellenarComboBoxOrdenCorredores() {
+        this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
     }
 
     /**
@@ -327,78 +302,57 @@ public class VistaCarreras extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jComboBoxOrdenCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCarrerasActionPerformed
-        try {
-            switch (jComboBoxOrdenCarreras.getSelectedIndex()) {
-                case 0:
-                    LogicaCarrera.getInstance().ordenarFecha();
-                    break;
-                case 1:
-                    LogicaCarrera.getInstance().ordenarMaxCorredores();
-                    break;
-                case 2:
-                    LogicaCarrera.getInstance().ordenarNumCorredores();
-                    break;
-            }
-            rellenarTablaCarreras();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Carrera repetida", JOptionPane.ERROR_MESSAGE);
+        switch (jComboBoxOrdenCarreras.getSelectedIndex()) {
+            case 0:
+                LogicaCarrera.getInstance().ordenarId();
+            case 1:
+                LogicaCarrera.getInstance().ordenarFecha();
+                break;
+            case 2:
+                LogicaCarrera.getInstance().ordenarMaxCorredores();
+                break;
+            case 3:
+                LogicaCarrera.getInstance().ordenarNumCorredores();
+                break;
         }
+        refrescarTablaCarreras();
     }//GEN-LAST:event_jComboBoxOrdenCarrerasActionPerformed
 
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
         FormularioCarreras ventanaCarrera = new FormularioCarreras(pantallaPrincipal, true);
         ventanaCarrera.setVisible(true);
-        rellenarTablaCarreras();
+        refrescarTablaCarreras();
     }//GEN-LAST:event_jButtonNuevoActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
-
-        try {
-            int selectedRow = jTableCarreras.getSelectedRow();
-            Carrera c = LogicaCarrera.getInstance().getCarreras().get(selectedRow);
-            FormularioCarreras ventanaCarrera = new FormularioCarreras(pantallaPrincipal, true, c);
-            ventanaCarrera.setVisible(true);
-            rellenarTablaCarreras();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Carrera repetida", JOptionPane.ERROR_MESSAGE);
-        }
+        Carrera carrera = LogicaCarrera.getInstance().getCarreras().get(jTableCarreras.getSelectedRow());
+        FormularioCarreras ventanaCarrera = new FormularioCarreras(pantallaPrincipal, true, carrera);
+        ventanaCarrera.setVisible(true);
+        refrescarTablaCarreras();
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
     private void jButtonBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarActionPerformed
-        int selectedRow = jTableCarreras.getSelectedRow();
         try {
-            LogicaCarrera.getInstance().getCarreras().remove(selectedRow);
-            rellenarTablaCarreras();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Carrera repetida", JOptionPane.ERROR_MESSAGE);
+            LogicaCarrera.getInstance().bajaCarrera(LogicaCarrera.getInstance().getCarreras().get(jTableCarreras.getSelectedRow()));
+            refrescarTablaCarreras();
+        } catch (ExcepcionesPropias.CarreraNoEsta ex) {
+            JOptionPane.showMessageDialog(this, "La carrera no existe", "Carrera no existe", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-        try {
-            switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
-                case 0:
-                    LogicaCorredor.getInstance().ordenarDni();
-                    break;
-                case 1:
-                    LogicaCorredor.getInstance().ordenarNombre();
-                    break;
-                case 2:
-                    LogicaCorredor.getInstance().ordenarFechaNac();
-                    break;
-            }
-            rellenarTablaCorredores();
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
+        switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
+            case 0:
+                LogicaCorredor.getInstance().ordenarDni();
+                break;
+            case 1:
+                LogicaCorredor.getInstance().ordenarNombre();
+                break;
+            case 2:
+                LogicaCorredor.getInstance().ordenarFechaNac();
+                break;
         }
+        refrescarTablaCorredores();
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

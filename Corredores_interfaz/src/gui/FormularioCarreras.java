@@ -3,6 +3,7 @@ package gui;
 import dto.Carrera;
 import java.io.IOException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import logic.LogicaCarrera;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
@@ -289,8 +290,8 @@ public class FormularioCarreras extends javax.swing.JDialog {
                     jTextFieldLugarCarrera.getText(),
                     Integer.parseInt(jTextFieldPlazasCarrera.getText())));
             LogicaCarrera.getInstance().guardarCarreras(true);
-        } catch (IOException | ExcepcionesPropias.CarreraRepetida ex) {
-            System.out.println(ex.getMessage());
+        } catch (ExcepcionesPropias.CarreraRepetida ex) {
+            JOptionPane.showMessageDialog(this, "Ya hay una carrera con ese identidicador", "Carrera repetida", JOptionPane.ERROR_MESSAGE);
         }
         this.dispose();
     }//GEN-LAST:event_jButtonEnviarActionPerformed

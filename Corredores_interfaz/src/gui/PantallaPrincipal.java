@@ -5,12 +5,10 @@
  */
 package gui;
 
-import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import logic.LogicaCorredor;
 import java.io.IOException;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import utils.ExcepcionesPropias;
@@ -37,11 +35,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                try {
-                    LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
-                } catch (IOException | ExcepcionesPropias.CorredorRepetido ex) {
-                    System.out.println(ex.getMessage());
-                } 
+                LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
             }
         });
         jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
@@ -220,13 +214,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVerCarrerasActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        try {
-            LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Corredor repetido", JOptionPane.ERROR_MESSAGE);
-        }
+        LogicaCorredor.getInstance().guardarCorredores(guardadoCSV);
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed

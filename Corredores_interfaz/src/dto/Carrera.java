@@ -8,6 +8,7 @@ package dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import utils.Utiles;
 
@@ -15,7 +16,7 @@ import utils.Utiles;
  *
  * @author silvia
  */
-public class Carrera implements Serializable{
+public class Carrera implements Serializable, Comparable<Carrera>{
 
     // ATRIBUTOS
     private Integer id;
@@ -23,7 +24,7 @@ public class Carrera implements Serializable{
     private Date fecha;
     private String lugar;
     private int maxCorredores;
-    private HashMap<Corredor, TiemposCorredor> listaCorredores;
+    private Map<Corredor, TiemposCorredor> listaCorredores;
 
     private boolean carreraCerrada;
     private int contadorDorsales;
@@ -39,6 +40,12 @@ public class Carrera implements Serializable{
         this.maxCorredores = maxCorredores;
         this.carreraCerrada = false;
     }
+
+    @Override
+    public int compareTo(Carrera o) {
+        return this.id.compareTo(o.id);
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -110,7 +117,7 @@ public class Carrera implements Serializable{
     }
 
     // GETTER
-    public HashMap<Corredor, TiemposCorredor> getListaCorredores() {
+    public Map<Corredor, TiemposCorredor> getListaCorredores() {
         return listaCorredores;
     }
 

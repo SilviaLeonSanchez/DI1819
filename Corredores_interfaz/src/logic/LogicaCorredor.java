@@ -11,6 +11,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.AbstractTableModel;
 import utils.ExcepcionesPropias;
 import utils.Utiles;
@@ -21,44 +23,36 @@ import utils.Utiles;
  */
 public class LogicaCorredor {
 
-    // PATRON DE DISEÑO SINGLETON 
-    // Para que solo se pueda crear una instancia
     private static LogicaCorredor INSTANCE;
-
-    // Constructor privado
-    public static LogicaCorredor getInstance() throws IOException, ExcepcionesPropias.CorredorRepetido {
-        if (INSTANCE == null) {
-            INSTANCE = new LogicaCorredor();
-        }
-        return INSTANCE;
-    }
 
     // ATRIBUTOS
     private List<Corredor> corredores;
     private FicheroTexto fichero_corredores;
     private final String separadorCSV;
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
+    private final boolean persistenciaEnFichero = true;
 
     // METODOS
-    private LogicaCorredor(File fichero, String separadorCSV, boolean usarFichero) throws IllegalArgumentException, ExcepcionesPropias.CorredorRepetido {
-        if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
-            this.fichero_corredores = new FicheroTexto(fichero);
-        } else {
-            throw new IllegalArgumentException("El fichero no es valido o no existe.");
+    public static LogicaCorredor getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LogicaCorredor();
         }
-        this.separadorCSV = separadorCSV;
-        leerCorredores(usarFichero);
+        return INSTANCE;
     }
 
-    private LogicaCorredor() throws IOException, ExcepcionesPropias.CorredorRepetido {
+    private LogicaCorredor() {
+        this.separadorCSV = ";";
         this.corredores = new ArrayList<>();
         File fichero = new File("fichero_corredores.csv");
-        if (!fichero.exists()) {
-            fichero.createNewFile();
+        try {
+            if (!fichero.exists()) {
+                fichero.createNewFile();
+            }
+            this.fichero_corredores = new FicheroTexto(fichero);
+            leerCorredores(true);
+        } catch (IOException | ExcepcionesPropias.CorredorRepetido ex) {
+            System.out.println(ex.getMessage());
         }
-        this.fichero_corredores = new FicheroTexto(fichero);
-        this.separadorCSV = ";";
-        leerCorredores(true);
     }
 
     // COLECCION
@@ -119,11 +113,10 @@ public class LogicaCorredor {
         while (st.hasMoreTokens()) {
             tokens.add(st.nextToken());
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
         Corredor runner = null;
         try {
             runner = new Corredor(tokens.get(0), tokens.get(1),
-                    sdf.parse(tokens.get(2)), tokens.get(3), tokens.get(4));
+                    Utiles.Sdf.parse(tokens.get(2)), tokens.get(3), tokens.get(4));
         } catch (ParseException ex) {
             System.out.println("Error al transformar la fecha del fichero");
         }
@@ -131,26 +124,18 @@ public class LogicaCorredor {
     }
 
     private String toStringCSV(Corredor corredor) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy"); // Meses en mayuscular porque sino cree que es minutos
-        String linea = corredor.getDni() + this.separadorCSV;
-        linea += corredor.getNombre() + this.separadorCSV;
-        linea += sdf.format(corredor.getFecha_nac()) + this.separadorCSV;
-        linea += corredor.getDireccion() + this.separadorCSV;
-        linea += corredor.getTelefono() + this.separadorCSV;
+        String linea = "";
+        for (String string : corredor.toArray()) {
+            linea = linea.concat(string + this.separadorCSV);
+        }
         return linea;
     }
 
-    private void leerCSV() throws ExcepcionesPropias.CorredorRepetido {
+    private void leerCSV() {
         this.fichero_corredores.abrirLector();
         String linea = null;
-        Corredor runner = null;
         while ((linea = this.fichero_corredores.leerString()) != null) {
-            runner = toRunner(linea);
-            if (!this.corredores.contains(runner)) {
-                this.corredores.add(runner);
-            } else {
-                throw new ExcepcionesPropias.CorredorRepetido();
-            }
+            this.corredores.add(toRunner(linea));
         }
         this.fichero_corredores.cerrarLector();
     }

@@ -7,10 +7,10 @@ package logic;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import dto.Carrera;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.swing.table.AbstractTableModel;
@@ -27,7 +27,7 @@ public class LogicaCarrera {
     private static LogicaCarrera INSTANCE;
 
     // Constructor privado
-    public static LogicaCarrera getInstance() throws IOException, ExcepcionesPropias.CarreraRepetida {
+    public static LogicaCarrera getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new LogicaCarrera();
         }
@@ -35,50 +35,45 @@ public class LogicaCarrera {
     }
 
     // ATRIBUTOS
-    private Map<Integer,Carrera> carreras;
+    private TreeMap<Integer, Carrera> carreras;
     private FicheroObjetos ficheroCarreras;
-    private final String[] opcionesOrdenCarreras = {"Fecha", "Limite participantes", "Numero participantes"};
+    private final String[] opcionesOrdenCarreras = {"Id", "Fecha", "Limite participantes", "Numero participantes"};
 
     // METODOS
-    private LogicaCarrera(File fichero, boolean usarFichero) throws IllegalArgumentException, ExcepcionesPropias.CarreraRepetida {
-        if (fichero.exists() & fichero.canRead() & fichero.canWrite()) {
-            this.ficheroCarreras = new FicheroObjetos(fichero);
-        } else {
-            throw new IllegalArgumentException("El fichero no es valido o no existe.");
-        }
-        leerCarreras(usarFichero);
-    }
-
-    private LogicaCarrera() throws IOException, ExcepcionesPropias.CarreraRepetida {
+    private LogicaCarrera() {
         this.carreras = new TreeMap<>();
         File fichero = new File("fichero_carreras.dat");
-        this.ficheroCarreras = new FicheroObjetos(fichero);
-        if (!fichero.exists() || fichero.length()==0) {
-            fichero.createNewFile();
+        if (!fichero.exists()) {
+            try {
+                fichero.createNewFile();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
         } else {
             leerCarreras(true);
         }
-
+        this.ficheroCarreras = new FicheroObjetos(fichero);
     }
 
     // COLECCION
-    public Map<Integer,Carrera> getCarreras() {
+    public Map<Integer, Carrera> getCarreras() {
         return carreras;
     }
 
-    public boolean altaCarrera(Carrera c) throws ExcepcionesPropias.CarreraRepetida, IOException {
-        if (this.carreras.putIfAbsent(c.getId(),c)==null) {
+    public boolean altaCarrera(Carrera c) throws ExcepcionesPropias.CarreraRepetida {
+        if (this.carreras.putIfAbsent(c.getId(), c) == null) {
             return true;
         } else {
             throw new ExcepcionesPropias.CarreraRepetida();
         }
     }
 
-    public boolean bajaCarrera(Carrera carrera) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraNoEsta {
-        if (carreras.remove(carrera.getId())==null) {
+    public boolean bajaCarrera(Carrera carrera) throws ExcepcionesPropias.CarreraNoEsta {
+        if (carreras.remove(carrera.getId()) == null) {
+            return true;
+        } else {
             throw new ExcepcionesPropias.CarreraNoEsta();
         }
-        return true;
     }
 
     public boolean modificarCarrera(Carrera c_original, Carrera c_modificada) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.CarreraNoEsta, ExcepcionesPropias.CarreraRepetida {
@@ -91,7 +86,7 @@ public class LogicaCarrera {
         } else if ((!c_original.equals(c_modificada)) && carreras.containsKey(c_modificada.getId())) {
             throw new ExcepcionesPropias.CarreraRepetida();
         }
-        carreras.remove(c_original);
+        carreras.remove(c_original.getId());
         carreras.put(c_modificada.getId(), c_modificada);
         return true;
     }
@@ -105,7 +100,7 @@ public class LogicaCarrera {
         }
     }
 
-    public void leerCarreras(boolean usarFichero) throws ExcepcionesPropias.CarreraRepetida {
+    public void leerCarreras(boolean usarFichero){
         if (usarFichero) {
             leerDeFichero();
         } else {
@@ -124,15 +119,11 @@ public class LogicaCarrera {
         ficheroCarreras.cerrarEscritor();
     }
 
-    private void leerDeFichero() throws ExcepcionesPropias.CarreraRepetida {
+    private void leerDeFichero() {
         ficheroCarreras.abrirLector();
         Carrera c;
         while ((c = (Carrera) ficheroCarreras.leerObjeto()) != null) {
-            if (!carreras.containsKey(c.getId())) {
-                carreras.put(c.getId(), c);
-            } else {
-                throw new ExcepcionesPropias.CarreraRepetida();
-            }
+            carreras.put(c.getId(), c);
         }
         ficheroCarreras.cerrarLector();
     }
@@ -141,17 +132,36 @@ public class LogicaCarrera {
     public String[] getOpcionesOrdenCarreras() {
         return opcionesOrdenCarreras;
     }
+    
+    public void ordenarId() {
+        this.carreras = new TreeMap(this.carreras);
+    }
 
     public void ordenarFecha() {
-        Collections.sort(carreras, (Carrera o1, Carrera o2) -> o1.getFecha().compareTo(o2.getFecha()));
+        this.carreras = new TreeMap(new Comparator<Carrera>() {
+            @Override
+            public int compare(Carrera o1, Carrera o2) {
+                return o1.getFecha().compareTo(o2.getFecha());
+            }
+        });
     }
 
     public void ordenarMaxCorredores() {
-        Collections.sort(carreras, (Carrera o1, Carrera o2) -> Integer.compare(o1.getMaxCorredores(), o2.getMaxCorredores()));
+        this.carreras = new TreeMap(new Comparator<Carrera>() {
+            @Override
+            public int compare(Carrera o1, Carrera o2) {
+                return Integer.compare(o1.getMaxCorredores(), o2.getMaxCorredores());
+            }
+        });
     }
 
     public void ordenarNumCorredores() {
-        Collections.sort(carreras, (Carrera o1, Carrera o2) -> Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size()));
+        this.carreras = new TreeMap(new Comparator<Carrera>() {
+            @Override
+            public int compare(Carrera o1, Carrera o2) {
+                return Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size());
+            }
+        });
     }
 
     public static class TableModelCarrera extends AbstractTableModel {
