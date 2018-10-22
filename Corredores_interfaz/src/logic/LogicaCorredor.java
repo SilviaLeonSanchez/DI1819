@@ -7,12 +7,13 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import javax.swing.table.AbstractTableModel;
 import org.openide.util.Exceptions;
 import utils.ExcepcionesPropias;
-import utils.FicheroDeTexto;
+import utils.FicheroDeObjetos;
 import utils.Utiles;
 
 /**
@@ -28,9 +29,8 @@ public class LogicaCorredor {
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
 
     private final boolean usarFichero = true;
-    private final String separadorCSV = ";";
-    private final File fichero = new File("fichero_corredores.csv");
-    private final FicheroDeTexto fichero_corredores;
+    private final File fichero = new File("fichero_corredores.dat");
+    private FicheroDeObjetos<Corredor> fichero_corredores;
 
     // METODOS
     public static LogicaCorredor getInstance() {
@@ -42,15 +42,18 @@ public class LogicaCorredor {
 
     private LogicaCorredor() {
         this.corredores = new ArrayList<>();
-        if (!fichero.exists()) {
-            try {
-                fichero.createNewFile();
-            } catch (IOException ex) {
-                Exceptions.printStackTrace(ex);
-            }
+
+        if (fichero.exists() && fichero.length() > 0) {
+            this.fichero_corredores = new FicheroDeObjetos<>(fichero);
+            leerCorredores();
+            fichero.delete();
         }
-        this.fichero_corredores = new FicheroDeTexto(fichero);
-        leerCorredores();
+        try {
+            fichero.createNewFile();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        this.fichero_corredores = new FicheroDeObjetos<>(fichero);
     }
 
     // COLECCION
@@ -87,7 +90,7 @@ public class LogicaCorredor {
     // PERSISTENCIA
     public void guardarCorredores() {
         if (usarFichero) {
-            guardarCSV();
+            guardarFichero();
         } else {
             // BASE DE DATOS
         }
@@ -95,53 +98,28 @@ public class LogicaCorredor {
 
     public void leerCorredores() {
         if (usarFichero) {
-            leerCSV();
+            leerFichero();
         } else {
             // BASE DE DATOS
         }
     }
 
     // FICHERO
-    private Corredor toRunner(String linea) {
-        if (linea == null) {
-            throw new IllegalArgumentException("No se puede convertir a string un objeto null");
-        }
-        StringTokenizer st = new StringTokenizer(linea, this.separadorCSV);
-        ArrayList<String> tokens = new ArrayList<>();
-        while (st.hasMoreTokens()) {
-            tokens.add(st.nextToken());
-        }
-        Corredor runner = null;
-        try {
-            runner = new Corredor(tokens.get(0), tokens.get(1),
-                    Utiles.Sdf.parse(tokens.get(2)), tokens.get(3), tokens.get(4));
-        } catch (ParseException ex) {
-            System.out.println("Error al transformar la fecha del fichero");
-        }
-        return runner;
-    }
-
-    private String toStringCSV(Corredor corredor) {
-        String linea = "";
-        for (String string : corredor.toArray()) {
-            linea = linea.concat(string + this.separadorCSV);
-        }
-        return linea;
-    }
-
-    private void leerCSV() {
+    private void leerFichero() {
         this.fichero_corredores.abrirLector();
-        String linea = null;
-        while ((linea = this.fichero_corredores.leerString()) != null) {
-            this.corredores.add(toRunner(linea));
+        Corredor c = null;
+        while ((c = this.fichero_corredores.leerObjeto()) != null) {
+            this.corredores.add(c);
         }
         this.fichero_corredores.cerrarLector();
     }
 
-    private void guardarCSV() {
+    private void guardarFichero() {
         this.fichero_corredores.abrirEscritor(false);
+        Iterator<Corredor> it = corredores.iterator();
+        fichero_corredores.grabarPrimerObjeto(it.next());
         for (Corredor runner : corredores) {
-            fichero_corredores.println(toStringCSV(runner));
+            fichero_corredores.grabarObjeto(runner);
         }
         this.fichero_corredores.cerrarEscritor();
     }
