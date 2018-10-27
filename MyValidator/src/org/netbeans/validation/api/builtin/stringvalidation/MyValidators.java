@@ -12,53 +12,47 @@ import org.openide.util.NbBundle;
  *
  * @author silvia
  */
-public class MyValidators{
-    
-    public static class DniValidator extends StringValidator{
-        
-    @Override
-    public void validate(Problems problems, String string, String nombreComponente) {
-        boolean valid = false;
-        
-        
-        
-        if (!valid){
-        String msg = NbBundle.getMessage(ModeloValidador.class, "NOMBRE_MSG", nombreComponente);
-        problems.add(msg);
+public class MyValidators {
+
+    public static class DniValidator extends StringValidator {
+
+        @Override
+        public void validate(Problems problems, String string, String nombreComponente) {
+            /*
+            boolean valid = false;
+            
+            if (!valid) {
+            String msg = NbBundle.getMessage(ModeloValidador.class, "NOMBRE_MSG", nombreComponente);
+            problems.add(msg);
+            }
+            
+            if ((!esLetra(dni.charAt(dni.length() - 1))) | (dni.length() != 9)) {
+            throw new IllegalArgumentException();
+            }
+            for (byte i = 0; i <= 7; i++) {
+            if (!esNum(dni.charAt(i))) {
+            throw new IllegalArgumentException();
+            }
+            }*/
         }
-        
-        if ((!esLetra(dni.charAt(dni.length() - 1))) | (dni.length() != 9)) {
-                    throw new IllegalArgumentException();
-                }
-                for (byte i = 0; i <= 7; i++) {
-                    if (!esNum(dni.charAt(i))) {
-                        throw new IllegalArgumentException();
-                    }
-                }
-        
-    
+
     }
-    
-    }
-        
-    public static class TelephoneValidator extends StringValidator{
+
+    public static class TelephoneValidator extends StringValidator {
 
         @Override
         public void validate(Problems prblms, String string, String t) {
-                       if (tfn.length() != 9) {
-                    throw new IllegalArgumentException();
-                }
-                for (char c : tfn.toCharArray()) {
-                    if (!esNum(c)) {
-                        throw new IllegalArgumentException();
-                    }
-                }
-    }
+            /*
+            if (tfn.length() != 9) {
+            throw new IllegalArgumentException();
+            }
+            for (char c : tfn.toCharArray()) {
+            if (!esNum(c)) {
+            throw new IllegalArgumentException();
+            }
+            }
+             */
         }
-    
-    
     }
-    
-    
-    
+
 }

@@ -9,7 +9,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import logic.LogicaGuardado;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -18,12 +21,14 @@ import logic.LogicaGuardado;
 public class PantallaPrincipal extends javax.swing.JFrame {
 
     private static final String RUTA_LOGO = "/gui/img/icono.jpeg";
+    
 
     /**
      * Creates new form PantallaInicial
      *
      */
     public PantallaPrincipal() {
+        cambiarLookAndFell(1);
         initComponents();
         this.addWindowListener(new WindowAdapter() {
 
@@ -33,11 +38,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 LogicaGuardado.getInstance().guardarDatos();
             }
         });
-        jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
-        setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
+        //jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
+        //setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
         setTitle("MarAppTon");
         setLocationRelativeTo(null); // centrar en la pantalla
         LogicaGuardado.getInstance().cargarDatos();
+    }
+
+    private void cambiarLookAndFell(int i) {
+        UIManager.LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
+        try {
+            UIManager.setLookAndFeel(installedLookAndFeels[i].getClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
     /**
@@ -75,7 +89,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("MarAppTon");
-        jLabelTitulo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jLabelTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+
+        jLabelIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.jpeg"))); // NOI18N
+        jLabelIcono.setAlignmentY(0.0F);
+        jLabelIcono.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
         jPanelTitulo.setLayout(jPanelTituloLayout);
@@ -83,7 +102,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(100, 100, 100))
             .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelTituloLayout.createSequentialGroup()
@@ -93,15 +112,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         );
         jPanelTituloLayout.setVerticalGroup(
             jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloLayout.createSequentialGroup()
-                .addContainerGap(165, Short.MAX_VALUE)
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addGap(100, 100, 100)
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
             .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelTituloLayout.createSequentialGroup()
-                    .addGap(50, 50, 50)
+                    .addGap(25, 25, 25)
                     .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(363, Short.MAX_VALUE)))
+                    .addContainerGap()))
         );
 
         jPanelBotones.setForeground(new java.awt.Color(51, 51, 51));
@@ -168,7 +187,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelBotonesLayout.createSequentialGroup()
@@ -179,7 +198,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                         .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonNuevaCarrera)
                             .addComponent(jButtonVerCarreras))))
-                .addGap(30, 30, 30))
+                .addGap(15, 15, 15))
         );
 
         jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor, jButtonVerCarreras, jButtonVerCorredores});
@@ -195,9 +214,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
