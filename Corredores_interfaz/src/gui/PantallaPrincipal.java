@@ -11,6 +11,7 @@ import logic.LogicaCorredor;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import logic.LogicaCarrera;
+import logic.LogicaGuardado;
 
 /**
  *
@@ -33,14 +34,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             @Override
             public void windowClosing(WindowEvent e) {
                 super.windowClosing(e);
-                LogicaCorredor.getInstance().guardarCorredores();
-                LogicaCarrera.getInstance().guardarCarreras();
+                LogicaGuardado.getInstance().guardarDatos();
             }
         });
         jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
         setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
         setTitle("MarAppTon");
         setLocationRelativeTo(null); // centrar en la pantalla
+        LogicaGuardado.getInstance().cargarDatos();
     }
 
     /**
@@ -227,8 +228,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVerCarrerasActionPerformed
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        LogicaCorredor.getInstance().guardarCorredores();
-        LogicaCarrera.getInstance().guardarCarreras();
+        LogicaGuardado.getInstance().guardarDatos();
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed

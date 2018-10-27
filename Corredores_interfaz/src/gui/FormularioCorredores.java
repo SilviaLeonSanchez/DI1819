@@ -303,13 +303,11 @@ public class FormularioCorredores extends javax.swing.JDialog {
         grupoValidacion.add(jTextFieldDireccionCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
         grupoValidacion.add(jTextFieldDniCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
         validationPanel.addChangeListener(new ChangeListener() {
-
             @Override
             public void stateChanged(ChangeEvent e) {
                 jButtonEnviarCorredor.setEnabled(validationPanel.getProblem() == null);
             }
         });
-        modificar = false;
     }
 
     private void jButtonLimpiarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarCorredorActionPerformed
@@ -336,7 +334,6 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     this.jTextFieldDireccionCorredor.getText(),
                     this.jTextFieldTelefonoCorredor.getText()
             );
-            LogicaCorredor.getInstance().guardarCorredores();
             this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
@@ -346,22 +343,12 @@ public class FormularioCorredores extends javax.swing.JDialog {
     private void enviarParaModificar() {
         try {
             LogicaCorredor.getInstance().bajaCorredor(c_original);
-            LogicaCorredor.getInstance().altaCorredor(
-                    this.jTextFieldDniCorredor.getText(),
-                    this.jTextFieldNombreCorredor.getText(),
-                    (Date) this.jSpinnerFechaNacimientoCorredor.getValue(),
-                    this.jTextFieldDireccionCorredor.getText(),
-                    this.jTextFieldTelefonoCorredor.getText()
-            );
-            LogicaCorredor.getInstance().guardarCorredores();
+            enviar();
             this.dispose();
-        } catch (ExcepcionesPropias.CorredorRepetido ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
         } catch (ExcepcionesPropias.CorredorNoEsta ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor no exite", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     private void jButtonCancelarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCorredorActionPerformed
         Utiles.salirSinGuardar(this);

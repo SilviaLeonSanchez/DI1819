@@ -7,6 +7,7 @@ package dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import utils.Utiles;
@@ -18,19 +19,19 @@ import utils.Utiles;
 public class Carrera implements Serializable, Comparable<Carrera>{
 
     // ATRIBUTOS
-    private Integer id;
+    private String id;
     private String nombre;
     private Date fecha;
     private String lugar;
     private boolean carreraCerrada;
     
     private int maxCorredores;
-    private Map<Corredor, TiemposCorredor> listaCorredores;
+    private List<TiemposCorredor> listaCorredores;
     
     public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "CERRADA"};
 
     //  METODOS
-    public Carrera(int id, String nombre, Date fecha, String lugar, int maxCorredores) {
+    public Carrera(String id, String nombre, Date fecha, String lugar, int maxCorredores) {
         this.id = id;
         this.nombre = nombre;
         this.fecha = fecha;
@@ -67,19 +68,10 @@ public class Carrera implements Serializable, Comparable<Carrera>{
         return hash;
     }
 
-    @Override
-    public String toString() {
-        String carrera = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + Utiles.Sdf.format(fecha) + ", lugar=" + lugar + ", max_corredores=" + maxCorredores + ", terminada=" + carreraCerrada + '}';
-        for (Corredor corredor : listaCorredores.keySet()) {
-            carrera = carrera.concat("\t" + corredor.toString() + "\n");
-            carrera = carrera.concat(listaCorredores.get(corredor).toString());
-        }
-        return carrera;
-    }
 
     public String[] toArray() {
         String array[] = new String[6];
-        array[0] = Integer.toString(this.id);
+        array[0] = this.id;
         array[1] = this.nombre;
         array[2] = Utiles.Sdf.format(this.fecha);
         array[3] = this.lugar;
@@ -115,7 +107,7 @@ public class Carrera implements Serializable, Comparable<Carrera>{
     }
 
     // GETTER
-    public Map<Corredor, TiemposCorredor> getListaCorredores() {
+    public List<TiemposCorredor> getListaCorredores() {
         return listaCorredores;
     }
 
@@ -135,7 +127,7 @@ public class Carrera implements Serializable, Comparable<Carrera>{
         return nombre;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

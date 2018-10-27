@@ -3,9 +3,10 @@ package gui;
 import dto.Corredor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 import logic.LogicaCorredor;
-import logic.LogicaCorredor.TableModelCorredor;
 import utils.ExcepcionesPropias;
+import utils.Utiles;
 
 /**
  *
@@ -32,7 +33,7 @@ public class VistaCorredores extends javax.swing.JDialog {
     }
 
     private void refrescarTablaCorredores() {
-        this.jTableCorredores.setModel(new TableModelCorredor(LogicaCorredor.getInstance().getCorredores()));
+        this.jTableCorredores.setModel(new TableModelCorredor());
     }
 
     private void rellenarComboBoxOrdenCorredores() {
@@ -261,6 +262,45 @@ public class VistaCorredores extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
+    public static class TableModelCorredor extends AbstractTableModel {
+
+
+        @Override
+        public String getColumnName(int column) {
+            return Corredor.DATOS[column];
+        }
+
+        @Override
+        public int getRowCount() {
+            return LogicaCorredor.getInstance().getCorredores().size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return Corredor.DATOS.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            switch (columnIndex) {
+                case 0:
+                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getDni();
+                case 1:
+                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getNombre();
+                case 2:
+                    return Utiles.Sdf.format(LogicaCorredor.getInstance().getCorredores().get(rowIndex).getFecha_nac());
+                case 3:
+                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getDireccion();
+                case 4:
+                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getTelefono();
+                default:
+                    return null;
+            }
+        }
+
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonModificar;

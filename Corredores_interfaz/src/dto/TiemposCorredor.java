@@ -6,8 +6,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 import javax.xml.datatype.Duration;
 
@@ -18,48 +16,54 @@ import javax.xml.datatype.Duration;
 public class TiemposCorredor implements Serializable{
 
     // ATRIBUTOS
-    private String dorsal;
-    private LinkedList<Duration> tiempos;
+    private final Corredor corredor;
+    private final String idCarrera;
+    private final String dorsal;
+    private Duration tiempo;
 
     // METODOS
-    public TiemposCorredor(String dorsal) {
-        this.tiempos = new LinkedList<>();
+    public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal) {
+        this.idCarrera = idCarrera;
+        this.corredor = corredor;
+        this.dorsal = dorsal;
     }
 
     @Override
     public String toString() {
-        String corredorCarrera = "CorredorCarrera{"+" dorsal=" + dorsal + ", tiempos=";
-        for (Duration tiempo : tiempos) {
-            corredorCarrera = corredorCarrera.concat("\n\t" + tiempo.getHours()+":"+tiempo.getMinutes()+":"+tiempo.getSeconds());
-        }
-        return corredorCarrera + "\n}";
+        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + tiempo + '}';
     }
+
+    
 
 
     // GETTER
-    public List<Duration> getTiempos() {
-        return tiempos;
+    public Duration getTiempo() {
+        return tiempo;
     }
 
     public String getDorsal() {
         return dorsal;
     }
 
+    public Corredor getCorredor() {
+        return corredor;
+    }
+
+    public String getIdCarrera() {
+        return idCarrera;
+    }
+
 
     // SETTER
-
-    public void setTiempos(LinkedList<Duration> tiempos) {
-        this.tiempos = tiempos;
-    }
-    
-    public void addTiempo(Duration tiempo){
-        this.tiempos.add(tiempo);
+    public void setTiempo(Duration tiempo) {
+        this.tiempo = tiempo;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 83 * hash + Objects.hashCode(this.dorsal);
+        int hash = 3;
+        hash = 47 * hash + Objects.hashCode(this.corredor);
+        hash = 47 * hash + Objects.hashCode(this.idCarrera);
         return hash;
     }
 
@@ -75,11 +79,16 @@ public class TiemposCorredor implements Serializable{
             return false;
         }
         final TiemposCorredor other = (TiemposCorredor) obj;
-        if (!Objects.equals(this.dorsal, other.dorsal)) {
+        if (!Objects.equals(this.idCarrera, other.idCarrera)) {
+            return false;
+        }
+        if (!Objects.equals(this.corredor, other.corredor)) {
             return false;
         }
         return true;
     }
+    
+
     
     
 }
