@@ -291,7 +291,6 @@ public class FormularioCorredores extends javax.swing.JDialog {
 
     private void inicializarPantalla() {
         inicializarValidador();
-        jButtonEnviarCorredor.setEnabled(false);
         setTitle("Formulario Corredor");
         setLocationRelativeTo(null);
     }

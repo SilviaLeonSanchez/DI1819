@@ -6,17 +6,18 @@
 package dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
+import utils.ExcepcionesPropias;
 import utils.Utiles;
 
 /**
  *
  * @author silvia
  */
-public class Carrera implements Serializable, Comparable<Carrera>{
+public class Carrera implements Serializable, Comparable<Carrera> {
 
     // ATRIBUTOS
     private String id;
@@ -24,10 +25,10 @@ public class Carrera implements Serializable, Comparable<Carrera>{
     private Date fecha;
     private String lugar;
     private boolean carreraCerrada;
-    
+
     private int maxCorredores;
     private List<TiemposCorredor> listaCorredores;
-    
+
     public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "CERRADA"};
 
     //  METODOS
@@ -37,14 +38,15 @@ public class Carrera implements Serializable, Comparable<Carrera>{
         this.fecha = fecha;
         this.lugar = lugar;
         this.maxCorredores = maxCorredores;
+        this.listaCorredores = new ArrayList<>();
         this.carreraCerrada = false;
     }
 
     @Override
     public int compareTo(Carrera o) {
-        return this.id.compareTo(o.id);
+        Integer i = Integer.parseInt(id);
+        return i.compareTo(Integer.parseInt(o.getId()));
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -67,7 +69,6 @@ public class Carrera implements Serializable, Comparable<Carrera>{
         hash = 37 * hash + Objects.hashCode(this.id);
         return hash;
     }
-
 
     public String[] toArray() {
         String array[] = new String[6];
@@ -134,26 +135,30 @@ public class Carrera implements Serializable, Comparable<Carrera>{
     public boolean isCarreraCerrada() {
         return carreraCerrada;
     }
-    
-    
 
-    /*
     // CORREDORES
-    public boolean addCorredor(Corredor corredor, TiemposCorredor tiempos) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+    public boolean addCorredor(TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
+        checkAddCorredor(corredor);
+        return this.listaCorredores.add(corredor);
+    }
+    
+    public boolean addCorredores(List<TiemposCorredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
+        for (TiemposCorredor c : corredores){
+            checkAddCorredor(c);
+            this.listaCorredores.add(c);
+        }
+        return true;
+    }
+    
+    private void checkAddCorredor(TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
         if (corredor == null) {
             throw new IllegalArgumentException("El corredor no puede ser null");
-        } else if (this.listaCorredores.containsKey(corredor)) {
+        } else if (this.listaCorredores.contains(corredor)) {
             throw new ExcepcionesPropias.CorredorRepetido();
         } else if (this.carreraCerrada) {
             throw new ExcepcionesPropias.CarreraCerrada();
         } else if (this.listaCorredores.size() >= this.maxCorredores) {
             throw new ExcepcionesPropias.DemasiadosCorredores();
-        }
-        if (this.listaCorredores.putIfAbsent(corredor, tiempos) == null) {
-            this.contadorDorsales++;
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -166,11 +171,5 @@ public class Carrera implements Serializable, Comparable<Carrera>{
             return this.listaCorredores.remove(corredor);
         }
     }
-*/
-
-
-
-    
-    
 
 }

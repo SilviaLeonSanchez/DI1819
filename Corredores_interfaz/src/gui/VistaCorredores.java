@@ -1,12 +1,15 @@
 package gui;
 
+import dto.Carrera;
 import dto.Corredor;
+import dto.TiemposCorredor;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 import logic.LogicaCorredor;
 import utils.ExcepcionesPropias;
-import utils.Utiles;
 
 /**
  *
@@ -15,6 +18,7 @@ import utils.Utiles;
 public class VistaCorredores extends javax.swing.JDialog {
 
     PantallaPrincipal pantallaPrincipal;
+    Carrera carreraParaAniadir;
 
     /**
      * Creates new form PantallaCorredor
@@ -24,20 +28,24 @@ public class VistaCorredores extends javax.swing.JDialog {
      */
     public VistaCorredores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        inicializarPantalla(parent);
+        this.jButtonAniadirACarrera.setVisible(false);
+    }
+
+    public VistaCorredores(java.awt.Frame parent, boolean modal, Carrera carreraParaAniadir) {
+        super(parent, modal);
+        inicializarPantalla(parent);
+        this.carreraParaAniadir = carreraParaAniadir;
+        this.jButtonAniadirACarrera.setVisible(true);
+    }
+
+    private void inicializarPantalla(java.awt.Frame parent) {
         pantallaPrincipal = (PantallaPrincipal) parent;
         initComponents();
         setTitle("Corredores");
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
         refrescarTablaCorredores();
         rellenarComboBoxOrdenCorredores();
-    }
-
-    private void refrescarTablaCorredores() {
-        this.jTableCorredores.setModel(new TableModelCorredor());
-    }
-
-    private void rellenarComboBoxOrdenCorredores() {
-        this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
     }
 
     /**
@@ -61,10 +69,10 @@ public class VistaCorredores extends javax.swing.JDialog {
         jButtonNuevoCorredor = new javax.swing.JButton();
         jButtonModificar = new javax.swing.JButton();
         jButtonBorrar = new javax.swing.JButton();
+        jButtonAniadirACarrera = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(640, 480));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
@@ -139,7 +147,7 @@ public class VistaCorredores extends javax.swing.JDialog {
                 .addGroup(jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelOrdenCorredores))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanelListaCorredores, java.awt.BorderLayout.CENTER);
@@ -174,6 +182,13 @@ public class VistaCorredores extends javax.swing.JDialog {
             }
         });
 
+        jButtonAniadirACarrera.setText("Añadir a carrera");
+        jButtonAniadirACarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAniadirACarreraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelBotonesListaCorredoresLayout = new javax.swing.GroupLayout(jPanelBotonesListaCorredores);
         jPanelBotonesListaCorredores.setLayout(jPanelBotonesListaCorredoresLayout);
         jPanelBotonesListaCorredoresLayout.setHorizontalGroup(
@@ -182,9 +197,12 @@ public class VistaCorredores extends javax.swing.JDialog {
                 .addContainerGap(189, Short.MAX_VALUE)
                 .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBorrar)
+                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
+                        .addComponent(jButtonModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBorrar))
+                    .addComponent(jButtonAniadirACarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(189, Short.MAX_VALUE))
@@ -195,7 +213,9 @@ public class VistaCorredores extends javax.swing.JDialog {
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAniadirACarrera)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,16 +224,26 @@ public class VistaCorredores extends javax.swing.JDialog {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
-        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
+        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAniadirACarrera, jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
 
         getContentPane().add(jPanelBotonesListaCorredores, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // SALIR
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
+
+    // TABLA
+    private void refrescarTablaCorredores() {
+        this.jTableCorredores.setModel(new TableModelCorredor());
+    }
+
+    private void rellenarComboBoxOrdenCorredores() {
+        this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
+    }
 
     private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
         switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
@@ -230,6 +260,7 @@ public class VistaCorredores extends javax.swing.JDialog {
         refrescarTablaCorredores();
     }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
 
+    // BOTONES
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
         FormularioCorredores ventanaCorredor = new FormularioCorredores(pantallaPrincipal, true);
         ventanaCorredor.setVisible(true);
@@ -262,8 +293,27 @@ public class VistaCorredores extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
-    public static class TableModelCorredor extends AbstractTableModel {
+    private void jButtonAniadirACarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirACarreraActionPerformed
+        if (carreraParaAniadir != null) {
+            List<TiemposCorredor> corredores = new ArrayList<>();
+            for (int i : this.jTableCorredores.getSelectedRows()) {
+                corredores.add(new TiemposCorredor(this.carreraParaAniadir.getId(), LogicaCorredor.getInstance().getCorredores().get(i)));
+            }
+            try {
+                carreraParaAniadir.addCorredores(corredores);
+                this.dispose();
+            } catch (ExcepcionesPropias.CarreraCerrada ex) {
+                JOptionPane.showMessageDialog(this, "La carrera está cerrada y no se pueden añadir corredores", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
+            } catch (ExcepcionesPropias.DemasiadosCorredores ex) {
+                JOptionPane.showMessageDialog(this, "No se puede superar el número máximo de corredores para la carrera", "Demasiados corredores", JOptionPane.INFORMATION_MESSAGE);
+            } catch (ExcepcionesPropias.CorredorRepetido ex) {
+                JOptionPane.showMessageDialog(this, "El corredor ya esta incluido en la lista de corredores de la carrera", "Corredor repetido", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jButtonAniadirACarreraActionPerformed
 
+    //  MODELO DE TABLA
+    public static class TableModelCorredor extends AbstractTableModel {
 
         @Override
         public String getColumnName(int column) {
@@ -282,26 +332,15 @@ public class VistaCorredores extends javax.swing.JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            switch (columnIndex) {
-                case 0:
-                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getDni();
-                case 1:
-                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getNombre();
-                case 2:
-                    return Utiles.Sdf.format(LogicaCorredor.getInstance().getCorredores().get(rowIndex).getFecha_nac());
-                case 3:
-                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getDireccion();
-                case 4:
-                    return LogicaCorredor.getInstance().getCorredores().get(rowIndex).getTelefono();
-                default:
-                    return null;
-            }
+            String array[] = LogicaCorredor.getInstance().getCorredores().get(rowIndex).toArray();
+            return array[columnIndex];
         }
 
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAniadirACarrera;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevoCorredor;

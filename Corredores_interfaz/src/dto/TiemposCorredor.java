@@ -6,8 +6,11 @@
 package dto;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.util.Date;
 import java.util.Objects;
-import javax.xml.datatype.Duration;
+import utils.Duracion;
+import utils.Utiles;
 
 /**
  *
@@ -20,20 +23,32 @@ public class TiemposCorredor implements Serializable{
     private final String idCarrera;
     private final String dorsal;
     private Duration tiempo;
+    public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO", "DORSAL", "TIEMPO"};
 
     // METODOS
-    public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal) {
+    public TiemposCorredor(String idCarrera, Corredor corredor) {
         this.idCarrera = idCarrera;
         this.corredor = corredor;
-        this.dorsal = dorsal;
+        dorsal = "";
+        tiempo = Duration.ZERO;
     }
 
     @Override
     public String toString() {
-        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + tiempo + '}';
+        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + Duracion.verDuracion(this.tiempo) + '}';
     }
 
-    
+    public String[] toArray() {
+        String array[] = new String[7];
+        array[0] = this.corredor.getDni();
+        array[1] = this.corredor.getNombre();
+        array[2] = Utiles.Sdf.format(this.corredor.getFecha_nac());
+        array[3] = this.corredor.getDireccion();
+        array[4] = this.corredor.getTelefono();
+        array[5] = this.dorsal;
+        array[6] = Duracion.verDuracion(this.tiempo);
+        return array;
+    }
 
 
     // GETTER

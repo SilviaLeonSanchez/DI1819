@@ -7,10 +7,8 @@ package gui;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import logic.LogicaCorredor;
 import java.util.Locale;
 import javax.swing.ImageIcon;
-import logic.LogicaCarrera;
 import logic.LogicaGuardado;
 
 /**
@@ -20,8 +18,6 @@ import logic.LogicaGuardado;
 public class PantallaPrincipal extends javax.swing.JFrame {
 
     private static final String RUTA_LOGO = "/gui/img/icono.jpeg";
-        
-        
 
     /**
      * Creates new form PantallaInicial

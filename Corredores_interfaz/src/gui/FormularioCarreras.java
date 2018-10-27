@@ -46,7 +46,6 @@ public class FormularioCarreras extends javax.swing.JDialog {
         setTitle("Formulario Carrera");
         setLocationRelativeTo(null);
         inicializarValidador();
-        jButtonEnviarCarrera.setEnabled(false);
     }
     
     
