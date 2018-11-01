@@ -432,6 +432,8 @@ public class VistaCarreras extends javax.swing.JDialog {
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
         if (this.carreraSeleccionada == null) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Selecciona carrera", JOptionPane.INFORMATION_MESSAGE);
+        } else if (this.carreraSeleccionada.isCarreraCerrada()) {
+            JOptionPane.showMessageDialog(this, "No puedes modificar la carrera porque ya está cerrada", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
         } else {
             FormularioCarreras ventanaCarrera = new FormularioCarreras(pantallaPrincipal, true, this.carreraSeleccionada);
             ventanaCarrera.setVisible(true);
@@ -484,7 +486,9 @@ public class VistaCarreras extends javax.swing.JDialog {
     private void jButtonAddCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCorredorActionPerformed
         if (this.carreraSeleccionada == null) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Carrera no seleccionada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        } else if (this.carreraSeleccionada.isCarreraCerrada()) {
+            JOptionPane.showMessageDialog(this, "No puedes añadir corredores porque la carrera ya está cerrada", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
+        }else {
             VistaCorredores ventanaCorredores = new VistaCorredores(pantallaPrincipal, true, this.carreraSeleccionada);
             ventanaCorredores.setVisible(true);
             refrescarTablaCarreras();
@@ -506,7 +510,9 @@ public class VistaCarreras extends javax.swing.JDialog {
     private void jButtonBorrarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarCorredorActionPerformed
         if (this.carreraSeleccionada == null) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Carrera no seleccionada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        } else if (this.carreraSeleccionada.isCarreraCerrada()) {
+            JOptionPane.showMessageDialog(this, "No puedes borrar corredores porque la carrera ya está cerrada", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
+        }else {
             try {
                 List<TiemposCorredor> corredores = new ArrayList<>();
                 for (int i : this.jTableTiemposCorredores.getSelectedRows()) {
@@ -583,10 +589,6 @@ public class VistaCarreras extends javax.swing.JDialog {
             return corredoresCarreraSeleccionada.get(rowIndex).toArray()[columnIndex];
         }
 
-    }
-
-    private void cargarTablaCorredores() {
-        this.jTableTiemposCorredores.setModel(new VistaCorredores.TableModelCorredor());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

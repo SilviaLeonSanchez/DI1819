@@ -332,7 +332,9 @@ public class VistaCorredores extends javax.swing.JDialog {
         int seleccionado = jTableCorredores.getSelectedRow();
         if (seleccionado != -1) {
             try {
-                LogicaCorredor.getInstance().bajaCorredor(LogicaCorredor.getInstance().getCorredores().get(seleccionado));
+                Corredor corredor = LogicaCorredor.getInstance().getCorredores().get(seleccionado);
+                LogicaCorredor.getInstance().bajaCorredor(corredor);
+                LogicaCarrera.bajaCorredorCarreras(corredor);
                 refrescarTablaCorredores();
             } catch (ExcepcionesPropias.CorredorNoEsta ex) {
                 JOptionPane.showMessageDialog(this, "El corredor no existe", "Corredor no existe", JOptionPane.ERROR_MESSAGE);
@@ -346,9 +348,9 @@ public class VistaCorredores extends javax.swing.JDialog {
         if (carreraParaAniadir == null) {
             JOptionPane.showMessageDialog(this, "No se ha podido añadir ningun corredor. La carrera es nula", "Carrera nula", JOptionPane.ERROR_MESSAGE);
         }else{
-            List<TiemposCorredor> corredoresParaAniadir = new ArrayList<>();
+            List<Corredor> corredoresParaAniadir = new ArrayList<>();
             for (int i : this.jTableCorredores.getSelectedRows()) {
-                corredoresParaAniadir.add(new TiemposCorredor(this.carreraParaAniadir.getId(), LogicaCorredor.getInstance().getCorredores().get(i)));
+                corredoresParaAniadir.add(LogicaCorredor.getInstance().getCorredores().get(i));
             }
             if (corredoresParaAniadir.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Corredor no seleccionado", JOptionPane.INFORMATION_MESSAGE);

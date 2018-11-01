@@ -7,6 +7,7 @@ package logic;
 
 import java.util.List;
 import dto.Carrera;
+import dto.Corredor;
 import dto.TiemposCorredor;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import utils.ExcepcionesPropias;
  *
  * @author silvia
  */
-public class LogicaCarrera implements Serializable{
+public class LogicaCarrera implements Serializable {
 
     private static LogicaCarrera INSTANCE;
 
@@ -28,19 +29,19 @@ public class LogicaCarrera implements Serializable{
     private final String[] opcionesOrdenCarreras = {"Id", "Fecha", "Limite participantes", "Numero participantes"};
 
     // METODOS
-    private LogicaCarrera(){
+    private LogicaCarrera() {
         this.carreras = new ArrayList<>();
     }
-    
+
     public static LogicaCarrera getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new LogicaCarrera();
         }
         return INSTANCE;
     }
-    
+
     public static void setInstance(LogicaCarrera logicaCarrera) {
-            INSTANCE = logicaCarrera;
+        INSTANCE = logicaCarrera;
     }
 
     // COLECCION CARRERAS
@@ -52,11 +53,11 @@ public class LogicaCarrera implements Serializable{
         List<Carrera> carrerasPorId = new ArrayList<>(carreras);
         Collections.sort(carrerasPorId);
         String id = "";
-        if(carrerasPorId.isEmpty()){
+        if (carrerasPorId.isEmpty()) {
             id = "1";
-        }else{
-            Carrera ultimaCarrera = carrerasPorId.get(carrerasPorId.size()-1);
-            id = Integer.toString(Integer.parseInt(ultimaCarrera.getId())+1);
+        } else {
+            Carrera ultimaCarrera = carrerasPorId.get(carrerasPorId.size() - 1);
+            id = Integer.toString(Integer.parseInt(ultimaCarrera.getId()) + 1);
         }
         Carrera c = new Carrera(id, nombre, fecha, lugar, plazas);
         if (!this.carreras.contains(c)) {
@@ -101,19 +102,31 @@ public class LogicaCarrera implements Serializable{
         }
     }
 
-    public boolean addCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
-        checkAddCorredor(carrera, corredor);
-        return carrera.aniadirCorredor(corredor);
-    }
-    
-    public boolean addCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
-        for (TiemposCorredor corredor : corredores){
-            checkAddCorredor(carrera, corredor);
-            carrera.aniadirCorredor(corredor);
+    public boolean addCorredor(Carrera carrera, Corredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+        List<TiemposCorredor> corredoresPorDorsal = new ArrayList<>(carrera.getListaCorredores());
+        Collections.sort(corredoresPorDorsal);
+        String dorsal = "";
+        if (corredoresPorDorsal.isEmpty()){
+            dorsal = "1";
+        }else{
+            TiemposCorredor ultimoCorredor = corredoresPorDorsal.get(corredoresPorDorsal.size()-1);
+            dorsal = Integer.toString(Integer.parseInt(ultimoCorredor.getDorsal())+1);
         }
-        return true;
+        TiemposCorredor tiemposCorredor = new TiemposCorredor(carrera.getId(), corredor, dorsal);
+        checkAddCorredor(carrera, tiemposCorredor);
+        return carrera.aniadirCorredor(tiemposCorredor);
     }
-    
+
+    public boolean addCorredores(Carrera carrera, List<Corredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+        boolean isOk = true;
+        for (Corredor corredor : corredores) {
+            if (!addCorredor(carrera, corredor)){
+                isOk = false;
+            }
+        }
+        return isOk;
+    }
+
     private void checkDelCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
         if (!carrera.getListaCorredores().contains(corredor)) {
             throw new ExcepcionesPropias.CorredorNoEsta();
@@ -121,23 +134,37 @@ public class LogicaCarrera implements Serializable{
             throw new ExcepcionesPropias.CarreraCerrada();
         }
     }
-    
-    public boolean delCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
+
+    public boolean delCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
         checkDelCorredor(carrera, corredor);
         return carrera.borrarCorredor(corredor);
     }
-    
-    public boolean delCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
+
+    public boolean delCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
         Iterator<TiemposCorredor> it = corredores.iterator();
-        while (it.hasNext()){
+        while (it.hasNext()) {
             TiemposCorredor corredor = it.next();
             checkDelCorredor(carrera, corredor);
             carrera.borrarCorredor(corredor);
         }
         return true;
     }
-    
-    
+
+    // BORRADO CORREDOR DE TODAS LAS CARRERAS
+    public static boolean bajaCorredorCarreras(Corredor corredor) {
+        boolean isOk = true;
+        Iterator<Carrera> iteratorCarreras = LogicaCarrera.getInstance().getCarreras().iterator();
+        while (iteratorCarreras.hasNext()) {
+            Carrera carrera = iteratorCarreras.next();
+            if (!carrera.isCarreraCerrada() && carrera.contieneCorredor(corredor.getDni())) {
+                if (!carrera.borrarCorredor(corredor.getDni())){
+                    isOk = false;
+                }
+            }
+        }
+        return isOk;
+    }
+
     // ORDENACION    
     public String[] getOpcionesOrdenCarreras() {
         return opcionesOrdenCarreras;
@@ -159,5 +186,4 @@ public class LogicaCarrera implements Serializable{
         this.carreras.sort((Carrera o1, Carrera o2) -> Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size()));
     }
 
-    
 }

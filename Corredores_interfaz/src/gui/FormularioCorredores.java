@@ -80,6 +80,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Corredor");
         setForeground(java.awt.Color.darkGray);
+        setMaximumSize(new java.awt.Dimension(640, 480));
         setMinimumSize(new java.awt.Dimension(640, 480));
         setModal(true);
         setPreferredSize(new java.awt.Dimension(640, 480));
@@ -172,7 +173,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     .addComponent(jButtonEnviarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLimpiarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonCancelarCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(35, 35, 35))
         );
 
         jPanelBotonesCorredorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCancelarCorredor, jButtonEnviarCorredor, jButtonLimpiarCorredor});
@@ -221,32 +222,35 @@ public class FormularioCorredores extends javax.swing.JDialog {
         jPanelCamposCorredorLayout.setHorizontalGroup(
             jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCamposCorredorLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(11, 11, 11)
+                .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
                         .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelNombreCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelDireccionCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 115, Short.MAX_VALUE))
+                            .addComponent(jLabelDireccionCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldNombreCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-                            .addComponent(jTextFieldDireccionCorredor)))
-                    .addComponent(jLabelFechaNacimientoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                            .addComponent(jTextFieldDireccionCorredor))
+                        .addGap(39, 39, 39))
+                    .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
+                        .addComponent(jLabelFechaNacimientoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(27, 27, 27)))
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
-                        .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelDniCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelTelefonoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabelTelefonoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextFieldDniCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                             .addComponent(jTextFieldTelefonoCorredor)))
                     .addComponent(jSpinnerFechaNacimientoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
             .addGroup(jPanelCamposCorredorLayout.createSequentialGroup()
-                .addGap(215, 215, 215)
-                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130)
+                .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -261,19 +265,19 @@ public class FormularioCorredores extends javax.swing.JDialog {
                     .addComponent(jTextFieldNombreCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldTelefonoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabelDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDireccionCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanelCamposCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFechaNacimientoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addContainerGap())
         );
 
         jPanelCamposCorredorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDireccionCorredor, jLabelDniCorredor, jTextFieldDireccionCorredor, jTextFieldDniCorredor});

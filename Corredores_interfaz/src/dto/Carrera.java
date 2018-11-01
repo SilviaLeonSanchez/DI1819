@@ -8,6 +8,7 @@ package dto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import utils.Utiles;
@@ -46,7 +47,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
         String string = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", carreraCerrada=" + carreraCerrada + ", maxCorredores=" + maxCorredores + '}';
         string += "\tCorredores{\n";
         for (TiemposCorredor c : listaCorredores) {
-            string.concat("\n\t\t"+c.toString());
+            string.concat("\n\t\t" + c.toString());
         }
         string += "\t}";
         return string;
@@ -146,27 +147,36 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     public boolean isCarreraCerrada() {
         return carreraCerrada;
     }
-    
+
     // CORREDORES
-    public boolean contieneCorredor(String dniCorredor){
-        for(TiemposCorredor corredor : listaCorredores){
-            if (corredor.getCorredor().getDni().equalsIgnoreCase(dniCorredor)){
+    public boolean contieneCorredor(String dniCorredor) {
+        for (TiemposCorredor corredor : listaCorredores) {
+            if (corredor.getCorredor().getDni().equalsIgnoreCase(dniCorredor)) {
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean aniadirCorredor(TiemposCorredor corredor){
+
+    public boolean aniadirCorredor(TiemposCorredor corredor) {
         return this.listaCorredores.add(corredor);
     }
-    
-    public boolean borrarCorredor(TiemposCorredor corredor){
+
+    public boolean borrarCorredor(TiemposCorredor corredor) {
         return this.listaCorredores.remove(corredor);
     }
-    
-    public boolean borrarCorredor(int posicionCorredor){
-        return (this.listaCorredores.remove(posicionCorredor)!=null);
+
+    public boolean borrarCorredor(String dni) {
+        if (this.contieneCorredor(dni)) {
+            Iterator<TiemposCorredor> iteratorCorredores = listaCorredores.iterator();
+            while (iteratorCorredores.hasNext()) {
+                TiemposCorredor corredor = iteratorCorredores.next();
+                if (corredor.getCorredor().getDni().equalsIgnoreCase(dni)) {
+                    return this.listaCorredores.remove(corredor);
+                }
+            }
+        }
+        return false;
     }
 
 }

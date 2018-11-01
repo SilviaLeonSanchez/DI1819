@@ -16,7 +16,7 @@ import utils.Utiles;
  *
  * @author silvia
  */
-public class TiemposCorredor implements Serializable{
+public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor>{
 
     // ATRIBUTOS
     private final String idCarrera;
@@ -26,12 +26,18 @@ public class TiemposCorredor implements Serializable{
     public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO", "DORSAL", "TIEMPO"};
 
     // METODOS
-    public TiemposCorredor(String idCarrera, Corredor corredor) {
+    public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal) {
         this.idCarrera = idCarrera;
         this.corredor = corredor;
-        dorsal = "";
+        this.dorsal = dorsal;
         tiempo = Duration.ZERO;
     }
+
+    @Override
+    public int compareTo(TiemposCorredor o) {
+        return this.dorsal.compareToIgnoreCase(o.getDorsal());
+    }
+
 
     @Override
     public String toString() {
