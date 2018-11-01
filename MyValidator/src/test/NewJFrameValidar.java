@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package validar_libreria;
+package test;
 
 import java.util.Locale;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.builtin.stringvalidation.MyValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
 /**
@@ -23,15 +23,20 @@ public class NewJFrameValidar extends javax.swing.JFrame {
     public NewJFrameValidar() {
         initComponents();
         jButtonAceptar.setEnabled(false);
+
         ValidationGroup group = validationPanel.getValidationGroup();
-        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        group.add(jTextFieldEdad, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldDni, new MyValidators.DniValidator());
+        group.add(jTextFieldTelefono, new MyValidators.TelephoneValidator());
 
         validationPanel.addChangeListener(new ChangeListener() {
 
             @Override
             public void stateChanged(ChangeEvent e) {
-                jButtonAceptar.setEnabled((validationPanel.getProblem() == null));
+                if (validationPanel.getProblem() == null) {
+                    jButtonAceptar.setEnabled(true);
+                } else {
+                    jButtonAceptar.setEnabled(false);
+                }
             }
         });
 
@@ -48,22 +53,22 @@ public class NewJFrameValidar extends javax.swing.JFrame {
 
         validationPanel = new org.netbeans.validation.api.ui.swing.ValidationPanel();
         jButtonAceptar = new javax.swing.JButton();
-        jLabelNombre = new javax.swing.JLabel();
-        jLabelEdad = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jTextFieldEdad = new javax.swing.JTextField();
+        jLabeldni = new javax.swing.JLabel();
+        jLabelTelefono = new javax.swing.JLabel();
+        jTextFieldDni = new javax.swing.JTextField();
+        jTextFieldTelefono = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButtonAceptar.setText("Enviar");
 
-        jLabelNombre.setText("Nombre");
+        jLabeldni.setText("Dni");
 
-        jLabelEdad.setText("Edad");
+        jLabelTelefono.setText("Telefono");
 
-        jTextFieldNombre.setName("Nombre"); // NOI18N
+        jTextFieldDni.setName("Dni"); // NOI18N
 
-        jTextFieldEdad.setName("Edad"); // NOI18N
+        jTextFieldTelefono.setName("Telefono"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -72,33 +77,33 @@ public class NewJFrameValidar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabelEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(73, 73, 73)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldEdad)))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(156, 156, 156)
-                        .addComponent(jButtonAceptar)))
-                .addContainerGap(79, Short.MAX_VALUE))
+                        .addComponent(jButtonAceptar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabeldni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(73, 73, 73)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                            .addComponent(jTextFieldTelefono)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(69, 69, 69)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombre)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabeldni)
+                    .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelEdad)
-                    .addComponent(jTextFieldEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelTelefono)
+                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -148,10 +153,10 @@ public class NewJFrameValidar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
-    private javax.swing.JLabel jLabelEdad;
-    private javax.swing.JLabel jLabelNombre;
-    private javax.swing.JTextField jTextFieldEdad;
-    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JLabel jLabelTelefono;
+    private javax.swing.JLabel jLabeldni;
+    private javax.swing.JTextField jTextFieldDni;
+    private javax.swing.JTextField jTextFieldTelefono;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables
 }

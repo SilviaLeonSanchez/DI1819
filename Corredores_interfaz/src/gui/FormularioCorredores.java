@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.netbeans.validation.api.builtin.stringvalidation.MyValidators;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 import utils.ExcepcionesPropias;
@@ -297,10 +298,10 @@ public class FormularioCorredores extends javax.swing.JDialog {
 
     private void inicializarValidador() {
         ValidationGroup grupoValidacion = validationPanel.getValidationGroup();
-        grupoValidacion.add(jTextFieldNombreCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        grupoValidacion.add(jTextFieldTelefonoCorredor, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
+        grupoValidacion.add(jTextFieldNombreCorredor, new MyValidators.OnlyLetter());
+        grupoValidacion.add(jTextFieldTelefonoCorredor, new MyValidators.TelephoneValidator());
         grupoValidacion.add(jTextFieldDireccionCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        grupoValidacion.add(jTextFieldDniCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        grupoValidacion.add(jTextFieldDniCorredor, new MyValidators.DniValidator());
         validationPanel.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {

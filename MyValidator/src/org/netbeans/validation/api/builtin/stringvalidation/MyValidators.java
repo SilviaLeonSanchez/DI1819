@@ -17,23 +17,28 @@ public class MyValidators {
     public static class DniValidator extends StringValidator {
 
         @Override
-        public void validate(Problems problems, String string, String nombreComponente) {
-            /*
-            boolean valid = false;
-            
-            if (!valid) {
-            String msg = NbBundle.getMessage(ModeloValidador.class, "NOMBRE_MSG", nombreComponente);
-            problems.add(msg);
+        public void validate(Problems problemas, String nombreComponente, String dni) {
+
+            if ((dni.length() != 9)) {
+                String msg = NbBundle.getMessage(DniValidator.class, "INVALID_LONGITUDE", nombreComponente, "9");
+                problemas.add(msg);
+            } else {
+
+                char ultimoCaracter = dni.charAt(dni.length() - 1);
+                if (!Character.isLetter(ultimoCaracter)) {
+                    String msg = NbBundle.getMessage(DniValidator.class, "MAY_END_WITH_LETTER", nombreComponente);
+                    problemas.add(msg);
+                }
+
+                String numerosDni = dni.substring(0, 7);
+                try {
+                    Integer.parseInt(numerosDni);
+                } catch (NumberFormatException ex) {
+                    String msg = NbBundle.getMessage(DniValidator.class, "NOT_A_NUMBER", numerosDni, nombreComponente);
+                    problemas.add(msg);
+                }
+
             }
-            
-            if ((!esLetra(dni.charAt(dni.length() - 1))) | (dni.length() != 9)) {
-            throw new IllegalArgumentException();
-            }
-            for (byte i = 0; i <= 7; i++) {
-            if (!esNum(dni.charAt(i))) {
-            throw new IllegalArgumentException();
-            }
-            }*/
         }
 
     }
@@ -41,17 +46,46 @@ public class MyValidators {
     public static class TelephoneValidator extends StringValidator {
 
         @Override
-        public void validate(Problems prblms, String string, String t) {
-            /*
+        public void validate(Problems problemas, String nombreComponente, String tfn) {
+
             if (tfn.length() != 9) {
-            throw new IllegalArgumentException();
+                String msg = NbBundle.getMessage(TelephoneValidator.class, "INVALID_LONGITUDE", nombreComponente, "9");
+                problemas.add(msg);
+            } else {
+                try {
+                    int number = Integer.parseInt(tfn);
+                    if (number < 0) {
+                        String msg = NbBundle.getMessage(TelephoneValidator.class, "ERR_NEGATIVE_NUMBER", tfn);
+                        problemas.add(msg);
+                    }
+                } catch (NumberFormatException ex) {
+                    String msg = NbBundle.getMessage(TelephoneValidator.class, "ERR_NOT_INTEGER", tfn);
+                    problemas.add(msg);
+                }
             }
-            for (char c : tfn.toCharArray()) {
-            if (!esNum(c)) {
-            throw new IllegalArgumentException();
+        }
+    }
+
+    public static class OnlyLetter extends StringValidator {
+
+        @Override
+        public void validate(Problems problemas, String nombreComponente, String texto) {
+
+            boolean ok = true;
+            if (texto.length() == 0) {
+                String msg = NbBundle.getMessage(OnlyLetter.class, "MSG_MAY_NOT_BE_EMPTY", nombreComponente);
+                problemas.add(msg);
+            } else {
+                for (int i = 0; i < texto.length(); i++) {
+                    if (!Character.isAlphabetic(texto.charAt(i))) {
+                        ok = false;
+                    }
+                }
+                if (!ok) {
+                    String msg = NbBundle.getMessage(OnlyLetter.class, "ONLY_LETTERS", nombreComponente);
+                    problemas.add(msg);
+                }
             }
-            }
-             */
         }
     }
 
