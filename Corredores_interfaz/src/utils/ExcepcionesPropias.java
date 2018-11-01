@@ -30,7 +30,7 @@ public class ExcepcionesPropias {
     public static class CorredorRepetido extends Exception {
 
         public CorredorRepetido() {
-            super("El corredor no puede estar repetido");
+            super("No puede haber dos corredores con el mismo dni");
         }
 
     }

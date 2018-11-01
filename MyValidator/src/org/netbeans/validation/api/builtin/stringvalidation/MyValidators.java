@@ -111,5 +111,17 @@ public class MyValidators {
             }
         }
     }
+    
+    public static class NoComma extends StringValidator{
+
+        @Override
+        public void validate(Problems problemas, String nombreComponente, String texto) {
+            if (!texto.isEmpty() && texto.contains(",")){
+                String msg = NbBundle.getMessage(NoComma.class, "NO_COMMA", nombreComponente);
+                problemas.add(msg);
+            }
+        }
+        
+    }
 
 }

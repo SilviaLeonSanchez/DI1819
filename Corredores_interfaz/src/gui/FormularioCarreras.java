@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import logic.LogicaCarrera;
+import org.netbeans.validation.api.builtin.stringvalidation.MyValidators;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 import utils.ExcepcionesPropias;
@@ -41,21 +42,20 @@ public class FormularioCarreras extends javax.swing.JDialog {
         jSpinnerFechaCarrera.setValue(carrera.getFecha());
         inicializarPantalla();
     }
-    
-    private void inicializarPantalla(){
+
+    private void inicializarPantalla() {
         setTitle("Formulario Carrera");
         setLocationRelativeTo(null);
         inicializarValidador();
     }
-    
-    
-    
-    private void inicializarValidador(){
+
+    private void inicializarValidador() {
         ValidationGroup grupoValidacion = validationPanel.getValidationGroup();
         grupoValidacion.add(jTextFieldNombreCarrera, StringValidators.REQUIRE_NON_EMPTY_STRING);
         grupoValidacion.add(jTextFieldPlazasCarrera, StringValidators.REQUIRE_VALID_INTEGER, StringValidators.REQUIRE_NON_NEGATIVE_NUMBER);
         grupoValidacion.add(jTextFieldLugarCarrera, StringValidators.REQUIRE_NON_EMPTY_STRING);
         validationPanel.addChangeListener(new ChangeListener() {
+
             @Override
             public void stateChanged(ChangeEvent e) {
                 jButtonEnviarCarrera.setEnabled(validationPanel.getProblem() == null);
@@ -299,17 +299,22 @@ public class FormularioCarreras extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarCarreraActionPerformed
 
     private void jButtonEnviarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCarreraActionPerformed
-        try {
-            if (this.c_original!=null) {
-                LogicaCarrera.getInstance().getCarreras().remove(c_original);
+
+        if (this.c_original != null) {
+            this.c_original.setNombre(jTextFieldNombreCarrera.getText());
+            this.c_original.setFecha((Date) jSpinnerFechaCarrera.getValue());
+            this.c_original.setLugar(jTextFieldLugarCarrera.getText());
+            this.c_original.setMaxCorredores(Integer.parseInt(jTextFieldPlazasCarrera.getText()));
+        } else {
+            try {
+                LogicaCarrera.getInstance().altaCarrera(
+                        jTextFieldNombreCarrera.getText(),
+                        (Date) jSpinnerFechaCarrera.getValue(),
+                        jTextFieldLugarCarrera.getText(),
+                        Integer.parseInt(jTextFieldPlazasCarrera.getText()));
+            } catch (ExcepcionesPropias.CarreraRepetida ex) {
+                JOptionPane.showMessageDialog(this, "Ya hay una carrera con ese identidicador", "Carrera repetida", JOptionPane.ERROR_MESSAGE);
             }
-            LogicaCarrera.getInstance().altaCarrera(
-                    jTextFieldNombreCarrera.getText(),
-                    (Date) jSpinnerFechaCarrera.getValue(),
-                    jTextFieldLugarCarrera.getText(),
-                    Integer.parseInt(jTextFieldPlazasCarrera.getText()));
-        } catch (ExcepcionesPropias.CarreraRepetida ex) {
-            JOptionPane.showMessageDialog(this, "Ya hay una carrera con ese identidicador", "Carrera repetida", JOptionPane.ERROR_MESSAGE);
         }
         this.dispose();
     }//GEN-LAST:event_jButtonEnviarCarreraActionPerformed

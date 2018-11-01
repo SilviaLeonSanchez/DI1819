@@ -90,7 +90,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("MarAppTon");
-        jLabelTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jLabelTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
 
         jLabelIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.jpeg"))); // NOI18N

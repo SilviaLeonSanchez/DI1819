@@ -1,6 +1,7 @@
 package logic;
 
 import dto.Corredor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -11,7 +12,7 @@ import utils.ExcepcionesPropias;
  *
  * @author silvia
  */
-public class LogicaCorredor {
+public class LogicaCorredor implements Serializable{
 
     private static LogicaCorredor INSTANCE;
 
@@ -20,7 +21,7 @@ public class LogicaCorredor {
     private final String[] opcionesOrdenCorredores = {"Dni", "Nombre", "Fecha de nacimiento"};
 
     // METODOS
-    public LogicaCorredor(){
+    private LogicaCorredor(){
         this.corredores = new ArrayList<>();
     }
     
@@ -30,11 +31,22 @@ public class LogicaCorredor {
         }
         return INSTANCE;
     }
-
+    
+    public static void setInstance(LogicaCorredor logicaCorredor) {
+        if (logicaCorredor!=null){
+            INSTANCE = logicaCorredor;
+        }else{
+            INSTANCE = new LogicaCorredor();
+        }
+    }
 
     // COLECCION
     public List<Corredor> getCorredores() {
         return corredores;
+    }
+    
+    public boolean contieneCorredor(String dni){
+        return corredores.stream().anyMatch((corredor) -> (corredor.getDni().equalsIgnoreCase(dni)));
     }
 
     public Corredor buscarCorredor(Corredor c) {

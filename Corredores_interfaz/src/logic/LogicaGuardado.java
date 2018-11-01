@@ -5,12 +5,11 @@
  */
 package logic;
 
-import dto.Carrera;
 import dto.Corredor;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 import utils.FicheroDeObjetos;
+import utils.FicheroDeTexto;
 
 /**
  *
@@ -19,6 +18,16 @@ import utils.FicheroDeObjetos;
 public class LogicaGuardado {
 
     private final boolean usarFichero = true;
+    
+    private FicheroDeObjetos<LogicaCarrera> gestorFicheroCarreras;
+    private final File ficheroCarreras = new File("fichero_carreras.dat");
+    
+    private FicheroDeObjetos<LogicaCorredor> gestorFicheroCorredores;
+    private final File ficheroCorredores = new File("fichero_corredores.dat");
+    
+    private FicheroDeTexto gestorCSVCorredores;
+    private final File ficheroCSVCorredores = new File("fichero_corredores.csv");
+    
     private static LogicaGuardado INSTANCE;
 
     public static LogicaGuardado getInstance() {
@@ -31,8 +40,8 @@ public class LogicaGuardado {
     // PERSISTENCIA
     public void cargarDatos() {
         if (usarFichero) {
-            leerCarrerasFichero();
-            leerCorredoresFichero();
+            leerLogicaCarreras();
+            leerLogicaCorredores();
         } else {
             // BASE DE DATOS
         }
@@ -40,95 +49,124 @@ public class LogicaGuardado {
 
     public void guardarDatos() {
         if (usarFichero) {
-            guardarCarrerasEnFichero();
-            guardarCorredoresFichero();
+            guardarLogicaCarreras();
+            guardarLogicaCorredores();
+            guardarCorredoresCSV();
         } else {
             // BASE DE DATOS
         }
     }
 
     
-    // CARRERAS
-    private FicheroDeObjetos<Carrera> gestorFicheroCarreras;
-    private final File ficheroCarreras = new File("fichero_carreras.dat");
+    // FICHERO CARRERAS
+    private boolean leerLogicaCarreras() {
+        if (checkFicheroCarreras()) {
+            LogicaCarrera logicaCarreras = null;
+            if (ficheroCarreras.length() > 0) {
+                this.gestorFicheroCarreras.abrirLector();
+                logicaCarreras = gestorFicheroCarreras.leerObjeto();
+                this.gestorFicheroCarreras.cerrarLector();
+            }
+            LogicaCarrera.setInstance(logicaCarreras);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    // FICHERO
-    private void leerCarrerasFichero() {
-        // Comprobar si existe el fichero
+    private boolean guardarLogicaCarreras() {
+        if (checkFicheroCarreras()) {
+            gestorFicheroCarreras.abrirEscritor(false);
+            gestorFicheroCarreras.grabarPrimerObjeto(LogicaCarrera.getInstance());
+            gestorFicheroCarreras.cerrarEscritor();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean checkFicheroCarreras() {
         if (!ficheroCarreras.exists()) {
             try {
                 ficheroCarreras.createNewFile();
-                this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
+                return false;
             }
+        }
+        this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
+        return true;
+    }
+
+    //  FICHERO CORREDORES
+    private boolean leerLogicaCorredores() {
+        if (checkFicheroCorredores()) {
+            LogicaCorredor logicaCorredores = null;
+            if (ficheroCorredores.length() > 0) {
+                this.gestorFicheroCorredores.abrirLector();
+                logicaCorredores = gestorFicheroCorredores.leerObjeto();
+                this.gestorFicheroCorredores.cerrarLector();
+            }
+            LogicaCorredor.setInstance(logicaCorredores);
+            return true;
         } else {
-            this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
-
-            // Abrir el fichero para leer las carreras
-            this.gestorFicheroCarreras.abrirLector();
-            Carrera c;
-            while ((c = gestorFicheroCarreras.leerObjeto()) != null) {
-
-                // Añadir cada carrera a la collecion de carreras de la logica
-                LogicaCarrera.getInstance().getCarreras().add(c);
-            }
-            this.gestorFicheroCarreras.cerrarLector();
+            return false;
         }
     }
 
-    private void guardarCarrerasEnFichero() {
-        gestorFicheroCarreras.abrirEscritor(false);
-        Iterator<Carrera> it = LogicaCarrera.getInstance().getCarreras().iterator();
-        if (it.hasNext()) {
-            gestorFicheroCarreras.grabarPrimerObjeto(it.next());
+    private boolean guardarLogicaCorredores() {
+        if (checkFicheroCorredores()) {
+            gestorFicheroCorredores.abrirEscritor(false);
+            gestorFicheroCorredores.grabarPrimerObjeto(LogicaCorredor.getInstance());
+            gestorFicheroCorredores.cerrarEscritor();
+            return true;
+        } else {
+            return false;
         }
-        while (it.hasNext()) {
-            gestorFicheroCarreras.grabarObjeto(it.next());
-        }
-        gestorFicheroCarreras.cerrarEscritor();
     }
 
-    
-    // CORREDORES
-    private FicheroDeObjetos<Corredor> gestorFicheroCorredores;
-    private final File ficheroCorredores = new File("fichero_corredores.dat");
-
-    // FICHERO
-    private void leerCorredoresFichero() {
-        // Comprobar si existe el fichero
+    private boolean checkFicheroCorredores() {
         if (!ficheroCorredores.exists()) {
             try {
                 ficheroCorredores.createNewFile();
-                this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
             } catch (IOException ex) {
                 System.out.println(ex.getMessage());
+                return false;
             }
-        } else {
-            this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
-
-            // Abrir el fichero para leer las carreras
-            this.gestorFicheroCorredores.abrirLector();
-            Corredor c;
-            while ((c = gestorFicheroCorredores.leerObjeto()) != null) {
-
-                // Añadir cada carrera a la collecion de carreras de la logica
-                LogicaCorredor.getInstance().getCorredores().add(c);
-            }
-            this.gestorFicheroCorredores.cerrarLector();
         }
+        this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
+        return true;
     }
-
-    private void guardarCorredoresFichero() {
-        gestorFicheroCorredores.abrirEscritor(false);
-        Iterator<Corredor> it = LogicaCorredor.getInstance().getCorredores().iterator();
-        if (it.hasNext()) {
-            gestorFicheroCorredores.grabarPrimerObjeto(it.next());
+    
+    // CSV CORREDORES
+    private boolean guardarCorredoresCSV(){
+        if (!ficheroCSVCorredores.exists()) {
+            try {
+                ficheroCSVCorredores.createNewFile();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+                return false;
+            }
         }
-        while (it.hasNext()) {
-            gestorFicheroCorredores.grabarObjeto(it.next());
+        this.gestorCSVCorredores = new FicheroDeTexto(ficheroCSVCorredores);
+        this.gestorCSVCorredores.abrirEscritor(false);
+        
+        // CABECERA
+        for(String nombreAtributo : Corredor.DATOS){
+            gestorCSVCorredores.print(nombreAtributo+",");
         }
-        gestorFicheroCorredores.cerrarEscritor();
+        gestorCSVCorredores.print("\n");
+        
+        // CORREDORES
+        for (Corredor corredor : LogicaCorredor.getInstance().getCorredores()){
+            for (String atributo : corredor.toArray()){
+                gestorCSVCorredores.print(atributo+",");
+            }
+            gestorCSVCorredores.print("\n");
+        }
+        
+        this.gestorCSVCorredores.cerrarEscritor();
+        return true;
     }
 
 }

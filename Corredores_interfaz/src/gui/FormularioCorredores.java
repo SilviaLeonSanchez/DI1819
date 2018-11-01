@@ -23,7 +23,6 @@ import utils.Utiles;
  */
 public class FormularioCorredores extends javax.swing.JDialog {
 
-    private boolean modificar;
     private Corredor c_original;
 
     /**
@@ -47,7 +46,6 @@ public class FormularioCorredores extends javax.swing.JDialog {
         jTextFieldDireccionCorredor.setText(corredor.getDireccion());
         jTextFieldTelefonoCorredor.setText(corredor.getTelefono());
         jSpinnerFechaNacimientoCorredor.setValue(corredor.getFecha_nac());
-        modificar = true;
         inicializarPantalla();
     }
 
@@ -298,11 +296,12 @@ public class FormularioCorredores extends javax.swing.JDialog {
 
     private void inicializarValidador() {
         ValidationGroup grupoValidacion = validationPanel.getValidationGroup();
-        grupoValidacion.add(jTextFieldNombreCorredor, new MyValidators.OnlyLetterOrSpace());
+        grupoValidacion.add(jTextFieldNombreCorredor, new MyValidators.OnlyLetterOrSpace(), new MyValidators.NoComma());
         grupoValidacion.add(jTextFieldTelefonoCorredor, new MyValidators.TelephoneValidator());
-        grupoValidacion.add(jTextFieldDireccionCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        grupoValidacion.add(jTextFieldDireccionCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING, new MyValidators.NoComma());
         grupoValidacion.add(jTextFieldDniCorredor, new MyValidators.DniValidator());
         validationPanel.addChangeListener(new ChangeListener() {
+
             @Override
             public void stateChanged(ChangeEvent e) {
                 jButtonEnviarCorredor.setEnabled(validationPanel.getProblem() == null);
@@ -318,37 +317,34 @@ public class FormularioCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonLimpiarCorredorActionPerformed
 
     private void jButtonEnviarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnviarCorredorActionPerformed
-        if (!modificar) {
-            enviar();
-        } else {
-            enviarParaModificar();
-        }
-    }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
-
-    private void enviar() {
         try {
-            LogicaCorredor.getInstance().altaCorredor(
-                    this.jTextFieldDniCorredor.getText(),
-                    this.jTextFieldNombreCorredor.getText(),
-                    (Date) this.jSpinnerFechaNacimientoCorredor.getValue(),
-                    this.jTextFieldDireccionCorredor.getText(),
-                    this.jTextFieldTelefonoCorredor.getText()
-            );
+            if (c_original != null) {
+                String dniAntiguo = c_original.getDni();
+                String dniNuevo = this.jTextFieldDniCorredor.getText();
+                if (!dniAntiguo.equalsIgnoreCase(dniNuevo) && LogicaCorredor.getInstance().contieneCorredor(dniNuevo)) {
+                    throw new ExcepcionesPropias.CorredorRepetido();
+                } else {
+                    c_original.setDni(this.jTextFieldDniCorredor.getText());
+                    c_original.setNombre(this.jTextFieldNombreCorredor.getText());
+                    c_original.setFecha_nac((Date) this.jSpinnerFechaNacimientoCorredor.getValue());
+                    c_original.setDireccion(this.jTextFieldDireccionCorredor.getText());
+                    c_original.setTelefono(this.jTextFieldTelefonoCorredor.getText());
+                }
+            } else {
+                LogicaCorredor.getInstance().altaCorredor(
+                        this.jTextFieldDniCorredor.getText(),
+                        this.jTextFieldNombreCorredor.getText(),
+                        (Date) this.jSpinnerFechaNacimientoCorredor.getValue(),
+                        this.jTextFieldDireccionCorredor.getText(),
+                        this.jTextFieldTelefonoCorredor.getText()
+                );
+            }
             this.dispose();
         } catch (ExcepcionesPropias.CorredorRepetido ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor ya exite", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    }//GEN-LAST:event_jButtonEnviarCorredorActionPerformed
 
-    private void enviarParaModificar() {
-        try {
-            LogicaCorredor.getInstance().bajaCorredor(c_original);
-            enviar();
-            this.dispose();
-        } catch (ExcepcionesPropias.CorredorNoEsta ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "El corredor no exite", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     private void jButtonCancelarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCorredorActionPerformed
         Utiles.salirSinGuardar(this);

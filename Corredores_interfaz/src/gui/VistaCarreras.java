@@ -10,7 +10,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
 import logic.LogicaCarrera;
 import logic.LogicaCorredor;
-import org.openide.util.Exceptions;
 import utils.ExcepcionesPropias;
 
 /**

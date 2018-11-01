@@ -8,6 +8,7 @@ package logic;
 import java.util.List;
 import dto.Carrera;
 import dto.TiemposCorredor;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -18,7 +19,7 @@ import utils.ExcepcionesPropias;
  *
  * @author silvia
  */
-public class LogicaCarrera {
+public class LogicaCarrera implements Serializable{
 
     private static LogicaCarrera INSTANCE;
 
@@ -27,7 +28,7 @@ public class LogicaCarrera {
     private final String[] opcionesOrdenCarreras = {"Id", "Fecha", "Limite participantes", "Numero participantes"};
 
     // METODOS
-    public LogicaCarrera(){
+    private LogicaCarrera(){
         this.carreras = new ArrayList<>();
     }
     
@@ -36,6 +37,10 @@ public class LogicaCarrera {
             INSTANCE = new LogicaCarrera();
         }
         return INSTANCE;
+    }
+    
+    public static void setInstance(LogicaCarrera logicaCarrera) {
+            INSTANCE = logicaCarrera;
     }
 
     // COLECCION CARRERAS
