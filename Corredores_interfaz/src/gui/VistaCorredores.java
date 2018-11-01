@@ -110,13 +110,61 @@ public class VistaCorredores extends javax.swing.JDialog {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableCorredores.setMaximumSize(new java.awt.Dimension(2147483647, 190));
+        jTableCorredores.setMinimumSize(new java.awt.Dimension(190, 190));
+        jTableCorredores.setName(""); // NOI18N
+        jTableCorredores.setPreferredSize(new java.awt.Dimension(300, 190));
+        jTableCorredores.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        jTableCorredores.setSelectionForeground(new java.awt.Color(51, 0, 51));
         jScrollPane1.setViewportView(jTableCorredores);
+        if (jTableCorredores.getColumnModel().getColumnCount() > 0) {
+            jTableCorredores.getColumnModel().getColumn(0).setResizable(false);
+            jTableCorredores.getColumnModel().getColumn(1).setResizable(false);
+            jTableCorredores.getColumnModel().getColumn(2).setResizable(false);
+            jTableCorredores.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxOrdenCorredores.setToolTipText("");
@@ -143,8 +191,8 @@ public class VistaCorredores extends javax.swing.JDialog {
         jPanelListaCorredoresLayout.setVerticalGroup(
             jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelOrdenCorredores))
@@ -295,17 +343,23 @@ public class VistaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
     private void jButtonAniadirACarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirACarreraActionPerformed
-        if (carreraParaAniadir != null) {
-            List<TiemposCorredor> corredores = new ArrayList<>();
+        if (carreraParaAniadir == null) {
+            JOptionPane.showMessageDialog(this, "No se ha podido añadir ningun corredor. La carrera es nula", "Carrera nula", JOptionPane.ERROR_MESSAGE);
+        }else{
+            List<TiemposCorredor> corredoresParaAniadir = new ArrayList<>();
             for (int i : this.jTableCorredores.getSelectedRows()) {
-                corredores.add(new TiemposCorredor(this.carreraParaAniadir.getId(), LogicaCorredor.getInstance().getCorredores().get(i)));
+                corredoresParaAniadir.add(new TiemposCorredor(this.carreraParaAniadir.getId(), LogicaCorredor.getInstance().getCorredores().get(i)));
             }
-            if (corredores.isEmpty()) {
+            if (corredoresParaAniadir.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Corredor no seleccionado", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 try {
-                    LogicaCarrera.getInstance().addCorredores(carreraParaAniadir, corredores);
-                    this.dispose();
+                    if (LogicaCarrera.getInstance().addCorredores(carreraParaAniadir, corredoresParaAniadir)) {
+                        JOptionPane.showMessageDialog(this, "Numero de corredores añadidos : "+Integer.toString(corredoresParaAniadir.size()), "Corredores añadidos", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "No se ha podido añadir ningun corredor", "Corredores no añadidos", JOptionPane.ERROR_MESSAGE);
+                    }
                 } catch (ExcepcionesPropias.CarreraCerrada ex) {
                     JOptionPane.showMessageDialog(this, "La carrera está cerrada y no se pueden añadir corredores", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
                 } catch (ExcepcionesPropias.DemasiadosCorredores ex) {
@@ -315,6 +369,7 @@ public class VistaCorredores extends javax.swing.JDialog {
                 }
             }
         }
+        
     }//GEN-LAST:event_jButtonAniadirACarreraActionPerformed
 
     //  MODELO DE TABLA

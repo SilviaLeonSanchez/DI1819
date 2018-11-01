@@ -69,9 +69,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelIcono = new javax.swing.JLabel();
         jPanelBotones = new javax.swing.JPanel();
         jButtonVerCorredores = new javax.swing.JButton();
-        jButtonNuevaCarrera = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
-        jButtonNuevoCorredor = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -102,21 +100,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelTituloLayout.setHorizontalGroup(
             jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
+                .addGap(78, 78, 78)
                 .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(100, 100, 100))
+                .addGap(78, 78, 78))
             .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelTituloLayout.createSequentialGroup()
-                    .addGap(100, 100, 100)
-                    .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE)
-                    .addGap(100, 100, 100)))
+                    .addContainerGap(94, Short.MAX_VALUE)
+                    .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
+                    .addContainerGap(95, Short.MAX_VALUE)))
         );
         jPanelTituloLayout.setVerticalGroup(
             jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(20, 20, 20))
             .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelTituloLayout.createSequentialGroup()
                     .addGap(25, 25, 25)
@@ -128,21 +126,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelBotones.setMaximumSize(new java.awt.Dimension(32767, 150));
         jPanelBotones.setPreferredSize(new java.awt.Dimension(814, 150));
 
-        jButtonVerCorredores.setText("Ver Corredores");
+        jButtonVerCorredores.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
+        jButtonVerCorredores.setText("CORREDORES");
         jButtonVerCorredores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerCorredoresActionPerformed(evt);
             }
         });
 
-        jButtonNuevaCarrera.setText("Nueva Carrera");
-        jButtonNuevaCarrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevaCarreraActionPerformed(evt);
-            }
-        });
-
-        jButtonSalir.setText("Salir");
+        jButtonSalir.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
+        jButtonSalir.setText("SALIR");
         jButtonSalir.setHideActionText(true);
         jButtonSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -151,14 +144,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonNuevoCorredor.setText("Nuevo Corredor");
-        jButtonNuevoCorredor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNuevoCorredorActionPerformed(evt);
-            }
-        });
-
-        jButtonVerCarreras.setText("Ver Carreras");
+        jButtonVerCarreras.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
+        jButtonVerCarreras.setText("CARRERAS");
         jButtonVerCarreras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerCarrerasActionPerformed(evt);
@@ -170,46 +157,39 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelBotonesLayout.setHorizontalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap(124, Short.MAX_VALUE)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
+                .addGap(124, 124, 124)
+                .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105))
+                .addGap(124, 124, 124))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor, jButtonVerCarreras, jButtonVerCorredores});
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanelBotonesLayout.createSequentialGroup()
-                        .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonVerCorredores)
-                            .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonNuevaCarrera)
-                            .addComponent(jButtonVerCarreras))))
-                .addGap(15, 15, 15))
+                .addGap(30, 30, 30)
+                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonVerCarreras)
+                        .addComponent(jButtonVerCorredores))
+                    .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonNuevaCarrera, jButtonNuevoCorredor, jButtonVerCarreras, jButtonVerCorredores});
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 819, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,16 +206,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         VistaCorredores ventanaCorredores = new VistaCorredores(this, true);
         ventanaCorredores.setVisible(true);
     }//GEN-LAST:event_jButtonVerCorredoresActionPerformed
-
-    private void jButtonNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaCarreraActionPerformed
-        FormularioCarreras ventanaCarrera = new FormularioCarreras(this, true);
-        ventanaCarrera.setVisible(true);
-    }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
-
-    private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
-        FormularioCorredores ventanaCorredor = new FormularioCorredores(this, true);
-        ventanaCorredor.setVisible(true);
-    }//GEN-LAST:event_jButtonNuevoCorredorActionPerformed
 
     private void jButtonVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVerCarrerasActionPerformed
         VistaCarreras ventanaCarreras = new VistaCarreras(this, true);
@@ -293,8 +263,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonNuevaCarrera;
-    private javax.swing.JButton jButtonNuevoCorredor;
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonVerCarreras;
     private javax.swing.JButton jButtonVerCorredores;

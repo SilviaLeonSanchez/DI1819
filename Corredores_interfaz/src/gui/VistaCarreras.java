@@ -111,15 +111,26 @@ public class VistaCarreras extends javax.swing.JDialog {
 
         jTableCarreras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -130,6 +141,7 @@ public class VistaCarreras extends javax.swing.JDialog {
         jTableCarreras.setPreferredSize(new java.awt.Dimension(190, 190));
         jTableCarreras.setSelectionBackground(new java.awt.Color(204, 204, 255));
         jTableCarreras.setSelectionForeground(new java.awt.Color(51, 0, 51));
+        jTableCarreras.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTableCarreras.getTableHeader().setReorderingAllowed(false);
         jTableCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -141,6 +153,8 @@ public class VistaCarreras extends javax.swing.JDialog {
             jTableCarreras.getColumnModel().getColumn(0).setResizable(false);
             jTableCarreras.getColumnModel().getColumn(1).setResizable(false);
             jTableCarreras.getColumnModel().getColumn(2).setResizable(false);
+            jTableCarreras.getColumnModel().getColumn(3).setResizable(false);
+            jTableCarreras.getColumnModel().getColumn(4).setResizable(false);
         }
 
         jComboBoxOrdenCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -176,25 +190,37 @@ public class VistaCarreras extends javax.swing.JDialog {
 
         jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableCorredores.setMaximumSize(new java.awt.Dimension(190, 0));
-        jTableCorredores.setMinimumSize(new java.awt.Dimension(100, 0));
-        jTableCorredores.setPreferredSize(new java.awt.Dimension(190, 0));
-        jTableCorredores.setSelectionBackground(new java.awt.Color(255, 204, 102));
-        jTableCorredores.setSelectionForeground(new java.awt.Color(51, 0, 0));
+        jTableCorredores.setMaximumSize(new java.awt.Dimension(190, 190));
+        jTableCorredores.setMinimumSize(new java.awt.Dimension(100, 190));
+        jTableCorredores.setPreferredSize(new java.awt.Dimension(190, 190));
+        jTableCorredores.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        jTableCorredores.setSelectionForeground(new java.awt.Color(51, 0, 51));
+        jTableCorredores.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableCorredores.getTableHeader().setReorderingAllowed(false);
         jScrollPaneCorredores.setViewportView(jTableCorredores);
         if (jTableCorredores.getColumnModel().getColumnCount() > 0) {
@@ -203,6 +229,8 @@ public class VistaCarreras extends javax.swing.JDialog {
             jTableCorredores.getColumnModel().getColumn(2).setResizable(false);
             jTableCorredores.getColumnModel().getColumn(3).setResizable(false);
             jTableCorredores.getColumnModel().getColumn(4).setResizable(false);
+            jTableCorredores.getColumnModel().getColumn(5).setResizable(false);
+            jTableCorredores.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -243,7 +271,7 @@ public class VistaCarreras extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 663, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneCorredores)
                     .addComponent(jScrollPaneCarreras))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -69,6 +69,7 @@ public class LogicaCorredor implements Serializable{
         }
         return corredores.remove(c);
     }
+    
 
     public void modificarCorredor(Corredor c_original, Corredor c_modificado) {
         corredores.remove(c_original);
