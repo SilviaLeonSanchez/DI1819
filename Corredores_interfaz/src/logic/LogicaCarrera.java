@@ -103,13 +103,13 @@ public class LogicaCarrera implements Serializable{
 
     public boolean addCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
         checkAddCorredor(carrera, corredor);
-        return carrera.getListaCorredores().add(corredor);
+        return carrera.aniadirCorredor(corredor);
     }
     
     public boolean addCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
         for (TiemposCorredor corredor : corredores){
             checkAddCorredor(carrera, corredor);
-            carrera.getListaCorredores().add(corredor);
+            carrera.aniadirCorredor(corredor);
         }
         return true;
     }
@@ -124,7 +124,7 @@ public class LogicaCarrera implements Serializable{
     
     public boolean delCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
         checkDelCorredor(carrera, corredor);
-        return carrera.getListaCorredores().remove(corredor);
+        return carrera.borrarCorredor(corredor);
     }
     
     public boolean delCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
@@ -132,7 +132,7 @@ public class LogicaCarrera implements Serializable{
         while (it.hasNext()){
             TiemposCorredor corredor = it.next();
             checkDelCorredor(carrera, corredor);
-            carrera.getListaCorredores().remove(corredor);
+            carrera.borrarCorredor(corredor);
         }
         return true;
     }

@@ -28,7 +28,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     private int maxCorredores;
     private List<TiemposCorredor> listaCorredores;
 
-    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "PARTICIPANTES", "CERRADA"};
+    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "PARTICIPANTES", "ESTATUS"};
 
     //  METODOS
     public Carrera(String id, String nombre, Date fecha, String lugar, int maxCorredores) {
@@ -145,6 +145,28 @@ public class Carrera implements Serializable, Comparable<Carrera> {
 
     public boolean isCarreraCerrada() {
         return carreraCerrada;
+    }
+    
+    // CORREDORES
+    public boolean contieneCorredor(String dniCorredor){
+        for(TiemposCorredor corredor : listaCorredores){
+            if (corredor.getCorredor().getDni().equalsIgnoreCase(dniCorredor)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean aniadirCorredor(TiemposCorredor corredor){
+        return this.listaCorredores.add(corredor);
+    }
+    
+    public boolean borrarCorredor(TiemposCorredor corredor){
+        return this.listaCorredores.remove(corredor);
+    }
+    
+    public boolean borrarCorredor(int posicionCorredor){
+        return (this.listaCorredores.remove(posicionCorredor)!=null);
     }
 
 }

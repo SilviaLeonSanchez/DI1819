@@ -18,8 +18,8 @@ import utils.ExcepcionesPropias;
  */
 public class VistaCarreras extends javax.swing.JDialog {
 
-    PantallaPrincipal pantallaPrincipal;
-    Carrera carreraSeleccionada;
+    private PantallaPrincipal pantallaPrincipal;
+    private Carrera carreraSeleccionada;
 
     /**
      * Creates new form PantallaCorredor
@@ -40,6 +40,10 @@ public class VistaCarreras extends javax.swing.JDialog {
         rellenarComboBoxOrdenCorredores();
     }
 
+    public Carrera getCarreraSeleccionada() {
+        return carreraSeleccionada;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +62,7 @@ public class VistaCarreras extends javax.swing.JDialog {
         jComboBoxOrdenCarreras = new javax.swing.JComboBox<>();
         jLabelOrdenCarreras = new javax.swing.JLabel();
         jScrollPaneCorredores = new javax.swing.JScrollPane();
-        jTableCorredores = new javax.swing.JTable();
+        jTableTiemposCorredores = new javax.swing.JTable();
         jPanelComboBoxOrdenCorredores = new javax.swing.JPanel();
         jComboBoxOrdenCorredores = new javax.swing.JComboBox<>();
         jLabelOrdenCorredores = new javax.swing.JLabel();
@@ -188,7 +192,7 @@ public class VistaCarreras extends javax.swing.JDialog {
                 .addGap(161, 161, 161))
         );
 
-        jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTiemposCorredores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -215,22 +219,22 @@ public class VistaCarreras extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTableCorredores.setMaximumSize(new java.awt.Dimension(190, 190));
-        jTableCorredores.setMinimumSize(new java.awt.Dimension(100, 190));
-        jTableCorredores.setPreferredSize(new java.awt.Dimension(190, 190));
-        jTableCorredores.setSelectionBackground(new java.awt.Color(204, 204, 255));
-        jTableCorredores.setSelectionForeground(new java.awt.Color(51, 0, 51));
-        jTableCorredores.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jTableCorredores.getTableHeader().setReorderingAllowed(false);
-        jScrollPaneCorredores.setViewportView(jTableCorredores);
-        if (jTableCorredores.getColumnModel().getColumnCount() > 0) {
-            jTableCorredores.getColumnModel().getColumn(0).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(1).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(2).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(3).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(4).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(5).setResizable(false);
-            jTableCorredores.getColumnModel().getColumn(6).setResizable(false);
+        jTableTiemposCorredores.setMaximumSize(new java.awt.Dimension(190, 190));
+        jTableTiemposCorredores.setMinimumSize(new java.awt.Dimension(100, 190));
+        jTableTiemposCorredores.setPreferredSize(new java.awt.Dimension(190, 190));
+        jTableTiemposCorredores.setSelectionBackground(new java.awt.Color(204, 204, 255));
+        jTableTiemposCorredores.setSelectionForeground(new java.awt.Color(51, 0, 51));
+        jTableTiemposCorredores.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableTiemposCorredores.getTableHeader().setReorderingAllowed(false);
+        jScrollPaneCorredores.setViewportView(jTableTiemposCorredores);
+        if (jTableTiemposCorredores.getColumnModel().getColumnCount() > 0) {
+            jTableTiemposCorredores.getColumnModel().getColumn(0).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(1).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(2).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(3).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(4).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(5).setResizable(false);
+            jTableTiemposCorredores.getColumnModel().getColumn(6).setResizable(false);
         }
 
         jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -453,11 +457,8 @@ public class VistaCarreras extends javax.swing.JDialog {
 
     // TABLA TIEMPOS CORREDORES
     private void refrescarTablaTiemposCorredores() {
-        if (this.carreraSeleccionada == null) {
-            this.jTableCorredores.setModel(new TableModelTiemposCorredor(new ArrayList<>()));
-        } else {
-            this.jTableCorredores.setModel(new TableModelTiemposCorredor(this.carreraSeleccionada.getListaCorredores()));
-        }
+        ArrayList<TiemposCorredor> corredores = (this.carreraSeleccionada == null) ? (new ArrayList<>()) : (this.carreraSeleccionada.getListaCorredores());
+        this.jTableTiemposCorredores.setModel(new TableModelTiemposCorredor(corredores));
     }
 
     private void rellenarComboBoxOrdenCorredores() {
@@ -508,7 +509,7 @@ public class VistaCarreras extends javax.swing.JDialog {
         } else {
             try {
                 List<TiemposCorredor> corredores = new ArrayList<>();
-                for (int i : this.jTableCorredores.getSelectedRows()) {
+                for (int i : this.jTableTiemposCorredores.getSelectedRows()) {
                     corredores.add(this.carreraSeleccionada.getListaCorredores().get(i));
                 }
                 if (corredores.isEmpty()) {
@@ -556,10 +557,10 @@ public class VistaCarreras extends javax.swing.JDialog {
 
     public static class TableModelTiemposCorredor extends AbstractTableModel {
 
-        private final List<TiemposCorredor> listaCorredores;
+        private final List<TiemposCorredor> corredoresCarreraSeleccionada;
 
         public TableModelTiemposCorredor(List<TiemposCorredor> listaCorredores) {
-            this.listaCorredores = listaCorredores;
+            this.corredoresCarreraSeleccionada = listaCorredores;
         }
 
         @Override
@@ -569,7 +570,7 @@ public class VistaCarreras extends javax.swing.JDialog {
 
         @Override
         public int getRowCount() {
-            return listaCorredores.size();
+            return corredoresCarreraSeleccionada.size();
         }
 
         @Override
@@ -579,11 +580,14 @@ public class VistaCarreras extends javax.swing.JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return listaCorredores.get(rowIndex).toArray()[columnIndex];
+            return corredoresCarreraSeleccionada.get(rowIndex).toArray()[columnIndex];
         }
 
     }
 
+    private void cargarTablaCorredores() {
+        this.jTableTiemposCorredores.setModel(new VistaCorredores.TableModelCorredor());
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAddCorredor;
@@ -605,6 +609,6 @@ public class VistaCarreras extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPaneCarreras;
     private javax.swing.JScrollPane jScrollPaneCorredores;
     private javax.swing.JTable jTableCarreras;
-    private javax.swing.JTable jTableCorredores;
+    private javax.swing.JTable jTableTiemposCorredores;
     // End of variables declaration//GEN-END:variables
 }

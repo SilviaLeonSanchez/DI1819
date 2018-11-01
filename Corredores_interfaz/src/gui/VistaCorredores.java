@@ -18,8 +18,8 @@ import utils.ExcepcionesPropias;
  */
 public class VistaCorredores extends javax.swing.JDialog {
 
-    PantallaPrincipal pantallaPrincipal;
-    Carrera carreraParaAniadir;
+    private PantallaPrincipal pantallaPrincipal;
+    private Carrera carreraParaAniadir;
 
     /**
      * Creates new form PantallaCorredor
@@ -355,7 +355,7 @@ public class VistaCorredores extends javax.swing.JDialog {
             } else {
                 try {
                     if (LogicaCarrera.getInstance().addCorredores(carreraParaAniadir, corredoresParaAniadir)) {
-                        JOptionPane.showMessageDialog(this, "Numero de corredores añadidos : "+Integer.toString(corredoresParaAniadir.size()), "Corredores añadidos", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(this, "Corredores añadidos correctamente", "Corredores añadidos", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
                     }else{
                         JOptionPane.showMessageDialog(this, "No se ha podido añadir ningun corredor", "Corredores no añadidos", JOptionPane.ERROR_MESSAGE);
@@ -392,8 +392,7 @@ public class VistaCorredores extends javax.swing.JDialog {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            String array[] = LogicaCorredor.getInstance().getCorredores().get(rowIndex).toArray();
-            return array[columnIndex];
+            return LogicaCorredor.getInstance().getCorredores().get(rowIndex).toArray()[columnIndex];
         }
 
     }
