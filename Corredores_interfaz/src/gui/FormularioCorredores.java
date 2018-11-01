@@ -298,7 +298,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
 
     private void inicializarValidador() {
         ValidationGroup grupoValidacion = validationPanel.getValidationGroup();
-        grupoValidacion.add(jTextFieldNombreCorredor, new MyValidators.OnlyLetter());
+        grupoValidacion.add(jTextFieldNombreCorredor, new MyValidators.OnlyLetterOrSpace());
         grupoValidacion.add(jTextFieldTelefonoCorredor, new MyValidators.TelephoneValidator());
         grupoValidacion.add(jTextFieldDireccionCorredor, StringValidators.REQUIRE_NON_EMPTY_STRING);
         grupoValidacion.add(jTextFieldDniCorredor, new MyValidators.DniValidator());

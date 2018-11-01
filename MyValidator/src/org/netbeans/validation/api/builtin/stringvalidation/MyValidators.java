@@ -82,7 +82,30 @@ public class MyValidators {
                     }
                 }
                 if (!ok) {
-                    String msg = NbBundle.getMessage(OnlyLetter.class, "ONLY_LETTERS", nombreComponente);
+                    String msg = NbBundle.getMessage(OnlyLetter.class, "ONLY_LETTER", nombreComponente);
+                    problemas.add(msg);
+                }
+            }
+        }
+    }
+    
+    public static class OnlyLetterOrSpace extends StringValidator {
+
+        @Override
+        public void validate(Problems problemas, String nombreComponente, String texto) {
+
+            boolean ok = true;
+            if (texto.length() == 0) {
+                String msg = NbBundle.getMessage(OnlyLetter.class, "MSG_MAY_NOT_BE_EMPTY", nombreComponente);
+                problemas.add(msg);
+            } else {
+                for (int i = 0; i < texto.length(); i++) {
+                    if (!(Character.isAlphabetic(texto.charAt(i)) || Character.isSpaceChar(texto.charAt(i)))) {
+                        ok = false;
+                    }
+                }
+                if (!ok) {
+                    String msg = NbBundle.getMessage(OnlyLetter.class, "ONLY_LETTER_OR_SPACE", nombreComponente);
                     problemas.add(msg);
                 }
             }

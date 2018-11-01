@@ -7,9 +7,11 @@ package logic;
 
 import java.util.List;
 import dto.Carrera;
+import dto.TiemposCorredor;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Iterator;
 import utils.ExcepcionesPropias;
 
 /**
@@ -36,7 +38,7 @@ public class LogicaCarrera {
         return INSTANCE;
     }
 
-    // COLECCION
+    // COLECCION CARRERAS
     public List<Carrera> getCarreras() {
         return carreras;
     }
@@ -81,6 +83,56 @@ public class LogicaCarrera {
         return true;
     }
 
+    // COLECCION CORREDORES DE CARRERA
+    private void checkAddCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
+        if (corredor == null) {
+            throw new IllegalArgumentException("El corredor no puede ser null");
+        } else if (carrera.getListaCorredores().contains(corredor)) {
+            throw new ExcepcionesPropias.CorredorRepetido();
+        } else if (carrera.isCarreraCerrada()) {
+            throw new ExcepcionesPropias.CarreraCerrada();
+        } else if (carrera.getListaCorredores().size() >= carrera.getMaxCorredores()) {
+            throw new ExcepcionesPropias.DemasiadosCorredores();
+        }
+    }
+
+    public boolean addCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
+        checkAddCorredor(carrera, corredor);
+        return carrera.getListaCorredores().add(corredor);
+    }
+    
+    public boolean addCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
+        for (TiemposCorredor corredor : corredores){
+            checkAddCorredor(carrera, corredor);
+            carrera.getListaCorredores().add(corredor);
+        }
+        return true;
+    }
+    
+    private void checkDelCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
+        if (!carrera.getListaCorredores().contains(corredor)) {
+            throw new ExcepcionesPropias.CorredorNoEsta();
+        } else if (carrera.isCarreraCerrada()) {
+            throw new ExcepcionesPropias.CarreraCerrada();
+        }
+    }
+    
+    public boolean delCorredor(Carrera carrera, TiemposCorredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
+        checkDelCorredor(carrera, corredor);
+        return carrera.getListaCorredores().remove(corredor);
+    }
+    
+    public boolean delCorredores(Carrera carrera, List<TiemposCorredor> corredores) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada  {
+        Iterator<TiemposCorredor> it = corredores.iterator();
+        while (it.hasNext()){
+            TiemposCorredor corredor = it.next();
+            checkDelCorredor(carrera, corredor);
+            carrera.getListaCorredores().remove(corredor);
+        }
+        return true;
+    }
+    
+    
     // ORDENACION    
     public String[] getOpcionesOrdenCarreras() {
         return opcionesOrdenCarreras;

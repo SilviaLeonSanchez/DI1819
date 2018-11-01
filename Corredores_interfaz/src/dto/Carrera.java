@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import utils.ExcepcionesPropias;
 import utils.Utiles;
 
 /**
@@ -29,7 +28,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     private int maxCorredores;
     private List<TiemposCorredor> listaCorredores;
 
-    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "CERRADA"};
+    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "PARTICIPANTES", "CERRADA"};
 
     //  METODOS
     public Carrera(String id, String nombre, Date fecha, String lugar, int maxCorredores) {
@@ -40,6 +39,17 @@ public class Carrera implements Serializable, Comparable<Carrera> {
         this.maxCorredores = maxCorredores;
         this.listaCorredores = new ArrayList<>();
         this.carreraCerrada = false;
+    }
+
+    @Override
+    public String toString() {
+        String string = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", carreraCerrada=" + carreraCerrada + ", maxCorredores=" + maxCorredores + '}';
+        string += "\tCorredores{\n";
+        for (TiemposCorredor c : listaCorredores) {
+            string.concat("\n\t\t"+c.toString());
+        }
+        string += "\t}";
+        return string;
     }
 
     @Override
@@ -71,13 +81,14 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     }
 
     public String[] toArray() {
-        String array[] = new String[6];
+        String array[] = new String[7];
         array[0] = this.id;
         array[1] = this.nombre;
         array[2] = Utiles.Sdf.format(this.fecha);
         array[3] = this.lugar;
         array[4] = Integer.toString(this.maxCorredores);
-        array[5] = ((this.carreraCerrada) ? ("CERRADA") : ("ABIERTA"));
+        array[5] = Integer.toString(getListaCorredores().size());
+        array[6] = ((this.carreraCerrada) ? ("CERRADA") : ("ABIERTA"));
         return array;
     }
 
@@ -108,8 +119,8 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     }
 
     // GETTER
-    public List<TiemposCorredor> getListaCorredores() {
-        return listaCorredores;
+    public ArrayList<TiemposCorredor> getListaCorredores() {
+        return new ArrayList<>(listaCorredores);
     }
 
     public int getMaxCorredores() {
@@ -134,42 +145,6 @@ public class Carrera implements Serializable, Comparable<Carrera> {
 
     public boolean isCarreraCerrada() {
         return carreraCerrada;
-    }
-
-    // CORREDORES
-    public boolean addCorredor(TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
-        checkAddCorredor(corredor);
-        return this.listaCorredores.add(corredor);
-    }
-    
-    public boolean addCorredores(List<TiemposCorredor> corredores) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido{
-        for (TiemposCorredor c : corredores){
-            checkAddCorredor(c);
-            this.listaCorredores.add(c);
-        }
-        return true;
-    }
-    
-    private void checkAddCorredor(TiemposCorredor corredor) throws ExcepcionesPropias.CarreraCerrada, ExcepcionesPropias.DemasiadosCorredores, ExcepcionesPropias.CorredorRepetido {
-        if (corredor == null) {
-            throw new IllegalArgumentException("El corredor no puede ser null");
-        } else if (this.listaCorredores.contains(corredor)) {
-            throw new ExcepcionesPropias.CorredorRepetido();
-        } else if (this.carreraCerrada) {
-            throw new ExcepcionesPropias.CarreraCerrada();
-        } else if (this.listaCorredores.size() >= this.maxCorredores) {
-            throw new ExcepcionesPropias.DemasiadosCorredores();
-        }
-    }
-
-    public boolean delCorredor(Corredor corredor) throws ExcepcionesPropias.CorredorNoEsta, ExcepcionesPropias.CarreraCerrada {
-        if (!this.listaCorredores.contains(corredor)) {
-            throw new ExcepcionesPropias.CorredorNoEsta();
-        } else if (this.carreraCerrada) {
-            throw new ExcepcionesPropias.CarreraCerrada();
-        } else {
-            return this.listaCorredores.remove(corredor);
-        }
     }
 
 }

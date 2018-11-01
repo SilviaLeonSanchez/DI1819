@@ -21,7 +21,6 @@ import org.openide.util.Exceptions;
 public class PantallaPrincipal extends javax.swing.JFrame {
 
     private static final String RUTA_LOGO = "/gui/img/icono.jpeg";
-    
 
     /**
      * Creates new form PantallaInicial
@@ -38,10 +37,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 LogicaGuardado.getInstance().guardarDatos();
             }
         });
-        //jLabelIcono.setIcon(new ImageIcon(getClass().getResource(RUTA_LOGO)));
-        //setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
         setTitle("MarAppTon");
-        setLocationRelativeTo(null); // centrar en la pantalla
+        try {
+            setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
+        } catch (NullPointerException ex) {
+        }
+        setLocationRelativeTo(null); 
         LogicaGuardado.getInstance().cargarDatos();
     }
 

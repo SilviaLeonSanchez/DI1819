@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import logic.LogicaCarrera;
 import logic.LogicaCorredor;
 import utils.ExcepcionesPropias;
 
@@ -299,15 +300,19 @@ public class VistaCorredores extends javax.swing.JDialog {
             for (int i : this.jTableCorredores.getSelectedRows()) {
                 corredores.add(new TiemposCorredor(this.carreraParaAniadir.getId(), LogicaCorredor.getInstance().getCorredores().get(i)));
             }
-            try {
-                carreraParaAniadir.addCorredores(corredores);
-                this.dispose();
-            } catch (ExcepcionesPropias.CarreraCerrada ex) {
-                JOptionPane.showMessageDialog(this, "La carrera está cerrada y no se pueden añadir corredores", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
-            } catch (ExcepcionesPropias.DemasiadosCorredores ex) {
-                JOptionPane.showMessageDialog(this, "No se puede superar el número máximo de corredores para la carrera", "Demasiados corredores", JOptionPane.INFORMATION_MESSAGE);
-            } catch (ExcepcionesPropias.CorredorRepetido ex) {
-                JOptionPane.showMessageDialog(this, "El corredor ya esta incluido en la lista de corredores de la carrera", "Corredor repetido", JOptionPane.INFORMATION_MESSAGE);
+            if (corredores.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Corredor no seleccionado", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                try {
+                    LogicaCarrera.getInstance().addCorredores(carreraParaAniadir, corredores);
+                    this.dispose();
+                } catch (ExcepcionesPropias.CarreraCerrada ex) {
+                    JOptionPane.showMessageDialog(this, "La carrera está cerrada y no se pueden añadir corredores", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
+                } catch (ExcepcionesPropias.DemasiadosCorredores ex) {
+                    JOptionPane.showMessageDialog(this, "No se puede superar el número máximo de corredores para la carrera", "Demasiados corredores", JOptionPane.INFORMATION_MESSAGE);
+                } catch (ExcepcionesPropias.CorredorRepetido ex) {
+                    JOptionPane.showMessageDialog(this, "El corredor ya esta incluido en la lista de corredores de la carrera", "Corredor repetido", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_jButtonAniadirACarreraActionPerformed

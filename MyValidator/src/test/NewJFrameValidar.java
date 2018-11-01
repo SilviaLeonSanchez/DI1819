@@ -25,6 +25,7 @@ public class NewJFrameValidar extends javax.swing.JFrame {
         jButtonAceptar.setEnabled(false);
 
         ValidationGroup group = validationPanel.getValidationGroup();
+        group.add(jTextFieldNombre, new MyValidators.OnlyLetterOrSpace());
         group.add(jTextFieldDni, new MyValidators.DniValidator());
         group.add(jTextFieldTelefono, new MyValidators.TelephoneValidator());
 
@@ -57,6 +58,8 @@ public class NewJFrameValidar extends javax.swing.JFrame {
         jLabelTelefono = new javax.swing.JLabel();
         jTextFieldDni = new javax.swing.JTextField();
         jTextFieldTelefono = new javax.swing.JTextField();
+        jLabelNombre = new javax.swing.JLabel();
+        jTextFieldNombre = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +73,10 @@ public class NewJFrameValidar extends javax.swing.JFrame {
 
         jTextFieldTelefono.setName("Telefono"); // NOI18N
 
+        jLabelNombre.setText("Nombre");
+
+        jTextFieldNombre.setName(jLabelNombre.getText());
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,23 +87,30 @@ public class NewJFrameValidar extends javax.swing.JFrame {
                         .addGap(156, 156, 156)
                         .addComponent(jButtonAceptar))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabeldni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(73, 73, 73)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldDni, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                            .addComponent(jTextFieldTelefono)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(45, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jLabeldni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabelTelefono))
+                                    .addComponent(jLabelNombre))
+                                .addGap(73, 73, 73)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldDni)
+                                    .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                    .addComponent(jTextFieldNombre))))))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addContainerGap(41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelNombre)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabeldni)
                     .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -104,7 +118,7 @@ public class NewJFrameValidar extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTelefono)
                     .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(validationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonAceptar)
@@ -153,9 +167,11 @@ public class NewJFrameValidar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabeldni;
     private javax.swing.JTextField jTextFieldDni;
+    private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldTelefono;
     private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel;
     // End of variables declaration//GEN-END:variables

@@ -30,30 +30,40 @@
                       <Component id="jButtonAceptar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabeldni" max="32767" attributes="0"/>
-                          <Component id="jLabelTelefono" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jTextFieldDni" pref="104" max="32767" attributes="0"/>
-                          <Component id="jTextFieldTelefono" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-                      <Component id="validationPanel" min="-2" pref="311" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="validationPanel" min="-2" pref="311" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabeldni" max="32767" attributes="0"/>
+                                      <Component id="jLabelTelefono" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="jLabelNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jTextFieldDni" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldTelefono" pref="104" max="32767" attributes="0"/>
+                                  <Component id="jTextFieldNombre" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="45" max="32767" attributes="0"/>
+              <EmptySpace pref="40" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+              <EmptySpace pref="41" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabelNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jTextFieldNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabeldni" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldDni" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -63,7 +73,7 @@
                   <Component id="jLabelTelefono" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextFieldTelefono" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="25" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="validationPanel" min="-2" pref="36" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonAceptar" min="-2" max="-2" attributes="0"/>
@@ -98,6 +108,18 @@
     <Component class="javax.swing.JTextField" name="jTextFieldTelefono">
       <Properties>
         <Property name="name" type="java.lang.String" value="Telefono" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabelNombre">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nombre"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+      <Properties>
+        <Property name="name" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection component="jLabelNombre" name="text" type="property"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>

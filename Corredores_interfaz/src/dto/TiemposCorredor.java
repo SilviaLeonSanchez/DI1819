@@ -19,8 +19,8 @@ import utils.Utiles;
 public class TiemposCorredor implements Serializable{
 
     // ATRIBUTOS
-    private final Corredor corredor;
     private final String idCarrera;
+    private final Corredor corredor;
     private final String dorsal;
     private Duration tiempo;
     public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO", "DORSAL", "TIEMPO"};
