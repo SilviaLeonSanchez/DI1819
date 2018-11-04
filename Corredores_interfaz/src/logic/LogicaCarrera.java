@@ -26,7 +26,6 @@ public class LogicaCarrera implements Serializable {
 
     // ATRIBUTOS
     private List<Carrera> carreras;
-    private final String[] opcionesOrdenCarreras = {"Id", "Fecha", "Limite participantes", "Numero participantes"};
 
     // METODOS
     private LogicaCarrera() {
@@ -165,25 +164,5 @@ public class LogicaCarrera implements Serializable {
         return isOk;
     }
 
-    // ORDENACION    
-    public String[] getOpcionesOrdenCarreras() {
-        return opcionesOrdenCarreras;
-    }
-
-    public void ordenarId() {
-        Collections.sort(carreras);
-    }
-
-    public void ordenarFecha() {
-        this.carreras.sort((Carrera o1, Carrera o2) -> o1.getFecha().compareTo(o2.getFecha()));
-    }
-
-    public void ordenarMaxCorredores() {
-        this.carreras.sort((Carrera o1, Carrera o2) -> Integer.compare(o1.getMaxCorredores(), o2.getMaxCorredores()));
-    }
-
-    public void ordenarNumCorredores() {
-        this.carreras.sort((Carrera o1, Carrera o2) -> Integer.compare(o1.getListaCorredores().size(), o2.getListaCorredores().size()));
-    }
 
 }

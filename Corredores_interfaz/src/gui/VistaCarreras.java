@@ -7,9 +7,12 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 import logic.LogicaCarrera;
-import logic.LogicaCorredor;
 import utils.ExcepcionesPropias;
 
 /**
@@ -19,6 +22,8 @@ import utils.ExcepcionesPropias;
 public class VistaCarreras extends javax.swing.JDialog {
 
     private PantallaPrincipal pantallaPrincipal;
+    private TableRowSorter<TableModelTiemposCorredor> sorterCorredores;
+    private TableRowSorter<TableModelCarrera> sorterCarreras;
     private Carrera carreraSeleccionada;
 
     /**
@@ -35,9 +40,9 @@ public class VistaCarreras extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         jTableCarreras.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         refrescarTablaCarreras();
-        rellenarComboBoxOrdenCarreras();
+        rellenarComboBoxFiltroCarreras();
         refrescarTablaTiemposCorredores();
-        rellenarComboBoxOrdenCorredores();
+        rellenarComboBoxFiltroCorredores();
     }
 
     public Carrera getCarreraSeleccionada() {
@@ -59,13 +64,15 @@ public class VistaCarreras extends javax.swing.JDialog {
         jScrollPaneCarreras = new javax.swing.JScrollPane();
         jTableCarreras = new javax.swing.JTable();
         jPanelComboBoxOrdenCarreras = new javax.swing.JPanel();
-        jComboBoxOrdenCarreras = new javax.swing.JComboBox<>();
-        jLabelOrdenCarreras = new javax.swing.JLabel();
+        jTextFieldFiltrarCarreras = new javax.swing.JTextField();
+        jButtonFiltrarCarreras = new javax.swing.JButton();
+        jComboBoxFiltroCarreras = new javax.swing.JComboBox<>();
         jScrollPaneCorredores = new javax.swing.JScrollPane();
         jTableTiemposCorredores = new javax.swing.JTable();
         jPanelComboBoxOrdenCorredores = new javax.swing.JPanel();
-        jComboBoxOrdenCorredores = new javax.swing.JComboBox<>();
-        jLabelOrdenCorredores = new javax.swing.JLabel();
+        jTextFieldFiltrarCorredores = new javax.swing.JTextField();
+        jButtonFiltrarCorredores = new javax.swing.JButton();
+        jComboBoxFiltroCorredores = new javax.swing.JComboBox<>();
         jPanelBotonesListaCarreras = new javax.swing.JPanel();
         jButtonVolver = new javax.swing.JButton();
         jButtonNueva = new javax.swing.JButton();
@@ -77,12 +84,13 @@ public class VistaCarreras extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
-        jPanelTituloVerCarreras.setMaximumSize(new java.awt.Dimension(600, 100));
-        jPanelTituloVerCarreras.setMinimumSize(new java.awt.Dimension(600, 100));
-        jPanelTituloVerCarreras.setPreferredSize(new java.awt.Dimension(600, 100));
+        jPanelTituloVerCarreras.setMaximumSize(new java.awt.Dimension(600, 75));
+        jPanelTituloVerCarreras.setMinimumSize(new java.awt.Dimension(600, 75));
+        jPanelTituloVerCarreras.setPreferredSize(new java.awt.Dimension(600, 75));
 
         jLabelTituloVerCarreras.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabelTituloVerCarreras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -95,16 +103,16 @@ public class VistaCarreras extends javax.swing.JDialog {
         jPanelTituloVerCarrerasLayout.setHorizontalGroup(
             jPanelTituloVerCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloVerCarrerasLayout.createSequentialGroup()
-                .addContainerGap(200, Short.MAX_VALUE)
+                .addContainerGap(98, Short.MAX_VALUE)
                 .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(200, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanelTituloVerCarrerasLayout.setVerticalGroup(
             jPanelTituloVerCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloVerCarrerasLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addGap(12, 12, 12)
+                .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
         );
 
         getContentPane().add(jPanelTituloVerCarreras, java.awt.BorderLayout.PAGE_START);
@@ -161,15 +169,14 @@ public class VistaCarreras extends javax.swing.JDialog {
             jTableCarreras.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        jComboBoxOrdenCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxOrdenCarreras.setToolTipText("");
-        jComboBoxOrdenCarreras.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFiltrarCarreras.setText("Filtrar");
+        jButtonFiltrarCarreras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxOrdenCarrerasActionPerformed(evt);
+                jButtonFiltrarCarrerasActionPerformed(evt);
             }
         });
 
-        jLabelOrdenCarreras.setText("Orden");
+        jComboBoxFiltroCarreras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanelComboBoxOrdenCarrerasLayout = new javax.swing.GroupLayout(jPanelComboBoxOrdenCarreras);
         jPanelComboBoxOrdenCarreras.setLayout(jPanelComboBoxOrdenCarrerasLayout);
@@ -178,18 +185,20 @@ public class VistaCarreras extends javax.swing.JDialog {
             .addGroup(jPanelComboBoxOrdenCarrerasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelComboBoxOrdenCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelOrdenCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxOrdenCarreras, 0, 113, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jTextFieldFiltrarCarreras)
+                    .addComponent(jButtonFiltrarCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(jComboBoxFiltroCarreras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelComboBoxOrdenCarrerasLayout.setVerticalGroup(
             jPanelComboBoxOrdenCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelComboBoxOrdenCarrerasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelOrdenCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxOrdenCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(jComboBoxFiltroCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldFiltrarCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(jButtonFiltrarCarreras))
         );
 
         jTableTiemposCorredores.setModel(new javax.swing.table.DefaultTableModel(
@@ -237,15 +246,14 @@ public class VistaCarreras extends javax.swing.JDialog {
             jTableTiemposCorredores.getColumnModel().getColumn(6).setResizable(false);
         }
 
-        jComboBoxOrdenCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxOrdenCorredores.setToolTipText("");
-        jComboBoxOrdenCorredores.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFiltrarCorredores.setText("Filtrar");
+        jButtonFiltrarCorredores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxOrdenCorredoresActionPerformed(evt);
+                jButtonFiltrarCorredoresActionPerformed(evt);
             }
         });
 
-        jLabelOrdenCorredores.setText("Orden");
+        jComboBoxFiltroCorredores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanelComboBoxOrdenCorredoresLayout = new javax.swing.GroupLayout(jPanelComboBoxOrdenCorredores);
         jPanelComboBoxOrdenCorredores.setLayout(jPanelComboBoxOrdenCorredoresLayout);
@@ -253,19 +261,21 @@ public class VistaCarreras extends javax.swing.JDialog {
             jPanelComboBoxOrdenCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelComboBoxOrdenCorredoresLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelComboBoxOrdenCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabelOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxOrdenCorredores, 0, 113, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanelComboBoxOrdenCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonFiltrarCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(jTextFieldFiltrarCorredores)
+                    .addComponent(jComboBoxFiltroCorredores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelComboBoxOrdenCorredoresLayout.setVerticalGroup(
             jPanelComboBoxOrdenCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelComboBoxOrdenCorredoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelComboBoxOrdenCorredoresLayout.createSequentialGroup()
+                .addContainerGap(117, Short.MAX_VALUE)
+                .addComponent(jComboBoxFiltroCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextFieldFiltrarCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(160, 160, 160))
+                .addComponent(jButtonFiltrarCorredores))
         );
 
         javax.swing.GroupLayout jPanelTablasLayout = new javax.swing.GroupLayout(jPanelTablas);
@@ -275,23 +285,24 @@ public class VistaCarreras extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPaneCorredores)
+                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
                     .addComponent(jScrollPaneCarreras))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelComboBoxOrdenCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelComboBoxOrdenCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanelTablasLayout.setVerticalGroup(
             jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTablasLayout.createSequentialGroup()
-                .addComponent(jPanelComboBoxOrdenCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanelTablasLayout.createSequentialGroup()
-                .addComponent(jScrollPaneCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPaneCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelComboBoxOrdenCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelComboBoxOrdenCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -346,7 +357,7 @@ public class VistaCarreras extends javax.swing.JDialog {
         jPanelBotonesListaCarrerasLayout.setHorizontalGroup(
             jPanelBotonesListaCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCarrerasLayout.createSequentialGroup()
-                .addGap(161, 161, 161)
+                .addGap(163, 163, 163)
                 .addGroup(jPanelBotonesListaCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBotonesListaCarrerasLayout.createSequentialGroup()
                         .addComponent(jButtonModificar)
@@ -360,7 +371,7 @@ public class VistaCarreras extends javax.swing.JDialog {
                         .addComponent(jButtonAddCorredor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonBorrar)))
-                .addGap(165, 165, 165))
+                .addGap(163, 163, 163))
         );
 
         jPanelBotonesListaCarrerasLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonAddCorredor, jButtonBorrar, jButtonBorrarCorredor, jButtonModificar, jButtonNueva, jButtonVolver});
@@ -378,7 +389,7 @@ public class VistaCarreras extends javax.swing.JDialog {
                     .addComponent(jButtonModificar)
                     .addComponent(jButtonBorrarCorredor)
                     .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
         );
 
         jPanelBotonesListaCarrerasLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAddCorredor, jButtonBorrar, jButtonBorrarCorredor, jButtonModificar, jButtonNueva, jButtonVolver});
@@ -397,29 +408,16 @@ public class VistaCarreras extends javax.swing.JDialog {
         if (jTableCarreras.getSelectedRow() == -1) {
             this.carreraSeleccionada = null;
         }
-        this.jTableCarreras.setModel(new TableModelCarrera());
+        TableModelCarrera model = new TableModelCarrera();
+        this.jTableCarreras.setModel(model);
+        
+        this.sorterCarreras = new TableRowSorter<>(model);
+        this.jTableCarreras.setRowSorter(sorterCarreras);
+        
+         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorterCarreras.setSortKeys(sortKeys);
     }
-
-    private void rellenarComboBoxOrdenCarreras() {
-        this.jComboBoxOrdenCarreras.setModel(new DefaultComboBoxModel<>(LogicaCarrera.getInstance().getOpcionesOrdenCarreras()));
-    }
-
-    private void jComboBoxOrdenCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCarrerasActionPerformed
-        switch (jComboBoxOrdenCarreras.getSelectedIndex()) {
-            case 0:
-                LogicaCarrera.getInstance().ordenarId();
-            case 1:
-                LogicaCarrera.getInstance().ordenarFecha();
-                break;
-            case 2:
-                LogicaCarrera.getInstance().ordenarMaxCorredores();
-                break;
-            case 3:
-                LogicaCarrera.getInstance().ordenarNumCorredores();
-                break;
-        }
-        refrescarTablaCarreras();
-    }//GEN-LAST:event_jComboBoxOrdenCarrerasActionPerformed
 
     // BOTONES
     private void jButtonNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaActionPerformed
@@ -459,36 +457,28 @@ public class VistaCarreras extends javax.swing.JDialog {
 
     // TABLA TIEMPOS CORREDORES
     private void refrescarTablaTiemposCorredores() {
-        ArrayList<TiemposCorredor> corredores = (this.carreraSeleccionada == null) ? (new ArrayList<>()) : (this.carreraSeleccionada.getListaCorredores());
-        this.jTableTiemposCorredores.setModel(new TableModelTiemposCorredor(corredores));
+        ArrayList<TiemposCorredor> corredores = (this.carreraSeleccionada == null) ? (new ArrayList<>()) : (this.carreraSeleccionada.getListaCorredores()); 
+        
+        // Modelo de la tabla
+        TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredores);
+        this.jTableTiemposCorredores.setModel(model);
+        
+        // Sorter para las filas
+        sorterCorredores = new TableRowSorter<>(model);
+        this.jTableTiemposCorredores.setRowSorter(sorterCorredores);
+        
+        // Ordenar por defecto
+        List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+        sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+        sorterCorredores.setSortKeys(sortKeys);
     }
 
-    private void rellenarComboBoxOrdenCorredores() {
-        this.jComboBoxOrdenCorredores.setModel(new DefaultComboBoxModel<>(LogicaCorredor.getInstance().getOpcionesOrdenCorredores()));
-    }
-
-    private void jComboBoxOrdenCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxOrdenCorredoresActionPerformed
-        switch (jComboBoxOrdenCorredores.getSelectedIndex()) {
-            case 0:
-                LogicaCorredor.getInstance().ordenarDni();
-                break;
-            case 1:
-                LogicaCorredor.getInstance().ordenarNombre();
-                break;
-            case 2:
-                LogicaCorredor.getInstance().ordenarFechaNac();
-                break;
-        }
-        refrescarTablaTiemposCorredores();
-    }//GEN-LAST:event_jComboBoxOrdenCorredoresActionPerformed
-
-    // INSERTAR CORREDORES
     private void jButtonAddCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddCorredorActionPerformed
         if (this.carreraSeleccionada == null) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Carrera no seleccionada", JOptionPane.INFORMATION_MESSAGE);
         } else if (this.carreraSeleccionada.isCarreraCerrada()) {
             JOptionPane.showMessageDialog(this, "No puedes añadir corredores porque la carrera ya está cerrada", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
-        }else {
+        } else {
             VistaCorredores ventanaCorredores = new VistaCorredores(pantallaPrincipal, true, this.carreraSeleccionada);
             ventanaCorredores.setVisible(true);
             refrescarTablaCarreras();
@@ -499,24 +489,24 @@ public class VistaCarreras extends javax.swing.JDialog {
     // ENLACE TABLAS
     private void jTableCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCarrerasMouseClicked
         try {
-            this.carreraSeleccionada = LogicaCarrera.getInstance().getCarreras().get(this.jTableCarreras.getSelectedRow());
+            this.carreraSeleccionada = LogicaCarrera.getInstance().getCarreras().get(this.jTableCarreras.convertRowIndexToModel(this.jTableCarreras.getSelectedRow()));
             refrescarTablaTiemposCorredores();
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Selecciona carrera", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jTableCarrerasMouseClicked
 
-    // BORRAR CORREDORES
+    // CORREDORES
     private void jButtonBorrarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarCorredorActionPerformed
         if (this.carreraSeleccionada == null) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar una carrera", "Carrera no seleccionada", JOptionPane.INFORMATION_MESSAGE);
         } else if (this.carreraSeleccionada.isCarreraCerrada()) {
             JOptionPane.showMessageDialog(this, "No puedes borrar corredores porque la carrera ya está cerrada", "Carrera cerrada", JOptionPane.INFORMATION_MESSAGE);
-        }else {
+        } else {
             try {
                 List<TiemposCorredor> corredores = new ArrayList<>();
-                for (int i : this.jTableTiemposCorredores.getSelectedRows()) {
-                    corredores.add(this.carreraSeleccionada.getListaCorredores().get(i));
+                for (int  i : this.jTableTiemposCorredores.getSelectedRows()) {
+                    corredores.add(this.carreraSeleccionada.getListaCorredores().get(jTableTiemposCorredores.convertRowIndexToModel(i)));
                 }
                 if (corredores.isEmpty()) {
                     JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Corredor no seleccionado", JOptionPane.INFORMATION_MESSAGE);
@@ -534,6 +524,26 @@ public class VistaCarreras extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_jButtonBorrarCorredorActionPerformed
+
+    private void rellenarComboBoxFiltroCorredores(){
+        this.jComboBoxFiltroCorredores.setModel(new DefaultComboBoxModel<>(TiemposCorredor.DATOS));
+    }
+    
+    private void jButtonFiltrarCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarCorredoresActionPerformed
+        RowFilter<TableModelTiemposCorredor,Integer> rowfilter;
+        rowfilter = RowFilter.regexFilter(jTextFieldFiltrarCorredores.getText(), jComboBoxFiltroCorredores.getSelectedIndex());
+        sorterCorredores.setRowFilter(rowfilter);
+    }//GEN-LAST:event_jButtonFiltrarCorredoresActionPerformed
+
+    private void rellenarComboBoxFiltroCarreras(){
+        this.jComboBoxFiltroCarreras.setModel(new DefaultComboBoxModel<>(Carrera.DATOS));
+    }
+    
+    private void jButtonFiltrarCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarCarrerasActionPerformed
+        RowFilter<TableModelCarrera,Integer> rowfilter;
+        rowfilter = RowFilter.regexFilter(jTextFieldFiltrarCarreras.getText(), jComboBoxFiltroCarreras.getSelectedIndex());
+        sorterCarreras.setRowFilter(rowfilter);
+    }//GEN-LAST:event_jButtonFiltrarCarrerasActionPerformed
 
     // MODELOS DE TABLA
     public static class TableModelCarrera extends AbstractTableModel {
@@ -595,13 +605,13 @@ public class VistaCarreras extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAddCorredor;
     private javax.swing.JButton jButtonBorrar;
     private javax.swing.JButton jButtonBorrarCorredor;
+    private javax.swing.JButton jButtonFiltrarCarreras;
+    private javax.swing.JButton jButtonFiltrarCorredores;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNueva;
     private javax.swing.JButton jButtonVolver;
-    private javax.swing.JComboBox<String> jComboBoxOrdenCarreras;
-    private javax.swing.JComboBox<String> jComboBoxOrdenCorredores;
-    private javax.swing.JLabel jLabelOrdenCarreras;
-    private javax.swing.JLabel jLabelOrdenCorredores;
+    private javax.swing.JComboBox<String> jComboBoxFiltroCarreras;
+    private javax.swing.JComboBox<String> jComboBoxFiltroCorredores;
     private javax.swing.JLabel jLabelTituloVerCarreras;
     private javax.swing.JPanel jPanelBotonesListaCarreras;
     private javax.swing.JPanel jPanelComboBoxOrdenCarreras;
@@ -612,5 +622,7 @@ public class VistaCarreras extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPaneCorredores;
     private javax.swing.JTable jTableCarreras;
     private javax.swing.JTable jTableTiemposCorredores;
+    private javax.swing.JTextField jTextFieldFiltrarCarreras;
+    private javax.swing.JTextField jTextFieldFiltrarCorredores;
     // End of variables declaration//GEN-END:variables
 }
