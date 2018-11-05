@@ -8,7 +8,11 @@ package gui;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JRadioButtonMenuItem;
+import javax.swing.LookAndFeel;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import logic.LogicaGuardado;
@@ -27,8 +31,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      *
      */
     public PantallaPrincipal() {
-        cambiarLookAndFell(1);
         initComponents();
+        inicializarBarraMenu();
         this.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -42,14 +46,29 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             setIconImage(new ImageIcon(getClass().getResource(RUTA_LOGO)).getImage());
         } catch (NullPointerException ex) {
         }
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
         LogicaGuardado.getInstance().cargarDatos();
     }
 
-    private void cambiarLookAndFell(int i) {
-        UIManager.LookAndFeelInfo[] installedLookAndFeels = UIManager.getInstalledLookAndFeels();
+    private void inicializarBarraMenu() {
+        for (UIManager.LookAndFeelInfo lookAndFeel : UIManager.getInstalledLookAndFeels()) {
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem();
+            item.setText(lookAndFeel.getName());
+            item.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiarLookAndFell(lookAndFeel);
+            }
+        });
+            jMenuLookAndFeel.add(item);
+            buttonGroupLookAndFeels.add(item);
+        }
+        
+    }
+
+    private void cambiarLookAndFell(UIManager.LookAndFeelInfo lookAndFeel) {
         try {
-            UIManager.setLookAndFeel(installedLookAndFeels[i].getClassName());
+            UIManager.setLookAndFeel(lookAndFeel.getClassName());
+            SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Exceptions.printStackTrace(ex);
         }
@@ -64,6 +83,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroupLookAndFeels = new javax.swing.ButtonGroup();
         jPanelTitulo = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelIcono = new javax.swing.JLabel();
@@ -71,6 +91,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jButtonVerCorredores = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
+        jMenuBar = new javax.swing.JMenuBar();
+        jMenuConfiguracion = new javax.swing.JMenu();
+        jMenuLookAndFeel = new javax.swing.JMenu();
+        jMenuAyuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MarAppTon");
@@ -171,24 +195,34 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap()
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonVerCarreras)
+                        .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonVerCorredores))
                     .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
+
+        jMenuConfiguracion.setText("Configuracion");
+
+        jMenuLookAndFeel.setText("LookAndFeel");
+        jMenuConfiguracion.add(jMenuLookAndFeel);
+
+        jMenuBar.add(jMenuConfiguracion);
+
+        jMenuAyuda.setText("Ayuda");
+        jMenuBar.add(jMenuAyuda);
+
+        setJMenuBar(jMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -196,7 +230,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -263,11 +298,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroupLookAndFeels;
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonVerCarreras;
     private javax.swing.JButton jButtonVerCorredores;
     private javax.swing.JLabel jLabelIcono;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JMenu jMenuAyuda;
+    private javax.swing.JMenuBar jMenuBar;
+    private javax.swing.JMenu jMenuConfiguracion;
+    private javax.swing.JMenu jMenuLookAndFeel;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelTitulo;
     // End of variables declaration//GEN-END:variables
