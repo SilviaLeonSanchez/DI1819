@@ -41,7 +41,7 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
 
     @Override
     public String toString() {
-        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + Duracion.verDuracion(this.tiempo) + '}';
+        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + Duracion.verDuracionFormatoLargo(this.tiempo) + '}';
     }
 
     public String[] toArray() {
@@ -52,7 +52,7 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
         array[3] = this.corredor.getDireccion();
         array[4] = this.corredor.getTelefono();
         array[5] = this.dorsal;
-        array[6] = Duracion.verDuracion(this.tiempo);
+        array[6] = Duracion.verDuracionFormatoCorto(this.tiempo);
         return array;
     }
 

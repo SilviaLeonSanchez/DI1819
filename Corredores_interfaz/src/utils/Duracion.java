@@ -23,12 +23,24 @@ public class Duracion {
         return duracion2.toHours() - duracion1.toHours();
     }
 
-    public static String verDuracion(Duration duracion) {
-        int horas = (int) Math.floor(duracion.toHours());
-        int minutos = (int) Math.floor(duracion.toMinutes() - horas * 60);
-        int segundos = (int) Math.floor(duracion.getSeconds() - horas * 3600 - minutos * 60);
-
-        return horas + " h  " + minutos + " min  " + segundos + " seg  ";
+    public static String verDuracionFormatoLargo(Duration duracion) {
+        return getHoras(duracion) + " horas  " + getMinutos(duracion) + " minutos  " + getSegundos(duracion) + " segundos  ";
+    }
+    
+    public static String verDuracionFormatoCorto(Duration duracion) {
+        return getHoras(duracion) + ":" + getMinutos(duracion) + ":" + getSegundos(duracion);
+    }
+    
+    private static int getHoras(Duration duracion){
+        return (int) Math.floor(duracion.toHours());
+    }
+    
+    private static int getMinutos(Duration duracion){
+        return (int) Math.floor(duracion.toMinutes() - getHoras(duracion) * 60);
+    }
+    
+    private static int getSegundos(Duration duracion){
+        return (int) Math.floor(duracion.getSeconds() - getHoras(duracion) * 3600 - getMinutos(duracion) * 60);
     }
     
     public static Duration nuevaDuracion(int minSeg, int maxSeg) {
