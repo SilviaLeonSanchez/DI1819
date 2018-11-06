@@ -8,10 +8,8 @@ package gui;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Locale;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -55,14 +53,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JRadioButtonMenuItem item = new JRadioButtonMenuItem();
             item.setText(lookAndFeel.getName());
             item.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cambiarLookAndFell(lookAndFeel);
-            }
-        });
+
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    cambiarLookAndFell(lookAndFeel);
+                }
+            });
             jMenuLookAndFeel.add(item);
             buttonGroupLookAndFeels.add(item);
         }
-        
+
     }
 
     private void cambiarLookAndFell(UIManager.LookAndFeelInfo lookAndFeel) {
