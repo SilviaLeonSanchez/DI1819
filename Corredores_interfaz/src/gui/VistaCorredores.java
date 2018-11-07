@@ -64,15 +64,15 @@ public class VistaCorredores extends javax.swing.JDialog {
 
         jPanelTituloVerCorredores = new javax.swing.JPanel();
         jLabelTituloVerCorredores = new javax.swing.JLabel();
+        jButtonVolver = new javax.swing.JButton();
         jPanelListaCorredores = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCorredores = new javax.swing.JTable();
         jPanelBotonesListaCorredores = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        jComboBoxFiltrar = new javax.swing.JComboBox<>();
         jTextFieldFiltrar = new javax.swing.JTextField();
+        jComboBoxFiltrar = new javax.swing.JComboBox<>();
         jButtonFiltrar = new javax.swing.JButton();
-        jButtonVolver = new javax.swing.JButton();
         jButtonNuevoCorredor = new javax.swing.JButton();
         jButtonModificar = new javax.swing.JButton();
         jButtonBorrar = new javax.swing.JButton();
@@ -95,21 +95,32 @@ public class VistaCorredores extends javax.swing.JDialog {
         jLabelTituloVerCorredores.setMinimumSize(new java.awt.Dimension(400, 70));
         jLabelTituloVerCorredores.setPreferredSize(new java.awt.Dimension(400, 70));
 
+        jButtonVolver.setText("<--");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTituloVerCorredoresLayout = new javax.swing.GroupLayout(jPanelTituloVerCorredores);
         jPanelTituloVerCorredores.setLayout(jPanelTituloVerCorredoresLayout);
         jPanelTituloVerCorredoresLayout.setHorizontalGroup(
             jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloVerCorredoresLayout.createSequentialGroup()
-                .addContainerGap(201, Short.MAX_VALUE)
-                .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonVolver)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(225, Short.MAX_VALUE))
         );
         jPanelTituloVerCorredoresLayout.setVerticalGroup(
             jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTituloVerCorredoresLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12))
+                .addGroup(jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         getContentPane().add(jPanelTituloVerCorredores, java.awt.BorderLayout.PAGE_START);
@@ -175,22 +186,6 @@ public class VistaCorredores extends javax.swing.JDialog {
             jTableCorredores.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        javax.swing.GroupLayout jPanelListaCorredoresLayout = new javax.swing.GroupLayout(jPanelListaCorredores);
-        jPanelListaCorredores.setLayout(jPanelListaCorredoresLayout);
-        jPanelListaCorredoresLayout.setHorizontalGroup(
-            jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-        );
-        jPanelListaCorredoresLayout.setVerticalGroup(
-            jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanelListaCorredores, java.awt.BorderLayout.CENTER);
-
         jPanelBotonesListaCorredores.setMaximumSize(new java.awt.Dimension(800, 150));
         jPanelBotonesListaCorredores.setMinimumSize(new java.awt.Dimension(800, 150));
         jPanelBotonesListaCorredores.setPreferredSize(new java.awt.Dimension(800, 150));
@@ -209,31 +204,27 @@ public class VistaCorredores extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(174, Short.MAX_VALUE)
-                .addComponent(jComboBoxFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(325, Short.MAX_VALUE)
+                .addComponent(jComboBoxFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(187, Short.MAX_VALUE))
+                .addGap(0, 0, 0))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jComboBoxFiltrar)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jTextFieldFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextFieldFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21))
+                        .addComponent(jButtonFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxFiltrar)))
+                .addContainerGap())
         );
-
-        jButtonVolver.setText("Volver");
-        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVolverActionPerformed(evt);
-            }
-        });
 
         jButtonNuevoCorredor.setText("Nuevo");
         jButtonNuevoCorredor.addActionListener(new java.awt.event.ActionListener() {
@@ -268,44 +259,57 @@ public class VistaCorredores extends javax.swing.JDialog {
         jPanelBotonesListaCorredoresLayout.setHorizontalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
+                        .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonModificar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBorrar))
-                    .addComponent(jButtonAniadirACarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonVolver)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBorrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAniadirACarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 23, Short.MAX_VALUE))
         );
 
-        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNuevoCorredor, jButtonVolver});
+        jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
 
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonAniadirACarrera)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonAniadirACarrera)
                     .addComponent(jButtonBorrar)
-                    .addComponent(jButtonVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18))
         );
 
         jPanelBotonesListaCorredoresLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonAniadirACarrera, jButtonBorrar, jButtonModificar, jButtonNuevoCorredor});
 
-        getContentPane().add(jPanelBotonesListaCorredores, java.awt.BorderLayout.PAGE_END);
+        javax.swing.GroupLayout jPanelListaCorredoresLayout = new javax.swing.GroupLayout(jPanelListaCorredores);
+        jPanelListaCorredores.setLayout(jPanelListaCorredoresLayout);
+        jPanelListaCorredoresLayout.setHorizontalGroup(
+            jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+            .addComponent(jPanelBotonesListaCorredores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanelListaCorredoresLayout.setVerticalGroup(
+            jPanelListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelListaCorredoresLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelBotonesListaCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanelListaCorredores, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -319,15 +323,14 @@ public class VistaCorredores extends javax.swing.JDialog {
     private void refrescarTablaCorredores() {
         TableModelCorredor model = new TableModelCorredor();
         this.jTableCorredores.setModel(model);
-        
+
         this.sorterCorredores = new TableRowSorter<>(model);
         this.jTableCorredores.setRowSorter(sorterCorredores);
-        
+
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorterCorredores.setSortKeys(sortKeys);
     }
-
 
     // BOTONES
     private void jButtonNuevoCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoCorredorActionPerformed
@@ -354,7 +357,7 @@ public class VistaCorredores extends javax.swing.JDialog {
         int seleccionado[] = jTableCorredores.getSelectedRows();
         if (seleccionado.length == 0) {
             JOptionPane.showMessageDialog(this, "Tienes que seleccionar un corredor", "Selecciona corredor", JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        } else if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(this, "¿Seguro que quieres borrar los corredores seleccionados?", "Confirmación de borrado", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE)) {
             try {
                 Corredor corredor = LogicaCorredor.getInstance().getCorredores().get(jTableCorredores.convertRowIndexToModel(seleccionado[0]));
                 LogicaCorredor.getInstance().bajaCorredor(corredor);
@@ -363,6 +366,8 @@ public class VistaCorredores extends javax.swing.JDialog {
             } catch (ExcepcionesPropias.CorredorNoEsta ex) {
                 JOptionPane.showMessageDialog(this, "El corredor no existe", "Corredor no existe", JOptionPane.ERROR_MESSAGE);
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha borrado ningun corredor", "Borrado candelado", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarActionPerformed
 
@@ -396,12 +401,12 @@ public class VistaCorredores extends javax.swing.JDialog {
 
     }//GEN-LAST:event_jButtonAniadirACarreraActionPerformed
 
-    private void rellenarComboBoxFiltrar(){
+    private void rellenarComboBoxFiltrar() {
         this.jComboBoxFiltrar.setModel(new DefaultComboBoxModel<>(Corredor.DATOS));
     }
-    
+
     private void jButtonFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFiltrarActionPerformed
-        RowFilter<TableModelCorredor,Integer> rowfilter;
+        RowFilter<TableModelCorredor, Integer> rowfilter;
         rowfilter = RowFilter.regexFilter(jTextFieldFiltrar.getText(), jComboBoxFiltrar.getSelectedIndex());
         sorterCorredores.setRowFilter(rowfilter);
     }//GEN-LAST:event_jButtonFiltrarActionPerformed

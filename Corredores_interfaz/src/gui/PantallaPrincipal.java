@@ -5,8 +5,14 @@
  */
 package gui;
 
+import com.bulenkov.darcula.DarculaLaf;
+import java.awt.Desktop;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButtonMenuItem;
@@ -53,24 +59,39 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JRadioButtonMenuItem item = new JRadioButtonMenuItem();
             item.setText(lookAndFeel.getName());
             item.addActionListener(new java.awt.event.ActionListener() {
-
+                @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    cambiarLookAndFell(lookAndFeel);
+                    cambiarLookAndFeel(lookAndFeel);
                 }
             });
             jMenuLookAndFeel.add(item);
             buttonGroupLookAndFeels.add(item);
         }
-
+        addDarculaLookAndFeel();
     }
 
-    private void cambiarLookAndFell(UIManager.LookAndFeelInfo lookAndFeel) {
+    private void cambiarLookAndFeel(UIManager.LookAndFeelInfo lookAndFeel) {
         try {
             UIManager.setLookAndFeel(lookAndFeel.getClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Exceptions.printStackTrace(ex);
         }
+    }
+
+    private void addDarculaLookAndFeel() {
+        JRadioButtonMenuItem item = new JRadioButtonMenuItem();
+        item.setText("Darcula");
+        item.addActionListener((java.awt.event.ActionEvent evt) -> {
+            try {
+                UIManager.setLookAndFeel(new DarculaLaf());
+                SwingUtilities.updateComponentTreeUI(PantallaPrincipal.this);
+            } catch (UnsupportedLookAndFeelException ex) {
+                Exceptions.printStackTrace(ex);
+            }
+        });
+        jMenuLookAndFeel.add(item);
+        buttonGroupLookAndFeels.add(item);
     }
 
     /**
@@ -83,17 +104,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroupLookAndFeels = new javax.swing.ButtonGroup();
-        jPanelTitulo = new javax.swing.JPanel();
-        jLabelTitulo = new javax.swing.JLabel();
-        jLabelIcono = new javax.swing.JLabel();
         jPanelBotones = new javax.swing.JPanel();
         jButtonVerCorredores = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
+        jPanelTitulo = new javax.swing.JPanel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jLabelIcono = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuConfiguracion = new javax.swing.JMenu();
         jMenuLookAndFeel = new javax.swing.JMenu();
         jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemJavadoc = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MarAppTon");
@@ -103,47 +125,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
-
-        jPanelTitulo.setForeground(new java.awt.Color(51, 51, 51));
-
-        jLabelTitulo.setBackground(new java.awt.Color(51, 51, 51));
-        jLabelTitulo.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
-        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTitulo.setText("MarAppTon");
-        jLabelTitulo.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED)));
-
-        jLabelIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.jpeg"))); // NOI18N
-        jLabelIcono.setAlignmentY(0.0F);
-        jLabelIcono.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
-        jPanelTitulo.setLayout(jPanelTituloLayout);
-        jPanelTituloLayout.setHorizontalGroup(
-            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTituloLayout.createSequentialGroup()
-                .addGap(78, 78, 78)
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(78, 78, 78))
-            .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelTituloLayout.createSequentialGroup()
-                    .addContainerGap(94, Short.MAX_VALUE)
-                    .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
-                    .addContainerGap(95, Short.MAX_VALUE)))
-        );
-        jPanelTituloLayout.setVerticalGroup(
-            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTituloLayout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
-            .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelTituloLayout.createSequentialGroup()
-                    .addGap(25, 25, 25)
-                    .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap()))
-        );
 
         jPanelBotones.setForeground(new java.awt.Color(51, 51, 51));
         jPanelBotones.setMaximumSize(new java.awt.Dimension(32767, 150));
@@ -194,18 +175,59 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelBotonesLayout.setVerticalGroup(
             jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonVerCorredores))
                     .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(36, 36, 36))
         );
 
         jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
+        jPanelTitulo.setForeground(new java.awt.Color(51, 51, 51));
+
+        jLabelTitulo.setBackground(new java.awt.Color(51, 51, 51));
+        jLabelTitulo.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("MarAppTon");
+
+        jLabelIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.jpeg"))); // NOI18N
+        jLabelIcono.setAlignmentY(0.0F);
+        jLabelIcono.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
+        jPanelTitulo.setLayout(jPanelTituloLayout);
+        jPanelTituloLayout.setHorizontalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTituloLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelTituloLayout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        jPanelTituloLayout.setVerticalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 310, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jMenuBar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuBar.setPreferredSize(new java.awt.Dimension(168, 36));
+
         jMenuConfiguracion.setText("Configuracion");
+        jMenuConfiguracion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         jMenuLookAndFeel.setText("LookAndFeel");
         jMenuConfiguracion.add(jMenuLookAndFeel);
@@ -213,6 +235,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuBar.add(jMenuConfiguracion);
 
         jMenuAyuda.setText("Ayuda");
+        jMenuAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
+        jMenuItemJavadoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemJavadoc.setText("Javadoc");
+        jMenuItemJavadoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemJavadocActionPerformed(evt);
+            }
+        });
+        jMenuAyuda.add(jMenuItemJavadoc);
+
         jMenuBar.add(jMenuAyuda);
 
         setJMenuBar(jMenuBar);
@@ -221,16 +254,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jPanelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(jPanelTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(4, 4, 4)
+                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -251,6 +283,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jMenuItemJavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJavadocActionPerformed
+        try {
+            Desktop.getDesktop().browse(new URI("file:///home/silvia/Documentos/DI1819/Corredores_interfaz/dist/javadoc/index.html"));
+        } catch (IOException | URISyntaxException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }//GEN-LAST:event_jMenuItemJavadocActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,6 +346,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguracion;
+    private javax.swing.JMenuItem jMenuItemJavadoc;
     private javax.swing.JMenu jMenuLookAndFeel;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelTitulo;

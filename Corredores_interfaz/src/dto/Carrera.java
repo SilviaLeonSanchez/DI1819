@@ -29,7 +29,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     private int maxCorredores;
     private List<TiemposCorredor> listaCorredores;
 
-    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "LIMITE PARTICIPANTES", "PARTICIPANTES", "ESTATUS"};
+    public static final String[] DATOS = {"ID", "NOMBRE", "FECHA", "LUGAR", "MAX PARTICIPANTES", "PARTICIPANTES", "ESTATUS"};
 
     //  METODOS
     public Carrera(String id, String nombre, Date fecha, String lugar, int maxCorredores) {
