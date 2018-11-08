@@ -5,21 +5,43 @@
  */
 package gui;
 
+import br.com.paulocanedo.pc9.laf.PC9LookAndFeel;
+import com.alee.laf.WebLookAndFeel;
+import com.birosoft.liquid.LiquidLookAndFeel;
 import com.bulenkov.darcula.DarculaLaf;
+import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
+import com.jtattoo.plaf.aero.AeroLookAndFeel;
+import com.jtattoo.plaf.aluminium.AluminiumLookAndFeel;
+import com.jtattoo.plaf.bernstein.BernsteinLookAndFeel;
+import com.jtattoo.plaf.fast.FastLookAndFeel;
+import com.jtattoo.plaf.graphite.GraphiteLookAndFeel;
+import com.jtattoo.plaf.hifi.HiFiLookAndFeel;
+import com.jtattoo.plaf.luna.LunaLookAndFeel;
+import com.jtattoo.plaf.mcwin.McWinLookAndFeel;
+import com.jtattoo.plaf.mint.MintLookAndFeel;
+import com.jtattoo.plaf.noire.NoireLookAndFeel;
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
+import com.jtattoo.plaf.texture.TextureLookAndFeel;
+import com.pagosoft.plaf.PgsLookAndFeel;
 import java.awt.Desktop;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import logic.LogicaGuardado;
+import napkin.NapkinLookAndFeel;
+import net.sf.tinylaf.TinyLookAndFeel;
 import org.openide.util.Exceptions;
 
 /**
@@ -28,6 +50,7 @@ import org.openide.util.Exceptions;
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
 
+    private HashMap<String, LookAndFeel> lookAndFeels;
     private static final String RUTA_LOGO = "/gui/img/icono.jpeg";
 
     /**
@@ -59,6 +82,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JRadioButtonMenuItem item = new JRadioButtonMenuItem();
             item.setText(lookAndFeel.getName());
             item.addActionListener(new java.awt.event.ActionListener() {
+
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     cambiarLookAndFeel(lookAndFeel);
@@ -67,10 +91,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             jMenuLookAndFeel.add(item);
             buttonGroupLookAndFeels.add(item);
         }
-        addDarculaLookAndFeel();
+        addLookAndFeels();
     }
 
-    private void cambiarLookAndFeel(UIManager.LookAndFeelInfo lookAndFeel) {
+    private void cambiarLookAndFeel(LookAndFeelInfo lookAndFeel) {
         try {
             UIManager.setLookAndFeel(lookAndFeel.getClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -79,19 +103,48 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
     }
 
-    private void addDarculaLookAndFeel() {
-        JRadioButtonMenuItem item = new JRadioButtonMenuItem();
-        item.setText("Darcula");
-        item.addActionListener((java.awt.event.ActionEvent evt) -> {
-            try {
-                UIManager.setLookAndFeel(new DarculaLaf());
-                SwingUtilities.updateComponentTreeUI(PantallaPrincipal.this);
-            } catch (UnsupportedLookAndFeelException ex) {
-                Exceptions.printStackTrace(ex);
-            }
-        });
-        jMenuLookAndFeel.add(item);
-        buttonGroupLookAndFeels.add(item);
+    public void addLookAndFeels() {
+        cargarNuevosLookAndFeel();
+        for (Map.Entry<String, LookAndFeel> lookAndFeel : lookAndFeels.entrySet()) {
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem();
+            item.setText(lookAndFeel.getKey());
+            item.addActionListener((java.awt.event.ActionEvent evt) -> {
+                try {
+                    UIManager.setLookAndFeel(lookAndFeel.getValue());
+                    SwingUtilities.updateComponentTreeUI(PantallaPrincipal.this);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Exceptions.printStackTrace(ex);
+                }
+            });
+            jMenuLookAndFeel.add(item);
+            buttonGroupLookAndFeels.add(item);
+        }
+    }
+
+    private void cargarNuevosLookAndFeel() {
+        lookAndFeels = new HashMap<>();
+        lookAndFeels.put("Darcula", new DarculaLaf());
+        lookAndFeels.put("Liquid", new LiquidLookAndFeel());
+        lookAndFeels.put("Acryl", new AcrylLookAndFeel());
+        lookAndFeels.put("Aero", new AeroLookAndFeel());
+        lookAndFeels.put("Aluminium", new AluminiumLookAndFeel());
+        lookAndFeels.put("Berstein", new BernsteinLookAndFeel());
+        lookAndFeels.put("Fast", new FastLookAndFeel());
+        lookAndFeels.put("Graphite", new GraphiteLookAndFeel());
+        lookAndFeels.put("Hifi", new HiFiLookAndFeel());
+        lookAndFeels.put("Luna", new LunaLookAndFeel());
+        lookAndFeels.put("McWin", new McWinLookAndFeel());
+        lookAndFeels.put("Mint", new MintLookAndFeel());
+        lookAndFeels.put("Mint", new MintLookAndFeel());
+        lookAndFeels.put("Noire", new NoireLookAndFeel());
+        lookAndFeels.put("Smart", new SmartLookAndFeel());
+        lookAndFeels.put("Texture", new TextureLookAndFeel());
+        lookAndFeels.put("PC9", new PC9LookAndFeel());
+        lookAndFeels.put("Napkin", new NapkinLookAndFeel());
+        lookAndFeels.put("Pgs", new PgsLookAndFeel());
+        lookAndFeels.put("Tiny", new TinyLookAndFeel());
+        lookAndFeels.put("Web", new WebLookAndFeel());
+        
     }
 
     /**
