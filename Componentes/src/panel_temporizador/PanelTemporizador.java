@@ -5,20 +5,20 @@
  */
 package panel_temporizador;
 
-import panel_temporizador.StartTemporizador;
-import panel_temporizador.StopTemporizador;
+import java.awt.Color;
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
-import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.text.DateFormatter;
@@ -31,17 +31,13 @@ public class PanelTemporizador extends JPanel implements Serializable {
 
     /*
     
-    Crear un temporizador que muestre la cuenta atrás desde un número de segundos determinado (una
-propiedad).
-Añadir la siguiente funcionalidad:
-1. propiedad string que permita establecer un texto determinado al finalizar la cuenta atrás
-2. propiedad Color que permita establecer el color del componente al acabar la cuenta atrás
 3. propiedad boolean que permita mostrar el contador con 1 o 0 decimales
+    
 4. propiedad File que nos permita mostrar una imagen en el componente al acabar la cuenta
 atrás
     
      */
-    
+    // ATRIBUTOS
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     ArrayList<StopTemporizador> listenersStopTemporizador;
     ArrayList<StartTemporizador> listenersStartTemporizador;
@@ -50,13 +46,36 @@ atrás
     private volatile Calendar tiempoRestante;
     private volatile boolean running;
 
+    // PROPIEDADES
+    private String texto;
+    private Color color;
+    private File imagen;
+
     /**
      * Creates new form RelojDigital
      */
     public PanelTemporizador() {
         initComponents();
+        jLabelTexto.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         this.listenersStartTemporizador = new ArrayList<>();
         this.listenersStopTemporizador = new ArrayList<>();
+        listenersStopTemporizador.add(new StopTemporizador() {
+
+            @Override
+            public void stopTemporizador() {
+                jLabelTexto.setText(texto);
+                if (color != null) {
+                    setBackground(color);
+                }
+                if (imagen != null) {
+                    try {
+                        jLabelTexto.setIcon(new ImageIcon(imagen.getAbsolutePath()));
+                    } catch (Exception ex) {
+                        JOptionPane.showMessageDialog(PanelTemporizador.this, ex.getMessage(), "No se ha podido mostrar la imagen", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
 
         this.tiempoInicial = Calendar.getInstance();
         this.tiempoRestante = Calendar.getInstance();
@@ -80,6 +99,22 @@ atrás
         SpinnerDateModel modelo = new SpinnerDateModel();
         modelo.setValue(tiempoInicial.getTime());
         return modelo;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setTexto(String texto) {
+        this.texto = texto;
+    }
+
+    public String getTexto() {
+        return texto;
     }
 
     private void inicializarSpinner() {
@@ -115,7 +150,7 @@ atrás
 
     // TIEMPO
     private void sincronizarTiempoSpinner() {
-        this.jLabel.setText(sdf.format((Date) jSpinner.getValue()));
+        this.jLabelTiempo.setText(sdf.format((Date) jSpinner.getValue()));
         this.tiempoInicial.setTime((Date) jSpinner.getValue());
         this.tiempoRestante.setTime((Date) jSpinner.getValue());
     }
@@ -147,7 +182,8 @@ atrás
         jButtonStart = new javax.swing.JButton();
         jButtonStop = new javax.swing.JButton();
         jSpinner = new javax.swing.JSpinner();
-        jLabel = new javax.swing.JLabel();
+        jLabelTiempo = new javax.swing.JLabel();
+        jLabelTexto = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -170,7 +206,9 @@ atrás
 
         jSpinner.setModel(PanelTemporizador.newSpinnerModelTiempoCero());
 
-        jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTiempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jLabelTexto.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -179,62 +217,77 @@ atrás
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonStart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonStop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                    .addComponent(jSpinner, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabelTexto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSpinner, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(jButtonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonStop)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonStart, jButtonStop});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonStop)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonStop))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonStart, jButtonStop});
 
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelTexto, jLabelTiempo});
+
     }// </editor-fold>//GEN-END:initComponents
 
     // BOTONES
     private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
-        this.running = false;
         if (this.running) {
+            this.running = false;
             this.timer.cancel();
         }
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
-
+        sincronizarTiempoSpinner();
+        
         this.running = true;
         for (StartTemporizador listener : listenersStartTemporizador) {
             listener.startTemporizador();
         }
 
+        this.timer  = new Timer();
         this.timer.schedule(new TimerTask() {
 
             @Override
             public void run() {
-                if (running && !isFinTiempo()) {
-                    System.out.println(" running");
-                    tiempoRestante.add(Calendar.SECOND, -1);
-                    jLabel.setText(sdf.format(tiempoRestante.getTime()));
-                } else {
-                    System.out.println("stop");
+                if (isFinTiempo()) {
                     running = false;
+                    timer.cancel();
+                }
+                if (running) {
+                    tiempoRestante.add(Calendar.SECOND, -1);
+                    jLabelTiempo.setText(sdf.format(tiempoRestante.getTime()));
+                } else {
                     for (StopTemporizador listener : listenersStopTemporizador) {
                         listener.stopTemporizador();
                     }
                 }
+
             }
-        }, 0, 1000);
+        }, 1000, 1000);
 
     }//GEN-LAST:event_jButtonStartActionPerformed
 
@@ -242,7 +295,8 @@ atrás
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonStart;
     private javax.swing.JButton jButtonStop;
-    private javax.swing.JLabel jLabel;
+    private javax.swing.JLabel jLabelTexto;
+    private javax.swing.JLabel jLabelTiempo;
     private javax.swing.JSpinner jSpinner;
     // End of variables declaration//GEN-END:variables
 }
