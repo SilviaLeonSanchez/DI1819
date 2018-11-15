@@ -5,7 +5,7 @@
  */
 package beans;
 
-import listener.StopTemporizador;
+import panel_temporizador.StopTemporizador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;

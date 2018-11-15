@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package beans;
+package panel_temporizador;
 
-import listener.StartTemporizador;
-import listener.StopTemporizador;
+import panel_temporizador.StartTemporizador;
+import panel_temporizador.StopTemporizador;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -29,6 +29,19 @@ import javax.swing.text.DateFormatter;
  */
 public class PanelTemporizador extends JPanel implements Serializable {
 
+    /*
+    
+    Crear un temporizador que muestre la cuenta atrás desde un número de segundos determinado (una
+propiedad).
+Añadir la siguiente funcionalidad:
+1. propiedad string que permita establecer un texto determinado al finalizar la cuenta atrás
+2. propiedad Color que permita establecer el color del componente al acabar la cuenta atrás
+3. propiedad boolean que permita mostrar el contador con 1 o 0 decimales
+4. propiedad File que nos permita mostrar una imagen en el componente al acabar la cuenta
+atrás
+    
+     */
+    
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     ArrayList<StopTemporizador> listenersStopTemporizador;
     ArrayList<StartTemporizador> listenersStartTemporizador;
