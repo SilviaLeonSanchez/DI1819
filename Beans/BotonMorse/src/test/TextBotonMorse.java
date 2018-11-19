@@ -6,7 +6,7 @@
 package test;
 
 import listener.CodigoDetectado;
-import listener.IntervaloDetectado;
+import listener.FinDetectado;
 import listener.LetraDetectada;
 
 /**
@@ -19,15 +19,8 @@ public class TextBotonMorse extends javax.swing.JFrame {
      * Creates new form TextBotonMorse
      */
     public TextBotonMorse() {
-        initComponents();
-        botonMorse1.addListenerIntervaloDetectado(new IntervaloDetectado() {
-            @Override
-            public void intervaloDetectado() {
-                jLabelMorse.setText(jLabelMorse.getText().concat(" "));
-                jLabelLetras.setText(jLabelLetras.getText().concat(" "));
-            }
-        });
-        
+        initComponents();        
+        setLocationRelativeTo(null);
         botonMorse1.addListenerCodigoDetectado(new CodigoDetectado() {
             @Override
             public void codigoDetectado(String codigo) {
@@ -39,7 +32,15 @@ public class TextBotonMorse extends javax.swing.JFrame {
             @Override
             public void letraDetectada(String letra, String morse) {
                 jLabelLetras.setText(jLabelLetras.getText() + letra);
-                System.out.println("Letra detectada: " + letra);
+                jLabelMorse.setText(jLabelMorse.getText() + " ");
+            }
+        });
+        
+        botonMorse1.addListenerFinDetectado(new FinDetectado() {
+            @Override
+            public void finDetectado() {
+                jLabelLetras.setText(jLabelLetras.getText() + ".");
+
             }
         });
     }
@@ -56,17 +57,31 @@ public class TextBotonMorse extends javax.swing.JFrame {
         jLabelMorse = new javax.swing.JLabel();
         jLabelLetras = new javax.swing.JLabel();
         jLabelImagen = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         botonMorse1 = new bean.BotonMorse();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabelMorse.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabelMorse.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabelLetras.setFont(new java.awt.Font("Dialog", 1, 16)); // NOI18N
+        jLabelLetras.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bean/alfabeto_morse_peq.jpg"))); // NOI18N
 
-        botonMorse1.setText("botonMorse1");
+        jLabel1.setText("Para terminar");
+
+        jLabel2.setText("pulsa 5 segundos");
+
+        jLabel3.setText("Para espacio");
+
+        jLabel4.setText("pulsa 3 segundos");
+
+        botonMorse1.setText("Boton Morse");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,17 +90,23 @@ public class TextBotonMorse extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelImagen)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelMorse, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelLetras, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 12, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botonMorse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonMorse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(66, 66, 66))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,13 +115,21 @@ public class TextBotonMorse extends javax.swing.JFrame {
                 .addComponent(jLabelImagen)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelMorse, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelLetras, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(botonMorse1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(77, 77, 77)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addGap(29, 29, 29)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(34, 34, 34))
         );
 
         pack();
@@ -143,6 +172,10 @@ public class TextBotonMorse extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private bean.BotonMorse botonMorse1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JLabel jLabelLetras;
     private javax.swing.JLabel jLabelMorse;

@@ -23,7 +23,9 @@ public class PanelDuracionPulsaciones extends javax.swing.JPanel {
             long duracionCorta = Long.valueOf(jTextFieldDuracionCorta.getText());
             long duracionLarga = Long.valueOf(jTextFieldDuracionLarga.getText());
             long duracionIntervalo = Long.valueOf(jTextFieldDuracionIntervalo.getText());
-            return new DuracionPulsaciones(duracionCorta, duracionLarga, duracionIntervalo);
+            long duracionEspacio = Long.valueOf(jTextFieldDuracionEspacio.getText());
+            long duracionFin = Long.valueOf(jTextFieldDuracionFin.getText());
+            return new DuracionPulsaciones(duracionCorta, duracionLarga, duracionIntervalo, duracionEspacio, duracionFin);
         } catch (Exception ex) {
             return null;
         }
@@ -44,12 +46,20 @@ public class PanelDuracionPulsaciones extends javax.swing.JPanel {
         jTextFieldDuracionIntervalo = new javax.swing.JTextField();
         jTextFieldDuracionLarga = new javax.swing.JTextField();
         jTextFieldDuracionCorta = new javax.swing.JTextField();
+        jLabelDuracionFin = new javax.swing.JLabel();
+        jLabelDuracionEspacio = new javax.swing.JLabel();
+        jTextFieldDuracionFin = new javax.swing.JTextField();
+        jTextFieldDuracionEspacio = new javax.swing.JTextField();
 
         jLabelDuracionCorta.setText("Duración Corta");
 
         jLabelDuracionLarga.setText("Duración Larga");
 
         jLabelDuracionIntervalo.setText("Intervalo entre pulsaciones");
+
+        jLabelDuracionFin.setText("Duracion señal de fin");
+
+        jLabelDuracionEspacio.setText("Duracion Caracter Espacio");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -60,9 +70,13 @@ public class PanelDuracionPulsaciones extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDuracionIntervalo)
                     .addComponent(jLabelDuracionLarga, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDuracionCorta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelDuracionCorta, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDuracionFin)
+                    .addComponent(jLabelDuracionEspacio))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldDuracionEspacio)
+                    .addComponent(jTextFieldDuracionFin)
                     .addComponent(jTextFieldDuracionIntervalo, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                     .addComponent(jTextFieldDuracionLarga)
                     .addComponent(jTextFieldDuracionCorta))
@@ -74,7 +88,7 @@ public class PanelDuracionPulsaciones extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(81, 81, 81)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelDuracionCorta, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDuracionCorta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -86,19 +100,31 @@ public class PanelDuracionPulsaciones extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelDuracionIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDuracionIntervalo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelDuracionEspacio, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDuracionEspacio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelDuracionFin, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldDuracionFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDuracionCorta, jLabelDuracionIntervalo, jLabelDuracionLarga, jTextFieldDuracionCorta, jTextFieldDuracionIntervalo, jTextFieldDuracionLarga});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabelDuracionCorta, jLabelDuracionIntervalo, jLabelDuracionLarga, jTextFieldDuracionCorta, jTextFieldDuracionEspacio, jTextFieldDuracionFin, jTextFieldDuracionIntervalo, jTextFieldDuracionLarga});
 
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabelDuracionCorta;
+    private javax.swing.JLabel jLabelDuracionEspacio;
+    private javax.swing.JLabel jLabelDuracionFin;
     private javax.swing.JLabel jLabelDuracionIntervalo;
     private javax.swing.JLabel jLabelDuracionLarga;
     private javax.swing.JTextField jTextFieldDuracionCorta;
+    private javax.swing.JTextField jTextFieldDuracionEspacio;
+    private javax.swing.JTextField jTextFieldDuracionFin;
     private javax.swing.JTextField jTextFieldDuracionIntervalo;
     private javax.swing.JTextField jTextFieldDuracionLarga;
     // End of variables declaration//GEN-END:variables

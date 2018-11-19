@@ -11,8 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import javax.swing.JButton;
 import listener.IntervaloDetectado;
+import listener.FinDetectado;
 
 /**
  *
@@ -42,15 +44,20 @@ public class BotonMorse extends JButton implements Serializable {
     private ArrayList<LetraDetectada> listenerLetraDetectada;
     private ArrayList<CodigoDetectado> listenerCodigoDetectado;
     private ArrayList<IntervaloDetectado> listenerIntervaloDetectado;
+    private ArrayList<FinDetectado> listenerFinDetectado;
 
     public BotonMorse() {
 
         // Valores por defecto
-        this.duracionPulsaciones = new DuracionPulsaciones(200, 1500, 2000);
+        this.duracionPulsaciones = new DuracionPulsaciones(200, 1500, 2000, 3000, 5000);
 
         this.listenerLetraDetectada = new ArrayList<>();
         this.listenerCodigoDetectado = new ArrayList<>();
         this.listenerIntervaloDetectado = new ArrayList<>();
+        this.listenerFinDetectado = new ArrayList<>();
+
+        this.codigo = "";
+        this.letra = "";
 
         addMouseListener(new MouseListener() {
 
@@ -70,6 +77,9 @@ public class BotonMorse extends JButton implements Serializable {
             public void mouseReleased(MouseEvent e) {
                 finClick = e.getWhen();
                 duracionClick = finClick - inicioClick;
+                if (duracionClick > duracionPulsaciones.getFin()) {
+                    checkClick();
+                }
             }
 
             @Override
@@ -88,11 +98,24 @@ public class BotonMorse extends JButton implements Serializable {
         long pulsacionCorta = this.duracionPulsaciones.getPulsacionCorta();
         long pulsacionLarga = this.duracionPulsaciones.getPulsacionLarga();
         long intervaloMax = this.duracionPulsaciones.getTiempoMaximoEntrePulsaciones();
+        long duracionEspacio = this.duracionPulsaciones.getEspacio();
+        long duracionFin = this.duracionPulsaciones.getFin();
 
         if (this.tiempoEntreClicks > intervaloMax) {
+
+            for (int i = 0; i < this.codigos.length; i++) {
+                if (this.codigo.compareToIgnoreCase(this.codigos[i]) == 0) {
+
+                    this.letra = this.letras[i];
+                    for (LetraDetectada listener : listenerLetraDetectada) {
+                        listener.letraDetectada(letra, codigo);
+                    }
+                }
+            }
+
             this.codigo = "";
             this.letra = "";
-            for (IntervaloDetectado listener : listenerIntervaloDetectado){
+            for (IntervaloDetectado listener : listenerIntervaloDetectado) {
                 listener.intervaloDetectado();
             }
         }
@@ -107,27 +130,15 @@ public class BotonMorse extends JButton implements Serializable {
             for (CodigoDetectado listener : listenerCodigoDetectado) {
                 listener.codigoDetectado("-");
             }
-        }
-
-        System.out.println("Llega al for");
-        for (int i = 0; i < this.codigos.length; i++) {
-            
-            // Ver recorrido del for
-            System.out.println(this.codigo + " -> " + this.codigos[i]);
-            
-            if (this.codigo.compareToIgnoreCase(this.codigos[i]) == 0) {
-                
-                // Ver letra encontrada
-                System.out.println("Coincidencia encontrada: " + this.letras[i]);
-                
-                this.letra = this.letras[i];
-                listenerLetraDetectada.forEach((listener) -> {
-                    listener.letraDetectada(this.letra, this.codigo);
-                });
+        } else if (this.duracionClick > duracionEspacio && this.duracionClick < duracionFin) {
+            for (LetraDetectada listener : listenerLetraDetectada) {
+                listener.letraDetectada(" ", "");
             }
-            
+        } else if (this.duracionClick > duracionFin) {
+            for (FinDetectado listener : listenerFinDetectado) {
+                listener.finDetectado();
+            }
         }
-        
 
     }
 
@@ -143,5 +154,8 @@ public class BotonMorse extends JButton implements Serializable {
         this.listenerIntervaloDetectado.add(listener);
     }
 
-    
+    public void addListenerFinDetectado(FinDetectado listener) {
+        this.listenerFinDetectado.add(listener);
+    }
+
 }
