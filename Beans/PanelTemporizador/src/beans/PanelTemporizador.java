@@ -40,14 +40,17 @@ atrás
     
      */
     // ATRIBUTOS
-    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    private final SimpleDateFormat sdf;
+    private final String formatoSinDecimales = "HH:mm:ss";
+    private final String formatoConDecimales = "HH:mm:ss S";
+
     private ArrayList<StopTemporizador> listenersStopTemporizador;
     private ArrayList<StartTemporizador> listenersStartTemporizador;
+    
     private Timer timer;
-    private Calendar tiempoInicial;
-    private volatile Calendar tiempoRestante;
+    private Date tiempoInicial;
+    private volatile Date tiempoRestante;
     private volatile boolean running;
-
 
     // PROPIEDADES
     private boolean conDecimales;
@@ -60,12 +63,17 @@ atrás
      */
     public PanelTemporizador() {
         initComponents();
+                
         jLabelTexto.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         this.listenersStartTemporizador = new ArrayList<>();
         this.listenersStopTemporizador = new ArrayList<>();
 
-        this.tiempoInicial = Calendar.getInstance();
-        this.tiempoRestante = Calendar.getInstance();
+        this.sdf = new SimpleDateFormat((conDecimales) ? formatoConDecimales : formatoSinDecimales);
+
+        this.tiempoInicial = new Date(0);
+        this.tiempoInicial.setHours(0);
+        this.tiempoRestante = new Date(0);  
+        this.tiempoRestante.setHours(0);
 
         inicializarSpinner();
         sincronizarTiempoSpinner();
@@ -73,28 +81,13 @@ atrás
         this.timer = new Timer();
         this.running = false;
     }
-    
-    
+
     public boolean isConDecimales() {
         return conDecimales;
     }
 
     public void setConDecimales(boolean conDecimales) {
         this.conDecimales = conDecimales;
-    }
-
-    // SPINNER
-    public static SpinnerDateModel newSpinnerModelTiempoCero() {
-        // Crear el tiempoInicial inicializado a cero
-        Calendar tiempoInicial = Calendar.getInstance();
-        tiempoInicial.set(Calendar.HOUR_OF_DAY, 0);
-        tiempoInicial.set(Calendar.MINUTE, 0);
-        tiempoInicial.set(Calendar.SECOND, 0);
-
-        // Crear el modelo con el tiempoInicial inicial  
-        SpinnerDateModel modelo = new SpinnerDateModel();
-        modelo.setValue(tiempoInicial.getTime());
-        return modelo;
     }
 
     public void setColor(Color color) {
@@ -112,28 +105,15 @@ atrás
     public String getTexto() {
         return texto;
     }
-
-    private void inicializarSpinner() {
-        // Crear el spinner con el modelo
-        this.jSpinner.setModel(newSpinnerModelTiempoCero());
-
-        // Darle formato al tiempoInicial mostrado
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.jSpinner, "HH:mm:ss");
-        DateFormatter formatter = (DateFormatter) editor.getTextField().getFormatter();
-
-        // Permitir que se modifiquen las cifras pero no los separadores
-        formatter.setAllowsInvalid(false);
-        formatter.setOverwriteMode(true);
-
-        this.jSpinner.setEditor(editor);
-        this.jSpinner.addChangeListener(new ChangeListener() {
-
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                sincronizarTiempoSpinner();
-            }
-        });
+    
+    public File getImagen() {
+        return imagen;
     }
+
+    public void setImagen(File imagen) {
+        this.imagen = imagen;
+    }
+
 
     // LISTENER
     public void addFinTemporizadorListener(StopTemporizador listener) {
@@ -145,24 +125,52 @@ atrás
     }
 
     // TIEMPO
+    private void inicializarSpinner() {
+        // Crear el modelo con el tiempo inicial
+        SpinnerDateModel model = new SpinnerDateModel();
+        model.setValue(tiempoInicial);
+        jSpinner.setModel(model);
+
+        // Darle formato al tiempoInicial mostrado
+        String formato = (conDecimales) ? formatoConDecimales : formatoSinDecimales;
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(this.jSpinner, formato);
+        DateFormatter formatter = (DateFormatter) editor.getTextField().getFormatter();
+
+        // Permitir que se modifiquen las cifras pero no los separadores
+        formatter.setAllowsInvalid(false);
+        formatter.setOverwriteMode(true);
+        formatter.setFormat(sdf);
+
+        this.jSpinner.setEditor(editor);
+        this.jSpinner.addChangeListener(new ChangeListener() {
+
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                sincronizarTiempoSpinner();
+            }
+        });
+    }
+    
     private void sincronizarTiempoSpinner() {
-        this.jLabelTiempo.setText(sdf.format((Date) jSpinner.getValue()));
-        this.tiempoInicial.setTime((Date) jSpinner.getValue());
-        this.tiempoRestante.setTime((Date) jSpinner.getValue());
+        if (!this.running) {
+            this.jLabelTiempo.setText(sdf.format((Date) jSpinner.getValue()));
+            this.tiempoInicial = (Date) jSpinner.getValue();
+            this.tiempoRestante = (Date) jSpinner.getValue();
+        }
     }
 
     private boolean isFinTiempo() {
-        boolean horaCero = tiempoRestante.get(Calendar.HOUR) == 0;
-        boolean minutosCero = tiempoRestante.get(Calendar.MINUTE) == 0;
-        boolean segundosCero = tiempoRestante.get(Calendar.SECOND) == 0;
+        boolean horaCero = tiempoRestante.getHours() == 0;
+        boolean minutosCero = tiempoRestante.getMinutes() == 0;
+        boolean segundosCero = tiempoRestante.getSeconds() == 0;
         return (horaCero && minutosCero && segundosCero);
     }
 
-    public Calendar getTiempoInicial() {
+    public Date getTiempoInicial() {
         return tiempoInicial;
     }
 
-    public Calendar getTiempoRestante() {
+    public Date getTiempoRestante() {
         return tiempoRestante;
     }
 
@@ -203,7 +211,7 @@ atrás
             }
         });
 
-        jSpinner.setModel(PanelTemporizador.newSpinnerModelTiempoCero());
+        jSpinner.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, null, java.util.Calendar.MINUTE));
         jSpinner.setMaximumSize(new java.awt.Dimension(38, 26));
 
         jLabelTiempo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -278,7 +286,7 @@ atrás
                     timer.cancel();
                 }
                 if (running) {
-                    tiempoRestante.add(Calendar.MILLISECOND, -100);
+                    tiempoRestante.setTime(tiempoRestante.getTime()-100);
                     jLabelTiempo.setText(sdf.format(tiempoRestante.getTime()));
                 } else {
                     jLabelTexto.setText(texto);
@@ -302,13 +310,6 @@ atrás
 
     }//GEN-LAST:event_jButtonStartActionPerformed
 
-    public File getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(File imagen) {
-        this.imagen = imagen;
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
