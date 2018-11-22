@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean;
+package propiedad_duracion;
+
+import propiedad_duracion.DuracionPulsaciones;
 
 /**
  *

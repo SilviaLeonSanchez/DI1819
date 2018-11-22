@@ -46,7 +46,7 @@ atrás
 
     private ArrayList<StopTemporizador> listenersStopTemporizador;
     private ArrayList<StartTemporizador> listenersStartTemporizador;
-    
+
     private Timer timer;
     private Date tiempoInicial;
     private volatile Date tiempoRestante;
@@ -63,7 +63,7 @@ atrás
      */
     public PanelTemporizador() {
         initComponents();
-                
+
         jLabelTexto.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         this.listenersStartTemporizador = new ArrayList<>();
         this.listenersStopTemporizador = new ArrayList<>();
@@ -72,7 +72,7 @@ atrás
 
         this.tiempoInicial = new Date(0);
         this.tiempoInicial.setHours(0);
-        this.tiempoRestante = new Date(0);  
+        this.tiempoRestante = new Date(0);
         this.tiempoRestante.setHours(0);
 
         inicializarSpinner();
@@ -105,7 +105,7 @@ atrás
     public String getTexto() {
         return texto;
     }
-    
+
     public File getImagen() {
         return imagen;
     }
@@ -113,7 +113,6 @@ atrás
     public void setImagen(File imagen) {
         this.imagen = imagen;
     }
-
 
     // LISTENER
     public void addFinTemporizadorListener(StopTemporizador listener) {
@@ -150,12 +149,23 @@ atrás
             }
         });
     }
-    
+
     private void sincronizarTiempoSpinner() {
         if (!this.running) {
-            this.jLabelTiempo.setText(sdf.format((Date) jSpinner.getValue()));
+            setTiempoEnLabel((Date) jSpinner.getValue());
             this.tiempoInicial = (Date) jSpinner.getValue();
             this.tiempoRestante = (Date) jSpinner.getValue();
+        }
+    }
+
+    private void setTiempoEnLabel(Date tiempo) {
+        String textoTiempo = sdf.format(tiempo);
+        if (conDecimales) {
+            if (textoTiempo.length() > 9) {
+                jLabelTiempo.setText(textoTiempo.subSequence(0, 9).toString());
+            }
+        } else {
+            jLabelTiempo.setText(textoTiempo.subSequence(0, 8).toString());
         }
     }
 
@@ -286,7 +296,7 @@ atrás
                     timer.cancel();
                 }
                 if (running) {
-                    tiempoRestante.setTime(tiempoRestante.getTime()-100);
+                    tiempoRestante.setTime(tiempoRestante.getTime() - 100);
                     jLabelTiempo.setText(sdf.format(tiempoRestante.getTime()));
                 } else {
                     jLabelTexto.setText(texto);
@@ -309,7 +319,6 @@ atrás
         }, 0, 100);
 
     }//GEN-LAST:event_jButtonStartActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

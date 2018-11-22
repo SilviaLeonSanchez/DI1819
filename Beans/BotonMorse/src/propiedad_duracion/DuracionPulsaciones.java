@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean;
+package propiedad_duracion;
 
 import java.io.Serializable;
 
@@ -21,12 +21,12 @@ public class DuracionPulsaciones implements Serializable {
     private final long duracionEspacio;
     private final long duracionFin;
 
-    public DuracionPulsaciones(long pulsacionCorta, long pulsacionLarga, long tiempoMaximoEntrePulsaciones, long espacio, long fin) {
+    public DuracionPulsaciones(long pulsacionCorta, long pulsacionLarga, long tiempoMaximoEntrePulsaciones, long duracionEspacio, long duracionFin) {
         this.pulsacionCorta = pulsacionCorta;
         this.pulsacionLarga = pulsacionLarga;
         this.tiempoMaximoEntrePulsaciones = tiempoMaximoEntrePulsaciones;
-        this.duracionEspacio = espacio;
-        this.duracionFin = fin;
+        this.duracionEspacio = duracionEspacio;
+        this.duracionFin = duracionFin;
     }
 
     public long getPulsacionCorta() {
@@ -41,11 +41,11 @@ public class DuracionPulsaciones implements Serializable {
         return tiempoMaximoEntrePulsaciones;
     }
 
-    public long getEspacio() {
+    public long getDuracionEspacio() {
         return duracionEspacio;
     }
 
-    public long getFin() {
+    public long getDuracionFin() {
         return duracionFin;
     }
 

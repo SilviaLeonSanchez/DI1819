@@ -5,13 +5,13 @@
  */
 package bean;
 
+import propiedad_duracion.DuracionPulsaciones;
 import listener.CodigoDetectado;
 import listener.LetraDetectada;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import javax.swing.JButton;
 import listener.IntervaloDetectado;
 import listener.FinDetectado;
@@ -77,7 +77,7 @@ public class BotonMorse extends JButton implements Serializable {
             public void mouseReleased(MouseEvent e) {
                 finClick = e.getWhen();
                 duracionClick = finClick - inicioClick;
-                if (duracionClick > duracionPulsaciones.getFin()) {
+                if (duracionClick > duracionPulsaciones.getDuracionFin()) {
                     checkClick();
                 }
             }
@@ -93,13 +93,21 @@ public class BotonMorse extends JButton implements Serializable {
             }
         });
     }
+    
+    public DuracionPulsaciones getDuracionPulsaciones() {
+        return duracionPulsaciones;
+    }
+
+    public void setDuracionPulsaciones(DuracionPulsaciones duracionPulsaciones) {
+        this.duracionPulsaciones = duracionPulsaciones;
+    }
 
     private void checkClick() {
         long pulsacionCorta = this.duracionPulsaciones.getPulsacionCorta();
         long pulsacionLarga = this.duracionPulsaciones.getPulsacionLarga();
         long intervaloMax = this.duracionPulsaciones.getTiempoMaximoEntrePulsaciones();
-        long duracionEspacio = this.duracionPulsaciones.getEspacio();
-        long duracionFin = this.duracionPulsaciones.getFin();
+        long duracionEspacio = this.duracionPulsaciones.getDuracionEspacio();
+        long duracionFin = this.duracionPulsaciones.getDuracionFin();
 
         if (this.tiempoEntreClicks > intervaloMax) {
 
