@@ -5,12 +5,14 @@
  */
 package beans;
 
+import interfaces.StartCronometro;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.swing.JLabel;
 import interfaces.StopCronometro;
+import interfaces.ListenerLlegada;
 
 /**
  *
@@ -20,19 +22,25 @@ public class Cronometro extends JLabel implements Serializable {
 
     private Timer timer;
     private int tiempo;
-    private ArrayList<StopCronometro> listeners;
+    private ArrayList<StopCronometro> listenersStopCronometro;
+    private ArrayList<StartCronometro> listenersStartCronometro;
 
     public Cronometro() {
         setHorizontalTextPosition(JLabel.HORIZONTAL);
         setText(String.valueOf(tiempo));
-        this.listeners = new ArrayList<>();
+        this.listenersStartCronometro = new ArrayList<>();
+        this.listenersStopCronometro = new ArrayList<>();
         timer = new Timer();
     }
 
-    public void addFinCuentaAtrasListener(StopCronometro listener) {
-        this.listeners.add(listener);
+    public void addStopCronometrorListener(StopCronometro listener) {
+        this.listenersStopCronometro.add(listener);
     }
 
+    public void addStartCronometroListener(StartCronometro listener) {
+        this.listenersStartCronometro.add(listener);
+    }
+    
     public int getTiempo() {
         return tiempo;
     }
@@ -43,6 +51,9 @@ public class Cronometro extends JLabel implements Serializable {
     }
 
     public void start() {
+        for (StartCronometro startCronometro : listenersStartCronometro) {
+            startCronometro.startCronometro();
+        }
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -54,6 +65,9 @@ public class Cronometro extends JLabel implements Serializable {
     
     public void stop(){
         this.timer.cancel();
+        for (StopCronometro stopCronometro : listenersStopCronometro) {
+            stopCronometro.stopCronometro();
+        }
     }
     
     public void restart(){

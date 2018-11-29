@@ -5,14 +5,13 @@
  */
 package interfaces;
 
-import interfaces.ReceptorTiempoCronometro;
 
 
 /**
  *
  * @author ubuntu
  */
-public interface Llegada {
+public interface ListenerLlegada {
     
     public ReceptorTiempoCronometro llegaReceptorACronometro();
     

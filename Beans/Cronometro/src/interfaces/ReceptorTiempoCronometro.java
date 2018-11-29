@@ -5,7 +5,8 @@
  */
 package interfaces;
 
-import javafx.util.Duration;
+import java.time.Duration;
+
 
 /**
  *
@@ -13,6 +14,6 @@ import javafx.util.Duration;
  */
 public interface ReceptorTiempoCronometro {
     
-    public void recibirTiempoCrronometro(Duration tiempo);
+    public void recibirTiempo(Duration tiempo);
     
 }

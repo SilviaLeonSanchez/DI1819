@@ -5,23 +5,20 @@
  */
 package beans;
 
-import interfaces.Llegada;
 import interfaces.ReceptorTiempoCronometro;
 import interfaces.StartCronometro;
 import interfaces.StopCronometro;
 import java.awt.Color;
 import java.io.File;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-import javafx.util.Duration;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import interfaces.ListenerLlegada;
 
 /**
  *
@@ -29,29 +26,15 @@ import javax.swing.JPanel;
  */
 public class PanelCronometro extends JPanel implements Serializable {
 
-    /*
-    
-3. propiedad boolean que permita mostrar el contador con 1 o 0 decimales
-    
-4. propiedad File que nos permita mostrar una imagen en el componente al acabar la cuenta
-atrás
-    
-     */
     // ATRIBUTOS
-    private final SimpleDateFormat sdf;
-    private final String formatoSinDecimales = "HH:mm:ss";
-    private final String formatoConDecimales = "HH:mm:ss S";
-
     private ArrayList<StopCronometro> listenersStopCronometro;
-    private ArrayList<Llegada> listenersLlegada;
+    private ArrayList<ListenerLlegada> listenersLlegada;
     private ArrayList<StartCronometro> listenersStartCronometro;
 
     private Timer timer;
-    private Instant ultimoInstante;
-    private Duration tiempo;
+    private Instant momentoStart;
+    private volatile Duration tiempo;
     private volatile boolean running;
-    
-    private ReceptorTiempoCronometro receptorTiempo;
 
     // PROPIEDADES
     private boolean conDecimales;
@@ -66,17 +49,31 @@ atrás
         initComponents();
 
         jLabelTexto.setHorizontalAlignment((int) CENTER_ALIGNMENT);
+
         this.listenersStartCronometro = new ArrayList<>();
         this.listenersStopCronometro = new ArrayList<>();
-
-        this.sdf = new SimpleDateFormat((conDecimales) ? formatoConDecimales : formatoSinDecimales);
+        this.listenersLlegada = new ArrayList<>();
 
         this.tiempo = Duration.ZERO;
-
+        setTiempoEnLabel(tiempo);
+        
         this.timer = new Timer();
         this.running = false;
+
+        jLabelTexto.setText(texto);
+        if (color != null) {
+            setBackground(color);
+        }
+        if (imagen != null) {
+            try {
+                jLabelTexto.setIcon(new ImageIcon(imagen.getAbsolutePath()));
+            } catch (Exception ex) {
+                System.out.println("No se ha podido mostrar la imagen del cronometro: " + ex.getMessage());
+            }
+        }
     }
 
+    // GETTER Y SETTER
     public boolean isConDecimales() {
         return conDecimales;
     }
@@ -117,27 +114,68 @@ atrás
     public void addStartCronometroListener(StartCronometro listener) {
         this.listenersStartCronometro.add(listener);
     }
-    
-    public void addLlegadaListener(Llegada listener) {
+
+    public void addLlegadaListener(ListenerLlegada listener) {
         this.listenersLlegada.add(listener);
     }
 
+    public void start() {
+
+        for (StartCronometro listener : listenersStartCronometro) {
+            listener.startCronometro();
+        }
+        
+        this.tiempo = Duration.ZERO;
+
+        this.momentoStart = Instant.now();
+        this.running = true;
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                tiempo = tiempo.plusMillis(100);
+                setTiempoEnLabel(tiempo);
+            }
+        }, 100, 100);
+    }
+
+    public void stop() {
+        if (this.running) {
+
+            this.timer.cancel();
+            this.running = false;
+
+            for (StopCronometro listener : listenersStopCronometro) {
+                listener.stopCronometro();
+            }
+
+            this.tiempo = Duration.between(this.momentoStart, Instant.now());
+        }
+    }
+
+    public void llegada() {
+        for (ListenerLlegada listenerLlegada : listenersLlegada) {
+            ReceptorTiempoCronometro receptorTiempo = listenerLlegada.llegaReceptorACronometro();
+            receptorTiempo.recibirTiempo(tiempo);
+            listenerLlegada.vuelveReceptorDeCronometro(receptorTiempo);
+        }
+    }
 
     // TIEMPO
     private void setTiempoEnLabel(Duration tiempo) {
         String textoTiempo;
         if (conDecimales) {
-            textoTiempo = String.format("%2d:%2d:%2d", tiempo.toHours(),tiempo.toMinutes(),tiempo.toSeconds());
-        } else {
-            textoTiempo = String.format("%2d:%2d:%2d.%1d", tiempo.toHours(),tiempo.toMinutes(),tiempo.toSeconds(),tiempo.toMillis());
-        }
+             textoTiempo = String.format("%02d:%02d:%02d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds());
+    } else {
+            textoTiempo = String.format("%02d:%02d:%02d %01d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds(), (int) (tiempo.getNano()/100000000));
+    }
         jLabelTiempo.setText(textoTiempo);
     }
 
     public Duration getTiempo() {
         return tiempo;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -220,47 +258,11 @@ atrás
 
     // BOTONES
     private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
-        if (this.running) {
-            this.running = false;
-            this.timer.cancel();
-        }
+        stop();
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
-        
-        this.running = true;
-        for (StartCronometro listener : listenersStartCronometro) {
-            listener.startCronometro();
-        }
-
-        this.timer = new Timer();
-        this.timer.schedule(new TimerTask() {
-
-            @Override
-            public void run() {
-                if (running) {
-                    tiempo.add(Duration.millis(100));
-                    jLabelTiempo.setText(sdf.format(tiempo));
-                } else {
-                    jLabelTexto.setText(texto);
-                    if (color != null) {
-                        setBackground(color);
-                    }
-                    if (imagen != null) {
-                        try {
-                            jLabelTexto.setIcon(new ImageIcon(imagen.getAbsolutePath()));
-                        } catch (Exception ex) {
-                            JOptionPane.showMessageDialog(PanelCronometro.this, ex.getMessage(), "No se ha podido mostrar la imagen", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
-                    for (StopCronometro listener : listenersStopCronometro) {
-                        listener.stopCronometro();
-                    }
-                }
-
-            }
-        }, 0, 100);
-
+        start();
     }//GEN-LAST:event_jButtonStartActionPerformed
 
 
