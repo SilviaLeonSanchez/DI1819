@@ -85,7 +85,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
         String array[] = new String[7];
         array[0] = this.id;
         array[1] = this.nombre;
-        array[2] = Utiles.Sdf.format(this.fecha);
+        array[2] = Utiles.Sdf.formatFecha(this.fecha);
         array[3] = this.lugar;
         array[4] = Integer.toString(this.maxCorredores);
         array[5] = Integer.toString(getListaCorredores().size());

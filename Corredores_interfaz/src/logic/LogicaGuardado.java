@@ -8,6 +8,7 @@ package logic;
 import dto.Corredor;
 import java.io.File;
 import java.io.IOException;
+import javax.swing.Timer;
 import utils.FicheroDeObjetos;
 import utils.FicheroDeTexto;
 
@@ -17,6 +18,16 @@ import utils.FicheroDeTexto;
  */
 public class LogicaGuardado {
 
+    private transient Timer timer;
+    private int intervaloGuardado;
+    
+    private LogicaGuardado INSTANCE;
+    
+    public LogicaGuardado getInstance(){
+        if ()
+    }
+    
+    
     private final boolean usarFichero = true;
     
     private FicheroDeObjetos<LogicaCarrera> gestorFicheroCarreras;

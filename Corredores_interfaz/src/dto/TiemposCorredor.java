@@ -48,7 +48,7 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
         String array[] = new String[7];
         array[0] = this.corredor.getDni();
         array[1] = this.corredor.getNombre();
-        array[2] = Utiles.Sdf.format(this.corredor.getFecha_nac());
+        array[2] = Utiles.Sdf.formatFecha(this.corredor.getFecha_nac());
         array[3] = this.corredor.getDireccion();
         array[4] = this.corredor.getTelefono();
         array[5] = this.dorsal;

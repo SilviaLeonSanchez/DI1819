@@ -336,7 +336,7 @@ public class FormularioCorredores extends javax.swing.JDialog {
                 }
             } else {
                 LogicaCorredor.getInstance().altaCorredor(
-                        this.jTextFieldDniCorredor.getText(),
+                        this.jTextFieldDniCorredor.getText().toUpperCase(),
                         this.jTextFieldNombreCorredor.getText(),
                         (Date) this.jSpinnerFechaNacimientoCorredor.getValue(),
                         this.jTextFieldDireccionCorredor.getText(),

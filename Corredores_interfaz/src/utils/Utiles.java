@@ -19,15 +19,28 @@ public class Utiles {
 
     public static class Sdf {
 
-        private static final String FORMATO = "dd/MM/yy";
-        private static final SimpleDateFormat SDF = new SimpleDateFormat(FORMATO);
+        private static final String FORMATO_FECHA = "dd/MM/yy";
+        private static final String FORMATO_HORA = "hh:mm:ss S";
+        private static SimpleDateFormat SDF;
 
-        public static String format(Date fecha) {
+        public static String formatFecha(Date fecha) {
+            SDF = new SimpleDateFormat(FORMATO_FECHA);
             return SDF.format(fecha);
         }
 
-        public static Date parse(String fecha) throws ParseException {
+        public static Date parseFecha(String fecha) throws ParseException {
+            SDF = new SimpleDateFormat(FORMATO_FECHA);
             return SDF.parse(fecha);
+        }
+        
+        public static String formatHora(Date hora) {
+            SDF = new SimpleDateFormat(FORMATO_HORA);
+            return SDF.format(hora);
+        }
+
+        public static Date parseHora(String hora) throws ParseException {
+            SDF = new SimpleDateFormat(FORMATO_HORA);
+            return SDF.parse(hora);
         }
 
     }

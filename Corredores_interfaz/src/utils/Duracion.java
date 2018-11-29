@@ -1,6 +1,8 @@
 package utils;
 
 import java.time.Duration;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 
 
 
@@ -28,7 +30,7 @@ public class Duracion {
     }
     
     public static String verDuracionFormatoCorto(Duration duracion) {
-        return getHoras(duracion) + ":" + getMinutos(duracion) + ":" + getSegundos(duracion);
+        return String.format("%02d:%02d:%02d %01d", (int) duracion.toHours(), (int) duracion.toMinutes(), (int) duracion.getSeconds(), (int) duracion.toMillis());
     }
     
     private static int getHoras(Duration duracion){
@@ -46,5 +48,6 @@ public class Duracion {
     public static Duration nuevaDuracion(int minSeg, int maxSeg) {
         return Duration.ofSeconds(minSeg+((int)(Math.random()*(maxSeg-minSeg))));
     }
+    
 
 }

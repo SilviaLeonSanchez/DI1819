@@ -42,7 +42,7 @@ public class Corredor implements Serializable, Comparable<Corredor>, Cloneable {
     @Override
     public String toString() {
         return "Corredor{" + "dni=" + dni + ", nombre=" + nombre
-                + ", fecha_nacimiento=" + Sdf.format(fecha_nac)
+                + ", fecha_nacimiento=" + Sdf.formatFecha(fecha_nac)
                 + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
 
@@ -50,7 +50,7 @@ public class Corredor implements Serializable, Comparable<Corredor>, Cloneable {
         String array[] = new String[5];
         array[0] = this.dni;
         array[1] = this.nombre;
-        array[2] = Utiles.Sdf.format(this.fecha_nac);
+        array[2] = Utiles.Sdf.formatFecha(this.fecha_nac);
         array[3] = this.direccion;
         array[4] = this.telefono;
         return array;
@@ -91,7 +91,7 @@ public class Corredor implements Serializable, Comparable<Corredor>, Cloneable {
 
     // GETTER Y SETTER
     public String[] getCorredor() {
-        String[] datos = {this.dni, this.nombre, Sdf.format(this.fecha_nac), this.direccion, this.telefono};
+        String[] datos = {this.dni, this.nombre, Sdf.formatFecha(this.fecha_nac), this.direccion, this.telefono};
         return datos;
     }
 
