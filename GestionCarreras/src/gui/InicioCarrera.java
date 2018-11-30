@@ -3,10 +3,14 @@ package gui;
 import dto.Carrera;
 import dto.TiemposCorredor;
 import gui.VistaCarreras.TableModelTiemposCorredor;
+import interfaces.ListenerLlegada;
+import interfaces.ReceptorTiempoCronometro;
+import java.awt.Component;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -18,7 +22,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class InicioCarrera extends javax.swing.JDialog {
 
-    private PantallaPrincipal pantallaPrincipal;
+    private Component pantallaPrincipal;
     private TableRowSorter<TableModelTiemposCorredor> sorterCorredoresInicio;
     private TableRowSorter<TableModelTiemposCorredor> sorterCorredoresFin;
     private final Carrera carrera;
@@ -36,9 +40,43 @@ public class InicioCarrera extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         this.carrera = carrera;
         setTitle("CARRERA " + carrera.getNombre().toUpperCase());
+        jLabelTituloVerCarreras.setText("CARRERA " + carrera.getNombre().toUpperCase());
         rellenarComboBoxesFiltroCorredores();
-        refrescarTablaTiemposCorredoresInicio();
-        refrescarTablaTiemposCorredoresFin();
+        refrescarTablaTiemposCorredoresInicio(carrera.getListaCorredores());
+        refrescarTablaTiemposCorredoresFin(new ArrayList<>());
+        cronometro.addLlegadaListener(new ListenerLlegada() {
+            @Override
+            public ReceptorTiempoCronometro llegaReceptorACronometro() {
+                int corredorSeleccionado = jTableTiemposCorredoresInicio.getSelectedRow();
+                if (corredorSeleccionado == -1) {
+                    JOptionPane.showMessageDialog(parent, "Tienes que seleccionar el corredor que ha llegado", "Selecciona corredor", JOptionPane.INFORMATION_MESSAGE);
+                    return null;
+                } else {
+                    TiemposCorredor corredorLlegada = carrera.getListaCorredores().get(corredorSeleccionado);
+                    corredorLlegada.setTiempo(cronometro.getTiempo());
+                    return corredorLlegada;
+                }
+            }
+
+            @Override
+            public void vuelveReceptorDeCronometro(ReceptorTiempoCronometro corredorLlegada) {
+                if (corredorLlegada != null) {
+                    ArrayList<TiemposCorredor> corredoresSinTerminar = new ArrayList<>();
+                    ArrayList<TiemposCorredor> corredoresFin = new ArrayList<>();
+
+                    for (TiemposCorredor corredor : carrera.getListaCorredores()) {
+                        if (corredor.getTiempo().equals(Duration.ZERO)) {
+                            corredoresSinTerminar.add(corredor);
+                        } else {
+                            corredoresFin.add(corredor);
+                        }
+                    }
+
+                    refrescarTablaTiemposCorredoresInicio(corredoresSinTerminar);
+                    refrescarTablaTiemposCorredoresFin(corredoresFin);
+                }
+            }
+        });
     }
 
     public Carrera getCarrera() {
@@ -68,6 +106,10 @@ public class InicioCarrera extends javax.swing.JDialog {
         jComboBoxFiltroCorredoresInicio = new javax.swing.JComboBox<>();
         jTextFieldFiltrarCorredoresInicio = new javax.swing.JTextField();
         jButtonFiltrarCorredoresInicio = new javax.swing.JButton();
+        cronometro = new beans.Cronometro();
+        jButtonStop = new javax.swing.JButton();
+        jButtonStart = new javax.swing.JButton();
+        jButtonLlegada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(800, 600));
@@ -98,9 +140,9 @@ public class InicioCarrera extends javax.swing.JDialog {
             .addGroup(jPanelTituloVerCarrerasLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jButtonVolver)
-                .addGap(110, 110, 110)
-                .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(jLabelTituloVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         jPanelTituloVerCarrerasLayout.setVerticalGroup(
             jPanelTituloVerCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,6 +268,30 @@ public class InicioCarrera extends javax.swing.JDialog {
             }
         });
 
+        cronometro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        cronometro.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+
+        jButtonStop.setText("STOP");
+        jButtonStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStopActionPerformed(evt);
+            }
+        });
+
+        jButtonStart.setText("START");
+        jButtonStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStartActionPerformed(evt);
+            }
+        });
+
+        jButtonLlegada.setText("LLEGADA");
+        jButtonLlegada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLlegadaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelTablasLayout = new javax.swing.GroupLayout(jPanelTablas);
         jPanelTablas.setLayout(jPanelTablasLayout);
         jPanelTablasLayout.setHorizontalGroup(
@@ -233,24 +299,34 @@ public class InicioCarrera extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTablasLayout.createSequentialGroup()
                 .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelTablasLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jComboBoxFiltroCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(jButtonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonStop, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelTablasLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
+                        .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+                            .addComponent(jScrollPaneCorredores1)))
+                    .addGroup(jPanelTablasLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPaneCorredores)
                             .addGroup(jPanelTablasLayout.createSequentialGroup()
-                                .addGap(210, 377, Short.MAX_VALUE)
                                 .addComponent(jComboBoxFiltroCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPaneCorredores1, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addComponent(jButtonFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelTablasLayout.createSequentialGroup()
+                                .addComponent(jComboBoxFiltroCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18))
         );
         jPanelTablasLayout.setVerticalGroup(
@@ -258,18 +334,27 @@ public class InicioCarrera extends javax.swing.JDialog {
             .addGroup(jPanelTablasLayout.createSequentialGroup()
                 .addComponent(jScrollPaneCorredores1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonFiltrarCorredoresInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxFiltroCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFiltrarCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxFiltroCorredoresInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelTablasLayout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonStop, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonStart, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonFiltrarCorredoresFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxFiltroCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldFiltrarCorredoresFin))
-                .addGap(16, 16, 16))
+                .addGroup(jPanelTablasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldFiltrarCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxFiltroCorredoresFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanelTablas, java.awt.BorderLayout.CENTER);
@@ -282,13 +367,7 @@ public class InicioCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     // TABLA TIEMPOS CORREDORES
-    private void refrescarTablaTiemposCorredoresInicio() {
-        List<TiemposCorredor> corredoresSinTerminar = new ArrayList<>();
-        for (TiemposCorredor corredor : corredoresSinTerminar) {
-            if (corredor.getTiempo().isZero()) {
-                corredoresSinTerminar.add(corredor);
-            }
-        }
+    private void refrescarTablaTiemposCorredoresInicio(List<TiemposCorredor> corredoresSinTerminar) {
 
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresSinTerminar);
@@ -296,7 +375,7 @@ public class InicioCarrera extends javax.swing.JDialog {
 
         // Sorter para las filas
         sorterCorredoresInicio = new TableRowSorter<>(model);
-        this.jTableTiemposCorredoresFin.setRowSorter(sorterCorredoresInicio);
+        this.jTableTiemposCorredoresInicio.setRowSorter(sorterCorredoresInicio);
 
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
@@ -304,26 +383,20 @@ public class InicioCarrera extends javax.swing.JDialog {
         sorterCorredoresInicio.setSortKeys(sortKeys);
     }
 
-    private void refrescarTablaTiemposCorredoresFin() {
-        List<TiemposCorredor> corredoresFin = new ArrayList<>();
-        for (TiemposCorredor corredor : corredoresFin) {
-            if (corredor.getTiempo().compareTo(Duration.ZERO) > 0) {
-                corredoresFin.add(corredor);
-            }
-        }
+    private void refrescarTablaTiemposCorredoresFin(List<TiemposCorredor> corredoresFin) {
 
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresFin);
         this.jTableTiemposCorredoresFin.setModel(model);
 
         // Sorter para las filas
-        sorterCorredoresInicio = new TableRowSorter<>(model);
-        this.jTableTiemposCorredoresFin.setRowSorter(sorterCorredoresInicio);
+        sorterCorredoresFin = new TableRowSorter<>(model);
+        this.jTableTiemposCorredoresFin.setRowSorter(sorterCorredoresFin);
 
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
-        sorterCorredoresInicio.setSortKeys(sortKeys);
+        sorterCorredoresFin.setSortKeys(sortKeys);
     }
 
     private void rellenarComboBoxesFiltroCorredores() {
@@ -343,6 +416,21 @@ public class InicioCarrera extends javax.swing.JDialog {
         sorterCorredoresInicio.setRowFilter(rowfilter);
     }//GEN-LAST:event_jButtonFiltrarCorredoresInicioActionPerformed
 
+    private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
+        cronometro.start();
+    }//GEN-LAST:event_jButtonStartActionPerformed
+
+    private void jButtonLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLlegadaActionPerformed
+        cronometro.llegada();
+    }//GEN-LAST:event_jButtonLlegadaActionPerformed
+
+    private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
+        int resultado = JOptionPane.showConfirmDialog(pantallaPrincipal, "Si paras el cronometro se acabará la carrera. ¿Estas seguro?", "Fin de la carrera", JOptionPane.YES_NO_OPTION);
+        if (resultado == JOptionPane.YES_OPTION) {
+            cronometro.stop();            
+        }
+    }//GEN-LAST:event_jButtonStopActionPerformed
+
     // HABILITAR BOTONES
     private void habilitarBotones(boolean habilitar) {
 
@@ -350,8 +438,12 @@ public class InicioCarrera extends javax.swing.JDialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private beans.Cronometro cronometro;
     private javax.swing.JButton jButtonFiltrarCorredoresFin;
     private javax.swing.JButton jButtonFiltrarCorredoresInicio;
+    private javax.swing.JButton jButtonLlegada;
+    private javax.swing.JButton jButtonStart;
+    private javax.swing.JButton jButtonStop;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JComboBox<String> jComboBoxFiltroCorredoresFin;
     private javax.swing.JComboBox<String> jComboBoxFiltroCorredoresInicio;

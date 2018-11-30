@@ -54,9 +54,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jButtonVolver" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
-                  <Component id="jLabelTituloVerCarreras" min="-2" pref="400" max="-2" attributes="0"/>
-                  <EmptySpace pref="198" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="jLabelTituloVerCarreras" min="-2" pref="533" max="-2" attributes="0"/>
+                  <EmptySpace pref="142" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -123,26 +123,39 @@
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jComboBoxFiltroCorredoresInicio" min="-2" pref="131" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="cronometro" min="-2" pref="330" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                          <Component id="jButtonStart" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextFieldFiltrarCorredoresInicio" min="-2" pref="136" max="-2" attributes="0"/>
+                          <Component id="jButtonLlegada" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButtonFiltrarCorredoresInicio" min="-2" pref="108" max="-2" attributes="0"/>
+                          <Component id="jButtonStop" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jScrollPaneCorredores" alignment="1" pref="764" max="32767" attributes="0"/>
+                              <Component id="jScrollPaneCorredores1" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jScrollPaneCorredores" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="210" pref="377" max="32767" attributes="0"/>
                                   <Component id="jComboBoxFiltroCorredoresFin" min="-2" pref="131" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jTextFieldFiltrarCorredoresFin" min="-2" pref="136" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldFiltrarCorredoresFin" min="-2" pref="101" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButtonFiltrarCorredoresFin" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <Component id="jButtonFiltrarCorredoresFin" min="-2" pref="102" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jScrollPaneCorredores1" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jComboBoxFiltroCorredoresInicio" min="-2" pref="131" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jTextFieldFiltrarCorredoresInicio" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonFiltrarCorredoresInicio" min="-2" pref="100" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
@@ -155,20 +168,32 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jScrollPaneCorredores1" min="-2" pref="147" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonFiltrarCorredoresInicio" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jComboBoxFiltroCorredoresInicio" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldFiltrarCorredoresInicio" alignment="0" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonFiltrarCorredoresInicio" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jTextFieldFiltrarCorredoresInicio" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jComboBoxFiltroCorredoresInicio" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="116" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jButtonStop" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="jButtonLlegada" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="jButtonStart" alignment="3" min="-2" pref="56" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="cronometro" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="37" max="32767" attributes="0"/>
                   <Component id="jScrollPaneCorredores" min="-2" pref="122" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonFiltrarCorredoresFin" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jComboBoxFiltroCorredoresFin" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldFiltrarCorredoresFin" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonFiltrarCorredoresFin" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jTextFieldFiltrarCorredoresFin" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBoxFiltroCorredoresFin" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <EmptySpace pref="22" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -390,6 +415,38 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFiltrarCorredoresInicioActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="beans.Cronometro" name="cronometro">
+          <Properties>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Dialog" size="48" style="1"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonStop">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="STOP"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStopActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonStart">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="START"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStartActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonLlegada">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="LLEGADA"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLlegadaActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
