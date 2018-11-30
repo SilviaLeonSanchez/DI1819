@@ -26,19 +26,23 @@ import com.pagosoft.plaf.PgsLookAndFeel;
 import java.awt.Desktop;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import static javax.swing.JFileChooser.SAVE_DIALOG;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.LookAndFeel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import logic.LogicaGuardado;
 import napkin.NapkinLookAndFeel;
 import net.sf.tinylaf.TinyLookAndFeel;
@@ -144,7 +148,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         lookAndFeels.put("Pgs", new PgsLookAndFeel());
         lookAndFeels.put("Tiny", new TinyLookAndFeel());
         lookAndFeels.put("Web", new WebLookAndFeel());
-        
+
     }
 
     /**
@@ -157,6 +161,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroupLookAndFeels = new javax.swing.ButtonGroup();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanelBotones = new javax.swing.JPanel();
         jButtonVerCorredores = new javax.swing.JButton();
         jButtonSalir = new javax.swing.JButton();
@@ -165,10 +171,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jLabelIcono = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
+        jMenuArchivos = new javax.swing.JMenu();
+        jMenuItemExportarCorredores = new javax.swing.JMenuItem();
+        jMenuItemExportarCarrera = new javax.swing.JMenuItem();
         jMenuConfiguracion = new javax.swing.JMenu();
         jMenuLookAndFeel = new javax.swing.JMenu();
+        jMenuItemOpciones = new javax.swing.JMenuItem();
+        jMenuItemGuardar = new javax.swing.JMenuItem();
         jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemAyuda = new javax.swing.JMenuItem();
         jMenuItemJavadoc = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MarAppTon");
@@ -279,18 +295,63 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuBar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jMenuBar.setPreferredSize(new java.awt.Dimension(168, 36));
 
+        jMenuArchivos.setText("Archivos");
+        jMenuArchivos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+
+        jMenuItemExportarCorredores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemExportarCorredores.setText("Exportar Corredores");
+        jMenuItemExportarCorredores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExportarCorredoresActionPerformed(evt);
+            }
+        });
+        jMenuArchivos.add(jMenuItemExportarCorredores);
+
+        jMenuItemExportarCarrera.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemExportarCarrera.setText("Exportar resultado de Carrera");
+        jMenuItemExportarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemExportarCarreraActionPerformed(evt);
+            }
+        });
+        jMenuArchivos.add(jMenuItemExportarCarrera);
+
+        jMenuBar.add(jMenuArchivos);
+
         jMenuConfiguracion.setText("Configuracion");
         jMenuConfiguracion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         jMenuLookAndFeel.setText("LookAndFeel");
+        jMenuLookAndFeel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jMenuConfiguracion.add(jMenuLookAndFeel);
+
+        jMenuItemOpciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemOpciones.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemOpciones.setText("Opciones");
+        jMenuConfiguracion.add(jMenuItemOpciones);
+
+        jMenuItemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemGuardar.setText("Guardar");
+        jMenuItemGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGuardarActionPerformed(evt);
+            }
+        });
+        jMenuConfiguracion.add(jMenuItemGuardar);
 
         jMenuBar.add(jMenuConfiguracion);
 
         jMenuAyuda.setText("Ayuda");
         jMenuAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
-        jMenuItemJavadoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItemAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemAyuda.setText("Ayuda");
+        jMenuAyuda.add(jMenuItemAyuda);
+
+        jMenuItemJavadoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItemJavadoc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jMenuItemJavadoc.setText("Javadoc");
         jMenuItemJavadoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -339,11 +400,95 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemJavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJavadocActionPerformed
         try {
-            Desktop.getDesktop().browse(new URI("file:///home/silvia/Documentos/DI1819/Corredores_interfaz/dist/javadoc/index.html"));
-        } catch (IOException | URISyntaxException ex) {
+            //Cargar una URI con ruta relativa
+            //File file = new File("dist/javadoc/index.html");
+            //Desktop.getDesktop().browse(file.toURI());
+
+            //Cargar archivos que están dentro del jar 
+            //(Meter la carpeta javadoc en la carpeta src y aparecera junto a mis paquetes)
+            Desktop.getDesktop().browse(getClass().getClassLoader().getResource("javadoc/index.html").toURI());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "No se encuentra el fichero Javadoc. Asegurate de haberlo generado.", "Javadoc no encontrado", JOptionPane.WARNING_MESSAGE);
+        } catch (URISyntaxException ex) {
             Exceptions.printStackTrace(ex);
         }
     }//GEN-LAST:event_jMenuItemJavadocActionPerformed
+
+    private void jMenuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardarActionPerformed
+        boolean guardadoOk = LogicaGuardado.getInstance().guardarDatos();
+        if (guardadoOk) {
+            JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente", "Datos guardados", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "Ha habido un problema al guardar los datos. Inténtelo otra vez", "Error al guardar", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItemGuardarActionPerformed
+
+    private void jMenuItemExportarCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportarCorredoresActionPerformed
+        JFileChooser jfc = new JFileChooser();
+
+        // Desactivar la posibilidad de elegir cualquier archivo y poner filtro para CSV
+        jfc.setAcceptAllFileFilterUsed(false);
+        jfc.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros CSV ", "csv"));
+
+        jfc.setDialogTitle("Elige el fichero CSV donde exportar los corredores");
+        jfc.setDialogType(SAVE_DIALOG);
+
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setMultiSelectionEnabled(false);
+
+        // Mostrar dialogo
+        jfc.showSaveDialog(this);
+
+        // Recoger el archivo elegido y exportar corredores
+        File archivoCSV = jfc.getSelectedFile();
+        
+        if (archivoCSV == null) {
+            JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ningun archivo", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            boolean guardadoOk = LogicaGuardado.getInstance().exportarCorredoresCSV(archivoCSV);
+
+            if (guardadoOk) {
+                JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente", "Datos guardados", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ha habido un problema al guardar los datos. Inténtelo otra vez", "Error al guardar", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jMenuItemExportarCorredoresActionPerformed
+
+    private void jMenuItemExportarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportarCarreraActionPerformed
+        JFileChooser jfc = new JFileChooser();
+
+        // Desactivar la posibilidad de elegir cualquier archivo y poner filtro para CSV
+        jfc.setAcceptAllFileFilterUsed(false);
+        jfc.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros CSV ", "csv"));
+
+        jfc.setDialogTitle("Elige el fichero CSV donde exportar la carrera");
+        jfc.setDialogType(SAVE_DIALOG);
+
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setMultiSelectionEnabled(false);
+
+        // Mostrar dialogo
+        jfc.showSaveDialog(this);
+
+        // Recoger el archivo elegido y exportar corredores
+        File archivoCSV = jfc.getSelectedFile();
+        
+        if (archivoCSV == null) {
+            JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ningun archivo", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
+
+        } else {
+            boolean guardadoOk = false;
+            //guardadoOk = LogicaGuardado.getInstance().exportarCorredoresCSV(archivoCSV);
+
+            if (guardadoOk) {
+                JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente", "Datos guardados", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Ha habido un problema al guardar los datos. Inténtelo otra vez", "Error al guardar", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jMenuItemExportarCarreraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -396,10 +541,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonVerCorredores;
     private javax.swing.JLabel jLabelIcono;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JMenu jMenuArchivos;
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguracion;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemAyuda;
+    private javax.swing.JMenuItem jMenuItemExportarCarrera;
+    private javax.swing.JMenuItem jMenuItemExportarCorredores;
+    private javax.swing.JMenuItem jMenuItemGuardar;
     private javax.swing.JMenuItem jMenuItemJavadoc;
+    private javax.swing.JMenuItem jMenuItemOpciones;
     private javax.swing.JMenu jMenuLookAndFeel;
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelTitulo;

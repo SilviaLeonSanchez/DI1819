@@ -5,6 +5,9 @@
  */
 package test;
 
+import interfaces.ListenerLlegada;
+import interfaces.ReceptorTiempoCronometro;
+
 /**
  *
  * @author silvia
@@ -16,8 +19,18 @@ public class PruebasCronometro extends javax.swing.JFrame {
      */
     public PruebasCronometro() {
         initComponents();
-        
         cronometro1.start();
+        cronometro1.addLlegadaListener(new ListenerLlegada() {
+            @Override
+            public ReceptorTiempoCronometro llegaReceptorACronometro() {
+                return receptor1;
+                        }
+
+            @Override
+            public void vuelveReceptorDeCronometro(ReceptorTiempoCronometro receptor) {
+                
+            }
+        });
     }
 
     /*
@@ -30,38 +43,88 @@ public class PruebasCronometro extends javax.swing.JFrame {
     private void initComponents() {
 
         cronometro1 = new beans.Cronometro();
+        jButtonStart = new javax.swing.JButton();
+        jButtonStop = new javax.swing.JButton();
+        jButtonLlegada = new javax.swing.JButton();
+        receptor1 = new test.Receptor();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cronometro1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cronometro1MouseClicked(evt);
+        cronometro1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+
+        jButtonStart.setText("Start");
+        jButtonStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStartActionPerformed(evt);
             }
         });
+
+        jButtonStop.setText("Stop");
+        jButtonStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonStopActionPerformed(evt);
+            }
+        });
+
+        jButtonLlegada.setText("Llegada");
+        jButtonLlegada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLlegadaActionPerformed(evt);
+            }
+        });
+
+        receptor1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        receptor1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(124, 124, 124)
+                .addComponent(cronometro1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(203, Short.MAX_VALUE)
-                .addComponent(cronometro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(189, 189, 189))
+                .addContainerGap(79, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(receptor1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonStart)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonStop)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonLlegada)))
+                .addGap(73, 73, 73))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(147, Short.MAX_VALUE)
-                .addComponent(cronometro1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(cronometro1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonStart)
+                    .addComponent(jButtonStop)
+                    .addComponent(jButtonLlegada))
+                .addGap(26, 26, 26)
+                .addComponent(receptor1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cronometro1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cronometro1MouseClicked
+    private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
+        cronometro1.start();
+    }//GEN-LAST:event_jButtonStartActionPerformed
+
+    private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
         cronometro1.stop();
-    }//GEN-LAST:event_cronometro1MouseClicked
+    }//GEN-LAST:event_jButtonStopActionPerformed
+
+    private void jButtonLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLlegadaActionPerformed
+       cronometro1.llegada();
+    }//GEN-LAST:event_jButtonLlegadaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -103,5 +166,9 @@ public class PruebasCronometro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private beans.Cronometro cronometro1;
+    private javax.swing.JButton jButtonLlegada;
+    private javax.swing.JButton jButtonStart;
+    private javax.swing.JButton jButtonStop;
+    private test.Receptor receptor1;
     // End of variables declaration//GEN-END:variables
 }

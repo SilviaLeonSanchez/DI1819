@@ -5,9 +5,9 @@
  */
 package dto;
 
+import interfaces.ReceptorTiempoCronometro;
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.Date;
 import java.util.Objects;
 import utils.Duracion;
 import utils.Utiles;
@@ -16,7 +16,7 @@ import utils.Utiles;
  *
  * @author silvia
  */
-public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor>{
+public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor>, ReceptorTiempoCronometro{
 
     // ATRIBUTOS
     private final String idCarrera;
@@ -109,7 +109,10 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
         return true;
     }
     
-
+@Override
+    public void recibirTiempo(Duration tiempo) {
+        this.tiempo = tiempo;
+    }
     
     
 }

@@ -13,6 +13,9 @@ import java.util.TimerTask;
 import javax.swing.JLabel;
 import interfaces.StopCronometro;
 import interfaces.ListenerLlegada;
+import interfaces.ReceptorTiempoCronometro;
+import java.time.Duration;
+import java.time.Instant;
 
 /**
  *
@@ -20,19 +23,42 @@ import interfaces.ListenerLlegada;
  */
 public class Cronometro extends JLabel implements Serializable {
 
-    private Timer timer;
-    private int tiempo;
-    private ArrayList<StopCronometro> listenersStopCronometro;
-    private ArrayList<StartCronometro> listenersStartCronometro;
+   
+    // ATRIBUTOS
+    private final ArrayList<StopCronometro> listenersStopCronometro;
+    private final ArrayList<ListenerLlegada> listenersLlegada;
+    private final ArrayList<StartCronometro> listenersStartCronometro;
 
+    private Timer timer;
+    private Instant momentoStart;
+    private volatile Duration tiempo;
+    private volatile boolean running;
+
+    // PROPIEDADES
+    private boolean conDecimales;
+
+    /**
+     * Creates new form RelojDigital
+     */
     public Cronometro() {
-        setHorizontalTextPosition(JLabel.HORIZONTAL);
-        setText(String.valueOf(tiempo));
         this.listenersStartCronometro = new ArrayList<>();
         this.listenersStopCronometro = new ArrayList<>();
-        timer = new Timer();
+        this.listenersLlegada = new ArrayList<>();
+        this.timer = new Timer();
+        this.tiempo = Duration.ZERO;
+        setTiempoEnLabel(tiempo);
     }
 
+    // GETTER Y SETTER    
+    public boolean isConDecimales() {
+        return conDecimales;
+    }
+
+    public void setConDecimales(boolean conDecimales) {
+        this.conDecimales = conDecimales;
+    }
+
+    // LISTENER
     public void addStopCronometrorListener(StopCronometro listener) {
         this.listenersStopCronometro.add(listener);
     }
@@ -40,39 +66,67 @@ public class Cronometro extends JLabel implements Serializable {
     public void addStartCronometroListener(StartCronometro listener) {
         this.listenersStartCronometro.add(listener);
     }
-    
-    public int getTiempo() {
-        return tiempo;
-    }
 
-    public void setTiempo(int tiempo) {
-        this.tiempo = tiempo;
-        this.setText(String.valueOf(tiempo));
+    public void addLlegadaListener(ListenerLlegada listener) {
+        this.listenersLlegada.add(listener);
     }
 
     public void start() {
-        for (StartCronometro startCronometro : listenersStartCronometro) {
-            startCronometro.startCronometro();
+
+        for (StartCronometro listener : listenersStartCronometro) {
+            listener.startCronometro();
         }
-        timer.schedule(new TimerTask() {
+
+        this.tiempo = Duration.ZERO;
+
+        this.momentoStart = Instant.now();
+        this.running = true;
+
+        this.timer = new Timer();
+        this.timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                    setText(String.valueOf(tiempo++));
+                tiempo = tiempo.plusMillis(100);
+                setTiempoEnLabel(tiempo);
             }
-        }, 0, 1000);
-
+        }, 100, 100);
     }
-    
-    public void stop(){
-        this.timer.cancel();
-        for (StopCronometro stopCronometro : listenersStopCronometro) {
-            stopCronometro.stopCronometro();
+
+    public void stop() {
+        if (this.running) {
+
+            this.timer.cancel();
+            this.running = false;
+
+            for (StopCronometro listener : listenersStopCronometro) {
+                listener.stopCronometro();
+            }
+
+            this.tiempo = Duration.between(this.momentoStart, Instant.now());
         }
     }
-    
-    public void restart(){
-        this.tiempo = 0;
-        this.setText(String.valueOf(tiempo));
+
+    public void llegada() {
+        for (ListenerLlegada listenerLlegada : listenersLlegada) {
+            ReceptorTiempoCronometro receptorTiempo = listenerLlegada.llegaReceptorACronometro();
+            receptorTiempo.recibirTiempo(tiempo);
+            listenerLlegada.vuelveReceptorDeCronometro(receptorTiempo);
+        }
+    }
+
+    // TIEMPO
+    private void setTiempoEnLabel(Duration tiempo) {
+        String textoTiempo;
+        if (conDecimales) {
+            textoTiempo = String.format("%02d:%02d:%02d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds());
+        } else {
+            textoTiempo = String.format("%02d:%02d:%02d %01d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds(), (int) (tiempo.getNano() / 100000000));
+        }
+        setText(textoTiempo);
+    }
+
+    public Duration getTiempo() {
+        return tiempo;
     }
 
 }

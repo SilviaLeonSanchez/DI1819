@@ -23,28 +23,84 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
+              <Component id="cronometro1" min="-2" pref="159" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="203" max="32767" attributes="0"/>
-              <Component id="cronometro1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="189" max="-2" attributes="0"/>
+              <EmptySpace pref="79" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="receptor1" min="-2" pref="234" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jButtonStart" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonStop" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="jButtonLlegada" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="147" max="32767" attributes="0"/>
-              <Component id="cronometro1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="138" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+              <Component id="cronometro1" min="-2" pref="64" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jButtonStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonStop" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonLlegada" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+              <Component id="receptor1" min="-2" pref="34" max="-2" attributes="0"/>
+              <EmptySpace pref="76" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Component class="beans.Cronometro" name="cronometro1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="24" style="1"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonStart">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Start"/>
+      </Properties>
       <Events>
-        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="cronometro1MouseClicked"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStartActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonStop">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Stop"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonStopActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButtonLlegada">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Llegada"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLlegadaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="test.Receptor" name="receptor1">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="14" style="1"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

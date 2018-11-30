@@ -6,6 +6,8 @@
 package logic;
 
 import dto.Corredor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.Timer;
@@ -18,27 +20,15 @@ import utils.FicheroDeTexto;
  */
 public class LogicaGuardado {
 
-    private transient Timer timer;
+    private Timer timer;
     private int intervaloGuardado;
-    
-    private LogicaGuardado INSTANCE;
-    
-    public LogicaGuardado getInstance(){
-        if ()
-    }
-    
-    
-    private final boolean usarFichero = true;
-    
+
     private FicheroDeObjetos<LogicaCarrera> gestorFicheroCarreras;
     private final File ficheroCarreras = new File("fichero_carreras.dat");
-    
+
     private FicheroDeObjetos<LogicaCorredor> gestorFicheroCorredores;
     private final File ficheroCorredores = new File("fichero_corredores.dat");
-    
-    private FicheroDeTexto gestorCSVCorredores;
-    private final File ficheroCSVCorredores = new File("fichero_corredores.csv");
-    
+
     private static LogicaGuardado INSTANCE;
 
     public static LogicaGuardado getInstance() {
@@ -48,27 +38,56 @@ public class LogicaGuardado {
         return INSTANCE;
     }
 
+    // CONSTRUCTOR
+    public LogicaGuardado() {
+        this.intervaloGuardado = (intervaloGuardado == 0) ? 5 : intervaloGuardado;
+
+        this.timer = new Timer(intervaloGuardado * 60 * 1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarDatos();
+                System.out.println("Guardado automatico");
+            }
+        });
+        this.timer.start();
+    }
+
+    // GETTER Y SETTER
+    public int getIntervaloGuardado() {
+        return intervaloGuardado;
+    }
+
+    public void setIntervaloGuardado(int intervaloGuardado) {
+        this.intervaloGuardado = intervaloGuardado;
+        this.timer = new Timer(intervaloGuardado * 60 * 1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                guardarDatos();
+            }
+        });
+        this.timer.start();
+    }
+
+    public File getFicheroCarreras() {
+        return ficheroCarreras;
+    }
+
+    public File getFicheroCorredores() {
+        return ficheroCorredores;
+    }
+
     // PERSISTENCIA
     public void cargarDatos() {
-        if (usarFichero) {
-            leerLogicaCarreras();
-            leerLogicaCorredores();
-        } else {
-            // BASE DE DATOS
-        }
+        leerLogicaCarreras();
+        leerLogicaCorredores();
     }
 
-    public void guardarDatos() {
-        if (usarFichero) {
-            guardarLogicaCarreras();
-            guardarLogicaCorredores();
-            guardarCorredoresCSV();
-        } else {
-            // BASE DE DATOS
-        }
+    public boolean guardarDatos() {
+        boolean carrerasOk = guardarLogicaCarreras();
+        boolean corredoresOk = guardarLogicaCorredores();
+        return carrerasOk && corredoresOk;
     }
 
-    
     // FICHERO CARRERAS
     private boolean leerLogicaCarreras() {
         if (checkFicheroCarreras()) {
@@ -148,9 +167,39 @@ public class LogicaGuardado {
         this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
         return true;
     }
-    
+
     // CSV CORREDORES
-    private boolean guardarCorredoresCSV(){
+    public boolean exportarCorredoresCSV(File ficheroCSVCorredores) {
+
+        // Comprobar si el fichero existe
+        if (!checkCSVCorredores(ficheroCSVCorredores)) {
+            return false;
+        }
+        
+        // GESTOR DE FICHERO CSV
+        FicheroDeTexto gestorCSVCorredores;
+        gestorCSVCorredores = new FicheroDeTexto(ficheroCSVCorredores);
+        gestorCSVCorredores.abrirEscritor(false);
+
+        // CABECERA
+        for (String nombreAtributo : Corredor.DATOS) {
+            gestorCSVCorredores.print(nombreAtributo + ",");
+        }
+        gestorCSVCorredores.print("\n");
+
+        // CORREDORES
+        for (Corredor corredor : LogicaCorredor.getInstance().getCorredores()) {
+            for (String atributo : corredor.toArray()) {
+                gestorCSVCorredores.print(atributo + ",");
+            }
+            gestorCSVCorredores.print("\n");
+        }
+
+        gestorCSVCorredores.cerrarEscritor();
+        return true;
+    }
+
+    public boolean checkCSVCorredores(File ficheroCSVCorredores) {
         if (!ficheroCSVCorredores.exists()) {
             try {
                 ficheroCSVCorredores.createNewFile();
@@ -159,25 +208,10 @@ public class LogicaGuardado {
                 return false;
             }
         }
-        this.gestorCSVCorredores = new FicheroDeTexto(ficheroCSVCorredores);
-        this.gestorCSVCorredores.abrirEscritor(false);
-        
-        // CABECERA
-        for(String nombreAtributo : Corredor.DATOS){
-            gestorCSVCorredores.print(nombreAtributo+",");
-        }
-        gestorCSVCorredores.print("\n");
-        
-        // CORREDORES
-        for (Corredor corredor : LogicaCorredor.getInstance().getCorredores()){
-            for (String atributo : corredor.toArray()){
-                gestorCSVCorredores.print(atributo+",");
-            }
-            gestorCSVCorredores.print("\n");
-        }
-        
-        this.gestorCSVCorredores.cerrarEscritor();
         return true;
     }
 
+
 }
+
+

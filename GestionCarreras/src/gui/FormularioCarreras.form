@@ -223,7 +223,8 @@
                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                          <Component id="jLabelNombreCarrera1" min="-2" pref="89" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="jTextFieldNombreCarrera" min="-2" pref="202" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -257,13 +258,6 @@
                       </Group>
                   </Group>
               </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="jLabelNombreCarrera1" min="-2" pref="89" max="-2" attributes="0"/>
-                      <EmptySpace pref="524" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -274,6 +268,7 @@
                       <Component id="jTextFieldNombreCarrera" linkSize="2" alignment="2" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="jLabelPlazasCarrera" linkSize="2" alignment="2" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="jTextFieldPlazasCarrera" linkSize="2" alignment="2" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jLabelNombreCarrera1" alignment="2" min="-2" pref="45" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="2" attributes="0">
@@ -290,13 +285,6 @@
                   <EmptySpace pref="43" max="32767" attributes="0"/>
                   <Component id="validationPanel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="jLabelNombreCarrera1" min="-2" pref="45" max="-2" attributes="0"/>
-                      <EmptySpace pref="195" max="32767" attributes="0"/>
-                  </Group>
               </Group>
           </Group>
         </DimensionLayout>

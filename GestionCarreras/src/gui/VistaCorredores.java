@@ -95,7 +95,7 @@ public class VistaCorredores extends javax.swing.JDialog {
         jLabelTituloVerCorredores.setMinimumSize(new java.awt.Dimension(400, 70));
         jLabelTituloVerCorredores.setPreferredSize(new java.awt.Dimension(400, 70));
 
-        jButtonVolver.setText("<--");
+        jButtonVolver.setText("Volver");
         jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVolverActionPerformed(evt);
@@ -109,9 +109,9 @@ public class VistaCorredores extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloVerCorredoresLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jButtonVolver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 155, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                 .addComponent(jLabelTituloVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(225, Short.MAX_VALUE))
+                .addContainerGap(213, Short.MAX_VALUE))
         );
         jPanelTituloVerCorredoresLayout.setVerticalGroup(
             jPanelTituloVerCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,6 +234,9 @@ public class VistaCorredores extends javax.swing.JDialog {
         });
 
         jButtonModificar.setText("Modificar");
+        jButtonModificar.setMaximumSize(new java.awt.Dimension(74, 31));
+        jButtonModificar.setMinimumSize(new java.awt.Dimension(74, 31));
+        jButtonModificar.setPreferredSize(new java.awt.Dimension(74, 31));
         jButtonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonModificarActionPerformed(evt);
@@ -241,6 +244,9 @@ public class VistaCorredores extends javax.swing.JDialog {
         });
 
         jButtonBorrar.setText("Borrar");
+        jButtonBorrar.setMaximumSize(new java.awt.Dimension(74, 31));
+        jButtonBorrar.setMinimumSize(new java.awt.Dimension(74, 31));
+        jButtonBorrar.setPreferredSize(new java.awt.Dimension(74, 31));
         jButtonBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarActionPerformed(evt);
@@ -260,16 +266,16 @@ public class VistaCorredores extends javax.swing.JDialog {
             jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelBotonesListaCorredoresLayout.createSequentialGroup()
-                        .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonModificar)
+                        .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonBorrar)
+                        .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAniadirACarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonAniadirACarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 23, Short.MAX_VALUE))
         );
         jPanelBotonesListaCorredoresLayout.setVerticalGroup(
@@ -279,8 +285,8 @@ public class VistaCorredores extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelBotonesListaCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAniadirACarrera)
-                    .addComponent(jButtonBorrar)
-                    .addComponent(jButtonModificar)
+                    .addComponent(jButtonBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonNuevoCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
