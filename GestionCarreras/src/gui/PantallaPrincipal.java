@@ -45,6 +45,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import logic.Configuracion;
 import logic.LogicaCarrera;
 import logic.LogicaGuardado;
 import napkin.NapkinLookAndFeel;
@@ -85,6 +86,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
         setLocationRelativeTo(null);
         LogicaGuardado.getInstance().cargarDatos();
+        
+        Configuracion configuracion = LogicaGuardado.getInstance().getConfiguracion();
+        if (configuracion != null){
+            cambiarLookAndFeel(configuracion.getLookAndFeel());
+        }
+        
     }
 
     private void inicializarJFileChooser() {
@@ -105,6 +112,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     cambiarLookAndFeel(lookAndFeel);
+                    LogicaGuardado.getInstance().getConfiguracion().setLookAndFeel(lookAndFeel);
                 }
             });
             jMenuLookAndFeel.add(item);
@@ -582,4 +590,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBotones;
     private javax.swing.JPanel jPanelTitulo;
     // End of variables declaration//GEN-END:variables
+
+    
 }
