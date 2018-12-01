@@ -6,8 +6,10 @@ import gui.VistaCarreras.TableModelTiemposCorredor;
 import interfaces.ListenerLlegada;
 import interfaces.ReceptorTiempoCronometro;
 import java.awt.Component;
+import java.awt.Frame;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -25,7 +27,10 @@ public class InicioCarrera extends javax.swing.JDialog {
 
     private Component pantallaPrincipal;
     private TableRowSorter<TableModelTiemposCorredor> sorterCorredoresInicio;
+    private List<TiemposCorredor> corredoresInicio;
+
     private TableRowSorter<TableModelTiemposCorredor> sorterCorredoresFin;
+    private List<TiemposCorredor> corredoresFin;
     private final Carrera carrera;
 
     /**
@@ -42,23 +47,41 @@ public class InicioCarrera extends javax.swing.JDialog {
         this.carrera = carrera;
         setTitle("CARRERA " + carrera.getNombre().toUpperCase());
         jLabelTituloVerCarreras.setText("CARRERA " + carrera.getNombre().toUpperCase());
-        rellenarComboBoxesFiltroCorredores();
-        
-        // TABLAS
+        rellenarComboBoxesFiltros();
+
         jTableTiemposCorredoresInicio.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        refrescarTablaTiemposCorredoresInicio(carrera.getListaCorredores());
-        refrescarTablaTiemposCorredoresFin(new ArrayList<TiemposCorredor>());
-        
+        this.corredoresInicio = carrera.getListaCorredores();
+        this.corredoresFin = new ArrayList<TiemposCorredor>();
+
+        refrescarTablaTiemposCorredoresInicio(corredoresInicio);
+        refrescarTablaTiemposCorredoresFin(corredoresFin);
+
+        aniadirListenerCronometro(parent);
+
+        jButtonLlegada.setEnabled(false);
+        jButtonStop.setEnabled(false);
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    private void aniadirListenerCronometro(Frame parent) {
         cronometro.addLlegadaListener(new ListenerLlegada() {
             @Override
             public ReceptorTiempoCronometro llegaReceptorACronometro() {
-                int corredorSeleccionado = jTableTiemposCorredoresInicio.getSelectedRow();
-                if (corredorSeleccionado == -1) {
+
+                int seleccionTabla = jTableTiemposCorredoresInicio.getSelectedRow();
+                if (seleccionTabla == -1) {
                     JOptionPane.showMessageDialog(parent, "Tienes que seleccionar el corredor que ha llegado", "Selecciona corredor", JOptionPane.INFORMATION_MESSAGE);
                     return null;
                 } else {
-                    TiemposCorredor corredorLlegada = carrera.getListaCorredores().get(corredorSeleccionado);
+
+                    int corredorSeleccionado = jTableTiemposCorredoresInicio.convertRowIndexToModel(seleccionTabla);
+                    TiemposCorredor corredorLlegada = corredoresInicio.get(corredorSeleccionado);
                     corredorLlegada.setTiempo(cronometro.getTiempo());
+                    corredoresInicio.remove(corredorLlegada);
+                    corredoresFin.add((TiemposCorredor) corredorLlegada);
                     return corredorLlegada;
                 }
             }
@@ -66,26 +89,11 @@ public class InicioCarrera extends javax.swing.JDialog {
             @Override
             public void vuelveReceptorDeCronometro(ReceptorTiempoCronometro corredorLlegada) {
                 if (corredorLlegada != null) {
-                    ArrayList<TiemposCorredor> corredoresSinTerminar = new ArrayList<>();
-                    ArrayList<TiemposCorredor> corredoresFin = new ArrayList<>();
-
-                    for (TiemposCorredor corredor : carrera.getListaCorredores()) {
-                        if (corredor.getTiempo().equals(Duration.ZERO)) {
-                            corredoresSinTerminar.add(corredor);
-                        } else {
-                            corredoresFin.add(corredor);
-                        }
-                    }
-
-                    refrescarTablaTiemposCorredoresInicio(corredoresSinTerminar);
+                    refrescarTablaTiemposCorredoresInicio(corredoresInicio);
                     refrescarTablaTiemposCorredoresFin(corredoresFin);
                 }
             }
         });
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
     }
 
     /**
@@ -368,7 +376,20 @@ public class InicioCarrera extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        this.dispose();
+        if (cronometro.isRunning()) {
+            int resultado = JOptionPane.showConfirmDialog(this,
+                    "Si sales se parará el cronómetro. La carrera no se cerrará, "
+                            + "pero se mantendrán los tiempos de los corredores. ¿Continuar?", 
+                    "¿Abandonar carrera?", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resultado == JOptionPane.YES_OPTION) {
+                this.cronometro.stop();
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "La carrera continuará sin cambios", "Continua la carrera", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            dispose();
+        }
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     // TABLA TIEMPOS CORREDORES
@@ -377,16 +398,16 @@ public class InicioCarrera extends javax.swing.JDialog {
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresInicio);
         this.jTableTiemposCorredoresInicio.setModel(model);
-        /*
+
         // Sorter para las filas
         sorterCorredoresInicio = new TableRowSorter<>(model);
         this.jTableTiemposCorredoresInicio.setRowSorter(sorterCorredoresInicio);
-        
+
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorterCorredoresInicio.setSortKeys(sortKeys);
-        */
+
     }
 
     private void refrescarTablaTiemposCorredoresFin(List<TiemposCorredor> corredoresFin) {
@@ -394,19 +415,19 @@ public class InicioCarrera extends javax.swing.JDialog {
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresFin);
         this.jTableTiemposCorredoresFin.setModel(model);
-        /*
+
         // Sorter para las filas
         sorterCorredoresFin = new TableRowSorter<>(model);
         this.jTableTiemposCorredoresFin.setRowSorter(sorterCorredoresFin);
-        
+
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorterCorredoresFin.setSortKeys(sortKeys);
-        */
+
     }
 
-    private void rellenarComboBoxesFiltroCorredores() {
+    private void rellenarComboBoxesFiltros() {
         this.jComboBoxFiltroCorredoresFin.setModel(new DefaultComboBoxModel<>(TiemposCorredor.DATOS));
         this.jComboBoxFiltroCorredoresInicio.setModel(new DefaultComboBoxModel<>(TiemposCorredor.DATOS));
     }
@@ -424,7 +445,11 @@ public class InicioCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonFiltrarCorredoresInicioActionPerformed
 
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
+        carrera.setFecha(new Date());
         cronometro.start();
+        jButtonStart.setEnabled(false);
+        jButtonLlegada.setEnabled(true);
+        jButtonStop.setEnabled(true);
     }//GEN-LAST:event_jButtonStartActionPerformed
 
     private void jButtonLlegadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLlegadaActionPerformed
@@ -434,14 +459,12 @@ public class InicioCarrera extends javax.swing.JDialog {
     private void jButtonStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStopActionPerformed
         int resultado = JOptionPane.showConfirmDialog(pantallaPrincipal, "Si paras el cronometro se acabará la carrera. ¿Estas seguro?", "Fin de la carrera", JOptionPane.YES_NO_OPTION);
         if (resultado == JOptionPane.YES_OPTION) {
-            cronometro.stop();            
+            cronometro.stop();
+            carrera.cerrarCarrera();
+            this.jButtonLlegada.setEnabled(false);
+            this.jButtonStop.setEnabled(false);
         }
     }//GEN-LAST:event_jButtonStopActionPerformed
-
-    // HABILITAR BOTONES
-    private void habilitarBotones(boolean habilitar) {
-
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

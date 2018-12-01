@@ -547,12 +547,12 @@ public class VistaCarreras extends javax.swing.JDialog {
             InicioCarrera inicioCarrera = new InicioCarrera(pantallaPrincipal, true, this.carreraSeleccionada);
             inicioCarrera.setVisible(true);
 
+            habilitarBotones(!carreraSeleccionada.isCarreraCerrada());
             refrescarTablaCarreras();
             refrescarTablaTiemposCorredores();
             
             // Seleccionar la carrera otra vez
-            ListSelectionModel selectionModel
-                    = jTableCarreras.getSelectionModel();
+            ListSelectionModel selectionModel = jTableCarreras.getSelectionModel();
             selectionModel.setSelectionInterval(posCarreraSeleccionada, posCarreraSeleccionada);
         } else {
             JOptionPane.showMessageDialog(this, "No se ha iniciado la carrera", "Inicio candelado", JOptionPane.INFORMATION_MESSAGE);

@@ -23,7 +23,6 @@ import java.time.Instant;
  */
 public class Cronometro extends JLabel implements Serializable {
 
-   
     // ATRIBUTOS
     private final ArrayList<StopCronometro> listenersStopCronometro;
     private final ArrayList<ListenerLlegada> listenersLlegada;
@@ -58,6 +57,10 @@ public class Cronometro extends JLabel implements Serializable {
         this.conDecimales = conDecimales;
     }
 
+    public boolean isRunning() {
+        return running;
+    }
+    
     // LISTENER
     public void addStopCronometrorListener(StopCronometro listener) {
         this.listenersStopCronometro.add(listener);
@@ -109,8 +112,11 @@ public class Cronometro extends JLabel implements Serializable {
     public void llegada() {
         for (ListenerLlegada listenerLlegada : listenersLlegada) {
             ReceptorTiempoCronometro receptorTiempo = listenerLlegada.llegaReceptorACronometro();
-            receptorTiempo.recibirTiempo(tiempo);
+            if (receptorTiempo != null) {
+                receptorTiempo.recibirTiempo(tiempo);
+            }
             listenerLlegada.vuelveReceptorDeCronometro(receptorTiempo);
+
         }
     }
 
