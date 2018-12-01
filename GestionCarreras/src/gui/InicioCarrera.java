@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.RowFilter;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -42,8 +43,12 @@ public class InicioCarrera extends javax.swing.JDialog {
         setTitle("CARRERA " + carrera.getNombre().toUpperCase());
         jLabelTituloVerCarreras.setText("CARRERA " + carrera.getNombre().toUpperCase());
         rellenarComboBoxesFiltroCorredores();
+        
+        // TABLAS
+        jTableTiemposCorredoresInicio.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         refrescarTablaTiemposCorredoresInicio(carrera.getListaCorredores());
-        refrescarTablaTiemposCorredoresFin(new ArrayList<>());
+        refrescarTablaTiemposCorredoresFin(new ArrayList<TiemposCorredor>());
+        
         cronometro.addLlegadaListener(new ListenerLlegada() {
             @Override
             public ReceptorTiempoCronometro llegaReceptorACronometro() {
@@ -367,20 +372,21 @@ public class InicioCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     // TABLA TIEMPOS CORREDORES
-    private void refrescarTablaTiemposCorredoresInicio(List<TiemposCorredor> corredoresSinTerminar) {
+    private void refrescarTablaTiemposCorredoresInicio(List<TiemposCorredor> corredoresInicio) {
 
         // Modelo de la tabla
-        TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresSinTerminar);
-        this.jTableTiemposCorredoresFin.setModel(model);
-
+        TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresInicio);
+        this.jTableTiemposCorredoresInicio.setModel(model);
+        /*
         // Sorter para las filas
         sorterCorredoresInicio = new TableRowSorter<>(model);
         this.jTableTiemposCorredoresInicio.setRowSorter(sorterCorredoresInicio);
-
+        
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorterCorredoresInicio.setSortKeys(sortKeys);
+        */
     }
 
     private void refrescarTablaTiemposCorredoresFin(List<TiemposCorredor> corredoresFin) {
@@ -388,15 +394,16 @@ public class InicioCarrera extends javax.swing.JDialog {
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredoresFin);
         this.jTableTiemposCorredoresFin.setModel(model);
-
+        /*
         // Sorter para las filas
         sorterCorredoresFin = new TableRowSorter<>(model);
         this.jTableTiemposCorredoresFin.setRowSorter(sorterCorredoresFin);
-
+        
         // Ordenar por defecto
         List<RowSorter.SortKey> sortKeys = new ArrayList<>();
         sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
         sorterCorredoresFin.setSortKeys(sortKeys);
+        */
     }
 
     private void rellenarComboBoxesFiltroCorredores() {
