@@ -35,7 +35,7 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
 
     @Override
     public int compareTo(TiemposCorredor o) {
-        return this.dorsal.compareToIgnoreCase(o.getDorsal());
+        return this.tiempo.compareTo(o.getTiempo());
     }
 
 

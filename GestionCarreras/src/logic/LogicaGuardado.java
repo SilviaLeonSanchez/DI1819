@@ -5,11 +5,15 @@
  */
 package logic;
 
+import dto.Carrera;
 import dto.Corredor;
+import dto.TiemposCorredor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
 import javax.swing.Timer;
 import utils.FicheroDeObjetos;
 import utils.FicheroDeTexto;
@@ -50,6 +54,9 @@ public class LogicaGuardado {
             }
         });
         this.timer.start();
+        
+        this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
+        this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
     }
 
     // GETTER Y SETTER
@@ -87,10 +94,24 @@ public class LogicaGuardado {
         boolean corredoresOk = guardarLogicaCorredores();
         return carrerasOk && corredoresOk;
     }
+    
+    public boolean ficheroOk(File fichero) {
+        if (!fichero.exists()) {
+            try {
+                fichero.createNewFile();
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+                return false;
+            }
+        }
+        return true;
+    }
 
     // FICHERO CARRERAS
     private boolean leerLogicaCarreras() {
-        if (checkFicheroCarreras()) {
+        if (!ficheroOk(ficheroCarreras)) {
+            return false;
+        } else {
             LogicaCarrera logicaCarreras = null;
             if (ficheroCarreras.length() > 0) {
                 this.gestorFicheroCarreras.abrirLector();
@@ -99,38 +120,25 @@ public class LogicaGuardado {
             }
             LogicaCarrera.setInstance(logicaCarreras);
             return true;
-        } else {
-            return false;
         }
     }
 
     private boolean guardarLogicaCarreras() {
-        if (checkFicheroCarreras()) {
+        if (!ficheroOk(ficheroCarreras)) {
+            return false;
+        } else {
             gestorFicheroCarreras.abrirEscritor(false);
             gestorFicheroCarreras.grabarPrimerObjeto(LogicaCarrera.getInstance());
             gestorFicheroCarreras.cerrarEscritor();
             return true;
-        } else {
-            return false;
         }
-    }
-
-    private boolean checkFicheroCarreras() {
-        if (!ficheroCarreras.exists()) {
-            try {
-                ficheroCarreras.createNewFile();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-                return false;
-            }
-        }
-        this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
-        return true;
     }
 
     //  FICHERO CORREDORES
     private boolean leerLogicaCorredores() {
-        if (checkFicheroCorredores()) {
+        if (!ficheroOk(ficheroCorredores)) {
+            return false;
+        } else {
             LogicaCorredor logicaCorredores = null;
             if (ficheroCorredores.length() > 0) {
                 this.gestorFicheroCorredores.abrirLector();
@@ -139,40 +147,25 @@ public class LogicaGuardado {
             }
             LogicaCorredor.setInstance(logicaCorredores);
             return true;
-        } else {
-            return false;
         }
     }
 
     private boolean guardarLogicaCorredores() {
-        if (checkFicheroCorredores()) {
+        if (!ficheroOk(ficheroCorredores)) {
+            return false;
+        } else {
             gestorFicheroCorredores.abrirEscritor(false);
             gestorFicheroCorredores.grabarPrimerObjeto(LogicaCorredor.getInstance());
             gestorFicheroCorredores.cerrarEscritor();
             return true;
-        } else {
-            return false;
         }
     }
-
-    private boolean checkFicheroCorredores() {
-        if (!ficheroCorredores.exists()) {
-            try {
-                ficheroCorredores.createNewFile();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-                return false;
-            }
-        }
-        this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
-        return true;
-    }
-
+    
     // CSV CORREDORES
     public boolean exportarCorredoresCSV(File ficheroCSVCorredores) {
 
         // Comprobar si el fichero existe
-        if (!checkCSVCorredores(ficheroCSVCorredores)) {
+        if (!ficheroOk(ficheroCSVCorredores)) {
             return false;
         }
         
@@ -199,19 +192,56 @@ public class LogicaGuardado {
         return true;
     }
 
-    public boolean checkCSVCorredores(File ficheroCSVCorredores) {
-        if (!ficheroCSVCorredores.exists()) {
-            try {
-                ficheroCSVCorredores.createNewFile();
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-                return false;
-            }
+
+    // CSV CARRERA TERMINADA
+    public boolean exportarCarreraCSV(File ficheroCSVCarreraTerminada, Carrera carrera){
+        
+        // Comprobar si el fichero existe
+        if (!carrera.isCarreraCerrada() || !ficheroOk(ficheroCSVCarreraTerminada)) {
+            return false;
         }
+        
+        // GESTOR DE FICHERO CSV
+        FicheroDeTexto gestorCSVCarrera;
+        gestorCSVCarrera = new FicheroDeTexto(ficheroCSVCarreraTerminada);
+        gestorCSVCarrera.abrirEscritor(false);
+        
+        // CABECERA CARRERA
+        gestorCSVCarrera.println("CARRERA: "+carrera.getNombre());
+        gestorCSVCarrera.println("FECHA: "+new SimpleDateFormat("dd/MM/yyyy").format(carrera.getFecha()));
+                
+
+        // CABECERA CORREDORES
+        gestorCSVCarrera.print("POSICION,");
+        for (String nombreAtributo : TiemposCorredor.DATOS) {
+            gestorCSVCarrera.print(nombreAtributo + ",");
+        }
+        gestorCSVCarrera.print("\n");
+
+        // CORREDORES
+        Collections.sort(carrera.getListaCorredores());
+        int posicion = 1;
+        
+        for (TiemposCorredor corredor : carrera.getListaCorredores()) {
+            
+            gestorCSVCarrera.print(posicion + "º,");
+            for (String atributo : corredor.toArray()) {
+                gestorCSVCarrera.print(atributo + ",");
+            }
+            gestorCSVCarrera.print("\n");
+            posicion++;
+        }
+
+        gestorCSVCarrera.cerrarEscritor();
         return true;
+        
     }
-
-
+    
+    
+    
+    
+    
+    
 }
 
 

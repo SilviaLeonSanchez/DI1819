@@ -23,12 +23,14 @@ import com.jtattoo.plaf.noire.NoireLookAndFeel;
 import com.jtattoo.plaf.smart.SmartLookAndFeel;
 import com.jtattoo.plaf.texture.TextureLookAndFeel;
 import com.pagosoft.plaf.PgsLookAndFeel;
+import dto.Carrera;
 import java.awt.Desktop;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,6 +45,7 @@ import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import logic.LogicaCarrera;
 import logic.LogicaGuardado;
 import napkin.NapkinLookAndFeel;
 import net.sf.tinylaf.TinyLookAndFeel;
@@ -56,6 +59,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private HashMap<String, LookAndFeel> lookAndFeels;
     private static final String RUTA_LOGO = "/gui/img/icono.jpeg";
+    private JFileChooser jfc;
+    private Carrera carreraParaExportar;
 
     /**
      * Creates new form PantallaInicial
@@ -64,6 +69,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     public PantallaPrincipal() {
         initComponents();
         inicializarBarraMenu();
+        inicializarJFileChooser();
         this.addWindowListener(new WindowAdapter() {
 
             @Override
@@ -79,6 +85,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
         setLocationRelativeTo(null);
         LogicaGuardado.getInstance().cargarDatos();
+    }
+
+    private void inicializarJFileChooser() {
+        jfc = new JFileChooser();
+        jfc.setAcceptAllFileFilterUsed(false);
+        jfc.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros CSV ", "csv"));
+        jfc.setDialogType(SAVE_DIALOG);
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        jfc.setMultiSelectionEnabled(false);
     }
 
     private void inicializarBarraMenu() {
@@ -424,24 +439,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemGuardarActionPerformed
 
     private void jMenuItemExportarCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportarCorredoresActionPerformed
-        JFileChooser jfc = new JFileChooser();
-
-        // Desactivar la posibilidad de elegir cualquier archivo y poner filtro para CSV
-        jfc.setAcceptAllFileFilterUsed(false);
-        jfc.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros CSV ", "csv"));
 
         jfc.setDialogTitle("Elige el fichero CSV donde exportar los corredores");
-        jfc.setDialogType(SAVE_DIALOG);
-
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        jfc.setMultiSelectionEnabled(false);
 
         // Mostrar dialogo
         jfc.showSaveDialog(this);
 
         // Recoger el archivo elegido y exportar corredores
         File archivoCSV = jfc.getSelectedFile();
-        
+
         if (archivoCSV == null) {
             JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ningun archivo", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
 
@@ -457,38 +463,57 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemExportarCorredoresActionPerformed
 
     private void jMenuItemExportarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemExportarCarreraActionPerformed
-        JFileChooser jfc = new JFileChooser();
 
-        // Desactivar la posibilidad de elegir cualquier archivo y poner filtro para CSV
-        jfc.setAcceptAllFileFilterUsed(false);
-        jfc.addChoosableFileFilter(new FileNameExtensionFilter("Ficheros CSV ", "csv"));
+        // Genero lista con carreras terminadas
+        ArrayList<Carrera> carrerasTerminadas = new ArrayList<>();
+        for (Carrera carrera : LogicaCarrera.getInstance().getCarreras()) {
+            if (carrera.isCarreraCerrada()) {
+                carrerasTerminadas.add(carrera);
+            }
+        }
 
-        jfc.setDialogTitle("Elige el fichero CSV donde exportar la carrera");
-        jfc.setDialogType(SAVE_DIALOG);
-
-        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        jfc.setMultiSelectionEnabled(false);
-
-        // Mostrar dialogo
-        jfc.showSaveDialog(this);
-
-        // Recoger el archivo elegido y exportar corredores
-        File archivoCSV = jfc.getSelectedFile();
-        
-        if (archivoCSV == null) {
-            JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ningun archivo", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
+        // Compruebo que no este vacia
+        if (carrerasTerminadas.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay ninguna carrera terminada para exportar", "No hay carreras que exportar", JOptionPane.INFORMATION_MESSAGE);
 
         } else {
-            boolean guardadoOk = false;
-            //guardadoOk = LogicaGuardado.getInstance().exportarCorredoresCSV(archivoCSV);
 
-            if (guardadoOk) {
-                JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente", "Datos guardados", JOptionPane.INFORMATION_MESSAGE);
+            // Abro el dialogo y le paso las carreras para que las muestre
+            DialogoExportarCarrera dialogo = new DialogoExportarCarrera(this, true, carrerasTerminadas);
+            dialogo.setVisible(true);
+
+            // Cuando se cierra el dialogo compruebo si me ha mandado una carrera que guardar
+            if (carreraParaExportar == null) {
+                JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ninguna carrera", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "Ha habido un problema al guardar los datos. Inténtelo otra vez", "Error al guardar", JOptionPane.WARNING_MESSAGE);
+
+                // Mostrar dialogo para elegir fichero
+                jfc.setDialogTitle("Elige el fichero CSV donde exportar la carrera");
+                jfc.showSaveDialog(this);
+
+                // Recoger el archivo elegido y exportar la carrera
+                File archivoCSV = jfc.getSelectedFile();
+
+                if (archivoCSV == null) {
+                    JOptionPane.showMessageDialog(this, "Los datos no se han guardado. No has elegido ningun archivo", "Datos no guardados", JOptionPane.INFORMATION_MESSAGE);
+
+                } else {
+                    boolean guardadoOk = false;
+                    guardadoOk = LogicaGuardado.getInstance().exportarCarreraCSV(archivoCSV, carreraParaExportar);
+
+                    if (guardadoOk) {
+                        JOptionPane.showMessageDialog(this, "Los datos se han guardado correctamente", "Datos guardados", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Ha habido un problema al guardar los datos. Inténtelo otra vez", "Error al guardar", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
             }
         }
     }//GEN-LAST:event_jMenuItemExportarCarreraActionPerformed
+
+    public void setCarreraParaExportar(Carrera carreraParaExportar) {
+        this.carreraParaExportar = carreraParaExportar;
+    }
 
     /**
      * @param args the command line arguments
