@@ -378,11 +378,16 @@ public class InicioCarrera extends javax.swing.JDialog {
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
         if (cronometro.isRunning()) {
             int resultado = JOptionPane.showConfirmDialog(this,
-                    "Si sales se parará el cronómetro. La carrera no se cerrará, "
-                            + "pero se mantendrán los tiempos de los corredores. ¿Continuar?", 
+                    "Si sales se parará el cronómetro y se perderán los tiempos de los corredores. ¿Continuar?", 
                     "¿Abandonar carrera?", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resultado == JOptionPane.YES_OPTION) {
                 this.cronometro.stop();
+                
+                // Poner los tiempos de los corredores a 0
+                for (TiemposCorredor corredor : carrera.getListaCorredores()) {
+                    corredor.setTiempo(Duration.ZERO);
+                }
+                
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "La carrera continuará sin cambios", "Continua la carrera", JOptionPane.INFORMATION_MESSAGE);

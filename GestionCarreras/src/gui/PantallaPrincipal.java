@@ -30,10 +30,13 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import static javax.swing.JFileChooser.SAVE_DIALOG;
@@ -91,7 +94,34 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         if (configuracion != null){
             cambiarLookAndFeel(configuracion.getLookAndFeel());
         }
-        
+        registrarAyuda();
+    }
+    
+    private void registrarAyuda() {
+        try {
+            // Carga el fichero de ayuda que esta en src 
+            URL ayuda = getClass().getResource("/help/help_set.hs");
+            // Si necesitamos un file
+            //File file = new File(ayuda.toUri());
+            
+            // Crea el HelpSet y el HelpBroker
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), ayuda);
+            HelpBroker hb = helpset.createHelpBroker();
+
+            // Sale la ayuda al pulsar en boton o item de menu
+            // hb.enableHelpOnButton(ayudaMenuItem, "aplicacion", helpset);
+            hb.enableHelpOnButton(jMenuItemAyuda, "aplicacion", helpset);
+            
+            // Si no hay foco y pulsan F1 sale ayuda principal
+            hb.enableHelpKey(getRootPane(), "ventana_principal", helpset);
+            
+            // Si el foco lo tiene ese boton y pulsan F1 sale esa pantalla de la ayuda
+            hb.enableHelpKey(jButtonVerCarreras, "carreras", helpset);
+            hb.enableHelpKey(jButtonVerCorredores, "corredores", helpset);
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void inicializarJFileChooser() {

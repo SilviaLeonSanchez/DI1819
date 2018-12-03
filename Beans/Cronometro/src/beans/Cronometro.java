@@ -123,10 +123,15 @@ public class Cronometro extends JLabel implements Serializable {
     // TIEMPO
     private void setTiempoEnLabel(Duration tiempo) {
         String textoTiempo;
+        int horas = (int) tiempo.toHours();
+        int minutos = (int) (tiempo.toMinutes() - horas*60);
+        int segundos = (int) (tiempo.getSeconds() - minutos*60);
+        int decimales = (int) (tiempo.getNano() / 100000000);
+        
         if (conDecimales) {
-            textoTiempo = String.format("%02d:%02d:%02d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds());
+            textoTiempo = String.format("%02d:%02d:%02d", horas, minutos, segundos);
         } else {
-            textoTiempo = String.format("%02d:%02d:%02d %01d", (int) tiempo.toHours(), (int) tiempo.toMinutes(), (int) tiempo.getSeconds(), (int) (tiempo.getNano() / 100000000));
+            textoTiempo = String.format("%02d:%02d:%02d %01d",  horas, minutos, segundos, decimales);
         }
         setText(textoTiempo);
     }
