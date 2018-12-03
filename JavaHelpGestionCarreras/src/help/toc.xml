@@ -1,0 +1,7 @@
+<toc version="1.0">
+   <tocitem text="Gestion Carreras" target="aplicacion">
+      <tocitem text="Ventana principal" target="ventana_principal"/>
+      <tocitem text="Corredores" target="corredores"/>
+      <tocitem text="Carreras" target="carreras"/>
+   </tocitem>
+</toc>
