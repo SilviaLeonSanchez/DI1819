@@ -381,6 +381,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuItemOpciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemOpciones.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jMenuItemOpciones.setText("Opciones");
+        jMenuItemOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOpcionesActionPerformed(evt);
+            }
+        });
         jMenuConfiguracion.add(jMenuItemOpciones);
 
         jMenuItemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
@@ -548,6 +553,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItemExportarCarreraActionPerformed
+
+    private void jMenuItemOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpcionesActionPerformed
+       DialogoOpciones dialogo = new DialogoOpciones(this, true);
+            dialogo.setVisible(true);
+    }//GEN-LAST:event_jMenuItemOpcionesActionPerformed
 
     public void setCarreraParaExportar(Carrera carreraParaExportar) {
         this.carreraParaExportar = carreraParaExportar;
