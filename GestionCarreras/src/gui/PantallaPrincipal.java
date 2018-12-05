@@ -153,6 +153,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void cambiarLookAndFeel(LookAndFeelInfo lookAndFeel) {
         try {
+            LogicaGuardado.getInstance().getConfiguracion().setLookAndFeel(lookAndFeel);
             UIManager.setLookAndFeel(lookAndFeel.getClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {

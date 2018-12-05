@@ -115,6 +115,7 @@ public class LogicaGuardado {
     // CONFIGURACION
     private boolean leerConfiguracion() {
         if (!ficheroOk(ficheroConfiguracion)) {
+            this.configuracion = new Configuracion();
             return false;
         } else {
             if (ficheroConfiguracion.length() > 0) {
