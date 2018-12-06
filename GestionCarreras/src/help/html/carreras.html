@@ -1,15 +1,15 @@
 <html>
-<head>
-	<title>Gestion de carreras</title>
-</head>
-<body>
-	<h1>Gestion de carreras</h1>
-	<p>Esta es la ayuda de la gestión de carreras de la aplicacion</p>
-	<p>Puedes añadir carreras, borrarlas, modificarlas y añadir corredores si esta abierta.</p>
-        
-        
+    <head>
+        <title>Gestion de carreras</title>
+    </head>
+    <body>
+        <h1>Gestion de carreras</h1>
+        <p>Esta es la ayuda de la gestión de carreras de la aplicacion</p>
+        <p>Puedes añadir carreras, borrarlas, modificarlas y añadir corredores si esta abierta.</p>
+
+
         <dl>
-            
+
             <dt>Tabla de carreras</dt>
             <dd>En la tabla aparecerán todos las carreras creadas y su información. 
                 Se pueden ordenar por cualquier campo de la tabla pulsando en 
@@ -23,31 +23,31 @@
                 Destacar que la búsqueda es sensible a mayúsculas.
                 Por último, al pulsar Filtrar, la tabla se actualiza mostrando 
                 solamente las carreras que cumplen con los criterios de busqueda.</dd>
-            
-             <dt>Botón Nueva</dt>
+
+            <dt>Botón Nueva</dt>
             <dd>Al pulsar este botón se abrirá un cuadro de dialogo donde se
                 podrá introducir la información de la nueva carrera. 
                 La información se irá analizando para indicarlos en todo momento 
                 si algún campo no cumple con los requisitos.
                 El identificador de la carrera se genera automaticamente.
-            La carrera se crea sin ningún corredor inscrito, no obstante se podrán añadir después.</dd>
+                La carrera se crea sin ningún corredor inscrito, no obstante se podrán añadir después.</dd>
 
             <dt>Botón Modificar<dt>
             <dd>Deberemos elegir de la tabla el registro que deseammos modificar, 
                 y pulsando después este botón se abrirá un cuadro de dialogo que 
                 nos permitirá modificar los datos de la carrera. Se comprobará la validez 
                 de los datos en todo momento de forma automática. Este botón no estará habilitado 
-            si la carrera ya está cerrada ya que en ese cado no admite modificaciones.</dd>
+                si la carrera ya está cerrada ya que en ese cado no admite modificaciones.</dd>
 
             <dt>Botón Borrar</dt>
             <dd>Se podrá elegir una o varias carreras de la tabla para ser borradas.
                 Después de realizar la operación los registros se habran eliminado de la 
                 lista de carreras. Los corredores que estaban inscritos dejan de 
                 estarlo, ya que la carrera deja de existir, pero no se eliminan.</dd>
-            
-            
-            
-            
+
+
+
+
             <dt>Tabla de corredores</dt>
             <dd>En la tabla aparecerán todos los corredores inscritos en la carrera
                 seleccionada con su información básica ademas del dorsal asignado 
@@ -63,25 +63,25 @@
                 Destacar que la búsqueda es sensible a mayúsculas.
                 Por último, al pulsar Filtrar, la tabla se actualiza mostrando 
                 solamente los corredores que cumplen con los criterios de busqueda.</dd>
-            
+
             <dt>Boton Insertar Corredor</dt>
             <dd>Al pulsar este botón se abre un cuadro de diálogo con una tabla 
                 donde aparece la lista de corredores disponibles para ser inscritos en la carrera.
-            Si se ha elegido un corredor que ya estaba inscrito aparecerá un 
-            mensaje informativo y no permitirá realizar la operación.
-            En caso de que se intenten añadir de una sola vez varios paricipantes 
-            y se sobrepasando el número máximo de participantes de la carrera se añadirán 
-            por orden de elección hasta llegar al máximo, no añadiendo los restantes 
-            y mostrando un mensaje de aviso.</dd>
-            
+                Si se ha elegido un corredor que ya estaba inscrito aparecerá un 
+                mensaje informativo y no permitirá realizar la operación.
+                En caso de que se intenten añadir de una sola vez varios paricipantes 
+                y se sobrepasando el número máximo de participantes de la carrera se añadirán 
+                por orden de elección hasta llegar al máximo, no añadiendo los restantes 
+                y mostrando un mensaje de aviso.</dd>
+
             <dt>Botón Borrar</dt>
             <dd>Se podrá elegir uno o varios corredores de la tabla para ser borrados de la carrera.
                 Después de realizar la operación los registros se habran eliminado de la 
                 lista de corredores inscritos en la carrera, pero no de la base de datos. 
                 Por lo tanto estarán disponibles para inscribirse en otra carrera.</dd>
-            
+
         </dl>
-        
-        
-</body>
+
+
+    </body>
 </html>

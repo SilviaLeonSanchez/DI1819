@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import javax.swing.Timer;
 import utils.FicheroDeObjetos;
 import utils.FicheroDeTexto;
@@ -50,7 +52,7 @@ public class LogicaGuardado {
         this.gestorFicheroConfiguracion = new FicheroDeObjetos<>(ficheroConfiguracion);
         this.gestorFicheroCarreras = new FicheroDeObjetos<>(ficheroCarreras);
         this.gestorFicheroCorredores = new FicheroDeObjetos<>(ficheroCorredores);
-        
+
         this.timer = new Timer(5 * 60 * 1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -59,7 +61,6 @@ public class LogicaGuardado {
         });
         this.timer.start();
 
-        
     }
 
     // GETTER Y SETTER
@@ -122,6 +123,9 @@ public class LogicaGuardado {
                 this.gestorFicheroConfiguracion.abrirLector();
                 this.configuracion = gestorFicheroConfiguracion.leerObjeto();
                 this.gestorFicheroConfiguracion.cerrarLector();
+            }
+            if (configuracion == null) {
+                this.configuracion = new Configuracion();
             }
             return true;
         }
@@ -247,11 +251,12 @@ public class LogicaGuardado {
         }
         gestorCSVCarrera.print("\n");
 
+        List<TiemposCorredor> corredores = carrera.getListaCorredores();
         // CORREDORES
-        Collections.sort(carrera.getListaCorredores());
+        Collections.sort(corredores);
         int posicion = 1;
 
-        for (TiemposCorredor corredor : carrera.getListaCorredores()) {
+        for (TiemposCorredor corredor : corredores) {
 
             gestorCSVCarrera.print(posicion + "º,");
             for (String atributo : corredor.toArray()) {

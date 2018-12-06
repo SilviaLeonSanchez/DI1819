@@ -435,7 +435,7 @@ public class VistaCarreras extends javax.swing.JDialog {
 
     // TABLA TIEMPOS CORREDORES
     private void refrescarTablaTiemposCorredores() {
-        ArrayList<TiemposCorredor> corredores = (this.carreraSeleccionada == null) ? (new ArrayList<>()) : (this.carreraSeleccionada.getListaCorredores());
+        List<TiemposCorredor> corredores = (this.carreraSeleccionada == null) ? (new ArrayList<>()) : (this.carreraSeleccionada.getListaCorredores());
 
         // Modelo de la tabla
         TableModelTiemposCorredor model = new TableModelTiemposCorredor(corredores);

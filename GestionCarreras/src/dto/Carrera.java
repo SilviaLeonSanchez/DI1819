@@ -120,7 +120,7 @@ public class Carrera implements Serializable, Comparable<Carrera> {
     }
 
     // GETTER
-    public ArrayList<TiemposCorredor> getListaCorredores() {
+    public List<TiemposCorredor> getListaCorredores() {
         return new ArrayList<>(listaCorredores);
     }
 

@@ -182,6 +182,7 @@ public class DialogoOpciones extends javax.swing.JDialog {
 
     private void jButtonGuardarOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarOpcionesActionPerformed
       LogicaGuardado.getInstance().setIntervaloGuardado(frecuenciaGuardado);
+      dispose();
     }//GEN-LAST:event_jButtonGuardarOpcionesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

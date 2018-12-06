@@ -89,21 +89,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
         setLocationRelativeTo(null);
         LogicaGuardado.getInstance().cargarDatos();
-        
+
         Configuracion configuracion = LogicaGuardado.getInstance().getConfiguracion();
-        if (configuracion != null){
+        if (configuracion != null) {
             cambiarLookAndFeel(configuracion.getLookAndFeel());
         }
         registrarAyuda();
     }
-    
+
     private void registrarAyuda() {
         try {
             // Carga el fichero de ayuda que esta en src 
             URL ayuda = getClass().getResource("/help/help_set.hs");
             // Si necesitamos un file
             //File file = new File(ayuda.toUri());
-            
+
             // Crea el HelpSet y el HelpBroker
             HelpSet helpset = new HelpSet(getClass().getClassLoader(), ayuda);
             HelpBroker hb = helpset.createHelpBroker();
@@ -111,14 +111,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             // Sale la ayuda al pulsar en boton o item de menu
             // hb.enableHelpOnButton(ayudaMenuItem, "aplicacion", helpset);
             hb.enableHelpOnButton(jMenuItemAyuda, "aplicacion", helpset);
-            
+
             // Si no hay foco y pulsan F1 sale ayuda principal
             hb.enableHelpKey(getRootPane(), "ventana_principal", helpset);
-            
+
             // Si el foco lo tiene ese boton y pulsan F1 sale esa pantalla de la ayuda
             hb.enableHelpKey(jButtonVerCarreras, "carreras", helpset);
             hb.enableHelpKey(jButtonVerCorredores, "corredores", helpset);
-             
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,12 +152,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     private void cambiarLookAndFeel(LookAndFeelInfo lookAndFeel) {
-        try {
-            LogicaGuardado.getInstance().getConfiguracion().setLookAndFeel(lookAndFeel);
-            UIManager.setLookAndFeel(lookAndFeel.getClassName());
-            SwingUtilities.updateComponentTreeUI(this);
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Exceptions.printStackTrace(ex);
+        if (lookAndFeel != null) {
+            try {
+                LogicaGuardado.getInstance().getConfiguracion().setLookAndFeel(lookAndFeel);
+                UIManager.setLookAndFeel(lookAndFeel.getClassName());
+                SwingUtilities.updateComponentTreeUI(this);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+                Exceptions.printStackTrace(ex);
+            }
         }
     }
 
@@ -556,8 +558,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemExportarCarreraActionPerformed
 
     private void jMenuItemOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOpcionesActionPerformed
-       DialogoOpciones dialogo = new DialogoOpciones(this, true);
-            dialogo.setVisible(true);
+        DialogoOpciones dialogo = new DialogoOpciones(this, true);
+        dialogo.setVisible(true);
     }//GEN-LAST:event_jMenuItemOpcionesActionPerformed
 
     public void setCarreraParaExportar(Carrera carreraParaExportar) {
@@ -568,21 +570,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -632,5 +619,4 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTitulo;
     // End of variables declaration//GEN-END:variables
 
-    
 }

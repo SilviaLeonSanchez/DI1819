@@ -5,13 +5,14 @@
  */
 package logic;
 
+import java.io.Serializable;
 import javax.swing.UIManager;
 
 /**
  *
  * @author silvia
  */
-public class Configuracion {
+public class Configuracion implements Serializable{
     
     private int intervaloDeGuardado;
     private UIManager.LookAndFeelInfo lookAndFeel;
