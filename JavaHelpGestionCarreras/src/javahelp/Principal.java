@@ -27,16 +27,16 @@ public class Principal extends javax.swing.JFrame {
     /*
     
     Para indezar los documentos de la ayuda y que la busqueda funcione correctamente seguir los pasos:
-    1. Limpiar y compilar el proyecto
+    1. Si ya teniamos ayuda borrar la carpeta JavaHelpSearch del proyecto para volver a generarla
     2. Desde la carpeta help del proyecto abrir un terminal
     3. Poner la ruta del archivo jhindexer de la libreria javahelp y a continuacion 
-        la ruta donde se encuentran los html del javahelp
+        la ruta donde se encuentran los html del javahelp 
     4. Ejecutar
     
     El comando quedaria asi:
     
     silvia@silvia-desktop:~/Descargas/DI1819/GestionCarreras/src/help$ ~/NetBeansProjects/libs/javahelp2_0_05/jh2.0/javahelp/bin/jhindexer html/
-
+        uauario                         donde estoy                         ruta del archivo jhindexer                                      ruta de los html
     */
 
     /**
