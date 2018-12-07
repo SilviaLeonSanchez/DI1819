@@ -16,14 +16,6 @@
       <data>toc.xml</data>
    </view>
 
-   <!-- El indice -->
-   <view>
-      <name>Indice</name>
-      <label>El indice</label>
-      <type>javax.help.IndexView</type>
-      <data>indice.xml</data>
-   </view>
-
    <!-- La pestana de busqueda -->
    <view>
       <name>Buscar</name>

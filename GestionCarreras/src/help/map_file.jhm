@@ -3,4 +3,7 @@
    <mapID target="ventana_principal" url="html/principal.html" />
    <mapID target="corredores" url="html/corredores.html" />
    <mapID target="carreras" url="html/carreras.html" />
+   <mapID target="archivos" url="html/archivos.html" />
+   <mapID target="configuracion" url="html/configuracion.html" />
+   <mapID target="cronometrar_carrera" url="html/cronometrar_carrera.html" />
 </map>

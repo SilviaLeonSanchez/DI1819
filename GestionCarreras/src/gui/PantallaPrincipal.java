@@ -22,12 +22,9 @@ import com.jtattoo.plaf.smart.SmartLookAndFeel;
 import com.jtattoo.plaf.texture.TextureLookAndFeel;
 import com.pagosoft.plaf.PgsLookAndFeel;
 import dto.Carrera;
-import java.awt.Desktop;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -115,6 +112,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             // Si el foco lo tiene ese boton y pulsan F1 sale esa pantalla de la ayuda
             hb.enableHelpKey(jButtonVerCarreras, "carreras", helpset);
             hb.enableHelpKey(jButtonVerCorredores, "corredores", helpset);
+            hb.enableHelpKey(jMenuArchivos, "archivos", helpset);
+            hb.enableHelpKey(jMenuConfiguracion, "configuracion", helpset);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -225,15 +224,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jLabelTitulo = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuArchivos = new javax.swing.JMenu();
-        jMenuItemExportarCorredores = new javax.swing.JMenuItem();
         jMenuItemExportarCarrera = new javax.swing.JMenuItem();
-        jMenuConfiguracion = new javax.swing.JMenu();
-        jMenuLookAndFeel = new javax.swing.JMenu();
-        jMenuItemOpciones = new javax.swing.JMenuItem();
+        jMenuItemExportarCorredores = new javax.swing.JMenuItem();
         jMenuItemGuardar = new javax.swing.JMenuItem();
+        jMenuConfiguracion = new javax.swing.JMenu();
+        jMenuItemOpciones = new javax.swing.JMenuItem();
+        jMenuLookAndFeel = new javax.swing.JMenu();
         jMenuAyuda = new javax.swing.JMenu();
         jMenuItemAyuda = new javax.swing.JMenuItem();
-        jMenuItemJavadoc = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -396,15 +394,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuArchivos.setText("Archivos");
         jMenuArchivos.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
 
-        jMenuItemExportarCorredores.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
-        jMenuItemExportarCorredores.setText("Exportar Corredores");
-        jMenuItemExportarCorredores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemExportarCorredoresActionPerformed(evt);
-            }
-        });
-        jMenuArchivos.add(jMenuItemExportarCorredores);
-
         jMenuItemExportarCarrera.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemExportarCarrera.setText("Exportar resultado de Carrera");
         jMenuItemExportarCarrera.addActionListener(new java.awt.event.ActionListener() {
@@ -414,24 +403,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuArchivos.add(jMenuItemExportarCarrera);
 
-        jMenuBar.add(jMenuArchivos);
-
-        jMenuConfiguracion.setText("Configuracion");
-        jMenuConfiguracion.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
-
-        jMenuLookAndFeel.setText("LookAndFeel");
-        jMenuLookAndFeel.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
-        jMenuConfiguracion.add(jMenuLookAndFeel);
-
-        jMenuItemOpciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemOpciones.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
-        jMenuItemOpciones.setText("Opciones");
-        jMenuItemOpciones.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemExportarCorredores.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
+        jMenuItemExportarCorredores.setText("Exportar Corredores");
+        jMenuItemExportarCorredores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemOpcionesActionPerformed(evt);
+                jMenuItemExportarCorredoresActionPerformed(evt);
             }
         });
-        jMenuConfiguracion.add(jMenuItemOpciones);
+        jMenuArchivos.add(jMenuItemExportarCorredores);
 
         jMenuItemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItemGuardar.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
@@ -441,7 +420,26 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 jMenuItemGuardarActionPerformed(evt);
             }
         });
-        jMenuConfiguracion.add(jMenuItemGuardar);
+        jMenuArchivos.add(jMenuItemGuardar);
+
+        jMenuBar.add(jMenuArchivos);
+
+        jMenuConfiguracion.setText("Configuracion");
+        jMenuConfiguracion.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
+
+        jMenuItemOpciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItemOpciones.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
+        jMenuItemOpciones.setText("Frecuencia de guardado");
+        jMenuItemOpciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOpcionesActionPerformed(evt);
+            }
+        });
+        jMenuConfiguracion.add(jMenuItemOpciones);
+
+        jMenuLookAndFeel.setText("LookAndFeel");
+        jMenuLookAndFeel.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
+        jMenuConfiguracion.add(jMenuLookAndFeel);
 
         jMenuBar.add(jMenuConfiguracion);
 
@@ -452,16 +450,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuItemAyuda.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemAyuda.setText("Ayuda");
         jMenuAyuda.add(jMenuItemAyuda);
-
-        jMenuItemJavadoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItemJavadoc.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
-        jMenuItemJavadoc.setText("Javadoc");
-        jMenuItemJavadoc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemJavadocActionPerformed(evt);
-            }
-        });
-        jMenuAyuda.add(jMenuItemJavadoc);
 
         jMenuBar.add(jMenuAyuda);
 
@@ -502,22 +490,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_jButtonSalirActionPerformed
-
-    private void jMenuItemJavadocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemJavadocActionPerformed
-        try {
-            //Cargar una URI con ruta relativa
-            //File file = new File("dist/javadoc/index.html");
-            //Desktop.getDesktop().browse(file.toURI());
-
-            //Cargar archivos que están dentro del jar 
-            //(Meter la carpeta javadoc en la carpeta src y aparecera junto a mis paquetes)
-            Desktop.getDesktop().browse(getClass().getClassLoader().getResource("javadoc/index.html").toURI());
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "No se encuentra el fichero Javadoc. Asegurate de haberlo generado.", "Javadoc no encontrado", JOptionPane.WARNING_MESSAGE);
-        } catch (URISyntaxException ex) {
-            Exceptions.printStackTrace(ex);
-        }
-    }//GEN-LAST:event_jMenuItemJavadocActionPerformed
 
     private void jMenuItemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardarActionPerformed
         boolean guardadoOk = LogicaGuardado.getInstance().guardarDatos();
@@ -606,6 +578,24 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         dialogo.setVisible(true);
     }//GEN-LAST:event_jMenuItemOpcionesActionPerformed
 
+    /*
+        CARGAR JAVADOC
+    
+    try {
+            //Cargar una URI con ruta relativa
+            //File file = new File("dist/javadoc/index.html");
+            //Desktop.getDesktop().browse(file.toURI());
+
+            //Cargar archivos que están dentro del jar
+            //(Meter la carpeta javadoc en la carpeta src y aparecera junto a mis paquetes)
+            Desktop.getDesktop().browse(getClass().getClassLoader().getResource("javadoc/index.html").toURI());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "No se encuentra el fichero Javadoc. Asegurate de haberlo generado.", "Javadoc no encontrado", JOptionPane.WARNING_MESSAGE);
+        } catch (URISyntaxException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    
+     */
     public void setCarreraParaExportar(Carrera carreraParaExportar) {
         this.carreraParaExportar = carreraParaExportar;
     }
@@ -659,7 +649,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemExportarCarrera;
     private javax.swing.JMenuItem jMenuItemExportarCorredores;
     private javax.swing.JMenuItem jMenuItemGuardar;
-    private javax.swing.JMenuItem jMenuItemJavadoc;
     private javax.swing.JMenuItem jMenuItemOpciones;
     private javax.swing.JMenu jMenuLookAndFeel;
     // End of variables declaration//GEN-END:variables
