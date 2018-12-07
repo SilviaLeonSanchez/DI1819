@@ -7,15 +7,22 @@ package logic;
 
 import java.io.Serializable;
 import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 /**
  *
  * @author silvia
  */
-public class Configuracion implements Serializable{
-    
+public class Configuracion implements Serializable {
+
     private int intervaloDeGuardado;
-    private UIManager.LookAndFeelInfo lookAndFeel;
+    private transient UIManager.LookAndFeelInfo lookAndFeel;
+    private String name;
+    private String className;
+
+    public Configuracion() {
+        this.intervaloDeGuardado = 5;
+    }
 
     public int getIntervaloDeGuardado() {
         return intervaloDeGuardado;
@@ -25,16 +32,19 @@ public class Configuracion implements Serializable{
         this.intervaloDeGuardado = intervaloDeGuardado;
     }
 
-    public UIManager.LookAndFeelInfo getLookAndFeel() {
+    public LookAndFeelInfo getLookAndFeel() {
+        if (name != null && className != null) {
+            if (!name.isEmpty() && !className.isEmpty()) {
+                this.lookAndFeel = new LookAndFeelInfo(name, className);
+            }
+        }
         return lookAndFeel;
     }
 
     public void setLookAndFeel(UIManager.LookAndFeelInfo lookAndFeel) {
         this.lookAndFeel = lookAndFeel;
+        this.name = lookAndFeel.getName();
+        this.className = lookAndFeel.getClassName();
     }
-    
-    
-    
-    
-    
+
 }

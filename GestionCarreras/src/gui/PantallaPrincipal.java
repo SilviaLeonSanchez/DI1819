@@ -88,7 +88,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         LogicaGuardado.getInstance().cargarDatos();
 
         Configuracion configuracion = LogicaGuardado.getInstance().getConfiguracion();
-        if (configuracion != null) {
+        if (configuracion != null && configuracion.getLookAndFeel() != null) {
             cambiarLookAndFeel(configuracion.getLookAndFeel());
         }
         registrarAyuda();
@@ -167,6 +167,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             item.setText(lookAndFeel.getKey());
             item.addActionListener((java.awt.event.ActionEvent evt) -> {
                 try {
+                    LogicaGuardado.getInstance().getConfiguracion().setLookAndFeel(
+                            new LookAndFeelInfo(lookAndFeel.getValue().getName(), lookAndFeel.getValue().getClass().getName()));
                     UIManager.setLookAndFeel(lookAndFeel.getValue());
                     SwingUtilities.updateComponentTreeUI(PantallaPrincipal.this);
                 } catch (UnsupportedLookAndFeelException ex) {
@@ -241,9 +243,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setTitle("MarAppTon");
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
         setForeground(new java.awt.Color(51, 51, 51));
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
@@ -322,9 +322,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                     .addGroup(jLayeredPaneBotonesLayout.createSequentialGroup()
                         .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSalir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jLayeredPaneTitulo.setMaximumSize(new java.awt.Dimension(640, 100));
@@ -394,9 +394,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuBar.setPreferredSize(new java.awt.Dimension(168, 36));
 
         jMenuArchivos.setText("Archivos");
-        jMenuArchivos.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuArchivos.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
 
-        jMenuItemExportarCorredores.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemExportarCorredores.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemExportarCorredores.setText("Exportar Corredores");
         jMenuItemExportarCorredores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -405,7 +405,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuArchivos.add(jMenuItemExportarCorredores);
 
-        jMenuItemExportarCarrera.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemExportarCarrera.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemExportarCarrera.setText("Exportar resultado de Carrera");
         jMenuItemExportarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -417,14 +417,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuBar.add(jMenuArchivos);
 
         jMenuConfiguracion.setText("Configuracion");
-        jMenuConfiguracion.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuConfiguracion.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
 
         jMenuLookAndFeel.setText("LookAndFeel");
-        jMenuLookAndFeel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuLookAndFeel.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuConfiguracion.add(jMenuLookAndFeel);
 
         jMenuItemOpciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemOpciones.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemOpciones.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemOpciones.setText("Opciones");
         jMenuItemOpciones.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -434,7 +434,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuConfiguracion.add(jMenuItemOpciones);
 
         jMenuItemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItemGuardar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemGuardar.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemGuardar.setText("Guardar");
         jMenuItemGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -446,15 +446,15 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuBar.add(jMenuConfiguracion);
 
         jMenuAyuda.setText("Ayuda");
-        jMenuAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuAyuda.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
 
         jMenuItemAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItemAyuda.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemAyuda.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemAyuda.setText("Ayuda");
         jMenuAyuda.add(jMenuItemAyuda);
 
         jMenuItemJavadoc.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItemJavadoc.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jMenuItemJavadoc.setFont(new java.awt.Font("Uroob", 1, 18)); // NOI18N
         jMenuItemJavadoc.setText("Javadoc");
         jMenuItemJavadoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
