@@ -51,10 +51,10 @@ public class DialogoOpciones extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanelBotonesCarrera = new javax.swing.JPanel();
+        jPanelBotones = new javax.swing.JPanel();
         jButtonGuardarOpciones = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
-        jPanelCamposCarrera = new javax.swing.JPanel();
+        jPanel = new javax.swing.JPanel();
         jLabelTextoFrecuenciaGuardado = new javax.swing.JLabel();
         jSliderFrecuenciaGuardado = new javax.swing.JSlider();
         jLabelValorFrecuencia = new javax.swing.JLabel();
@@ -63,15 +63,18 @@ public class DialogoOpciones extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones");
         setForeground(java.awt.Color.darkGray);
-        setMinimumSize(new java.awt.Dimension(640, 480));
+        setMaximumSize(null);
+        setMinimumSize(new java.awt.Dimension(480, 200));
         setModal(true);
         setResizable(false);
         setSize(new java.awt.Dimension(640, 480));
 
-        jPanelBotonesCarrera.setMinimumSize(new java.awt.Dimension(640, 100));
-        jPanelBotonesCarrera.setPreferredSize(new java.awt.Dimension(640, 100));
+        jPanelBotones.setMaximumSize(new java.awt.Dimension(480, 100));
+        jPanelBotones.setMinimumSize(new java.awt.Dimension(480, 70));
+        jPanelBotones.setPreferredSize(new java.awt.Dimension(480, 70));
 
-        jButtonGuardarOpciones.setText("Guardar");
+        jButtonGuardarOpciones.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
+        jButtonGuardarOpciones.setText("GUARDAR");
         jButtonGuardarOpciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonGuardarOpciones.setMinimumSize(new java.awt.Dimension(85, 40));
         jButtonGuardarOpciones.setPreferredSize(new java.awt.Dimension(85, 40));
@@ -81,7 +84,8 @@ public class DialogoOpciones extends javax.swing.JDialog {
             }
         });
 
-        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
+        jButtonCancelar.setText("CANCELAR");
         jButtonCancelar.setMinimumSize(new java.awt.Dimension(85, 40));
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(85, 40));
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,39 +94,37 @@ public class DialogoOpciones extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanelBotonesCarreraLayout = new javax.swing.GroupLayout(jPanelBotonesCarrera);
-        jPanelBotonesCarrera.setLayout(jPanelBotonesCarreraLayout);
-        jPanelBotonesCarreraLayout.setHorizontalGroup(
-            jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesCarreraLayout.createSequentialGroup()
-                .addContainerGap(122, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
+        jPanelBotones.setLayout(jPanelBotonesLayout);
+        jPanelBotonesLayout.setHorizontalGroup(
+            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addGap(114, 114, 114)
                 .addComponent(jButtonGuardarOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(200, 200, 200)
-                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(114, Short.MAX_VALUE))
         );
 
-        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCancelar, jButtonGuardarOpciones});
+        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonCancelar, jButtonGuardarOpciones});
 
-        jPanelBotonesCarreraLayout.setVerticalGroup(
-            jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelBotonesCarreraLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanelBotonesCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonGuardarOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+        jPanelBotonesLayout.setVerticalGroup(
+            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesLayout.createSequentialGroup()
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonGuardarOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
-        jPanelBotonesCarreraLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonCancelar, jButtonGuardarOpciones});
+        getContentPane().add(jPanelBotones, java.awt.BorderLayout.PAGE_END);
 
-        getContentPane().add(jPanelBotonesCarrera, java.awt.BorderLayout.PAGE_END);
+        jPanel.setMaximumSize(null);
+        jPanel.setMinimumSize(new java.awt.Dimension(480, 170));
+        jPanel.setPreferredSize(new java.awt.Dimension(480, 170));
 
-        jPanelCamposCarrera.setMaximumSize(null);
-        jPanelCamposCarrera.setMinimumSize(new java.awt.Dimension(640, 130));
-        jPanelCamposCarrera.setPreferredSize(new java.awt.Dimension(640, 130));
-
-        jLabelTextoFrecuenciaGuardado.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabelTextoFrecuenciaGuardado.setFont(new java.awt.Font("Uroob", 1, 36)); // NOI18N
         jLabelTextoFrecuenciaGuardado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTextoFrecuenciaGuardado.setText("Frecuencia de guardado");
         jLabelTextoFrecuenciaGuardado.setMinimumSize(new java.awt.Dimension(40, 12));
@@ -134,44 +136,48 @@ public class DialogoOpciones extends javax.swing.JDialog {
         jSliderFrecuenciaGuardado.setPaintLabels(true);
         jSliderFrecuenciaGuardado.setValue(30);
 
+        jLabelValorFrecuencia.setFont(new java.awt.Font("Uroob", 1, 36)); // NOI18N
         jLabelValorFrecuencia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelValorFrecuencia.setText("30");
 
+        jLabelTextoMinutos.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
         jLabelTextoMinutos.setText("MINUTOS");
 
-        javax.swing.GroupLayout jPanelCamposCarreraLayout = new javax.swing.GroupLayout(jPanelCamposCarrera);
-        jPanelCamposCarrera.setLayout(jPanelCamposCarreraLayout);
-        jPanelCamposCarreraLayout.setHorizontalGroup(
-            jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                .addContainerGap(159, Short.MAX_VALUE)
-                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSliderFrecuenciaGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelTextoFrecuenciaGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(158, 158, 158))
-            .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                .addGap(252, 252, 252)
+        javax.swing.GroupLayout jPanelLayout = new javax.swing.GroupLayout(jPanel);
+        jPanel.setLayout(jPanelLayout);
+        jPanelLayout.setHorizontalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTextoFrecuenciaGuardado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGap(80, 80, 80)
+                .addComponent(jSliderFrecuenciaGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelValorFrecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTextoMinutos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(166, 166, 166))
         );
-        jPanelCamposCarreraLayout.setVerticalGroup(
-            jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelCamposCarreraLayout.createSequentialGroup()
-                .addContainerGap(129, Short.MAX_VALUE)
+        jPanelLayout.setVerticalGroup(
+            jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jLabelTextoFrecuenciaGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSliderFrecuenciaGuardado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelCamposCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelValorFrecuencia, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelValorFrecuencia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelTextoMinutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanelCamposCarrera, java.awt.BorderLayout.CENTER);
-        jPanelCamposCarrera.getAccessibleContext().setAccessibleName("");
+        getContentPane().add(jPanel, java.awt.BorderLayout.CENTER);
+        jPanel.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -191,8 +197,8 @@ public class DialogoOpciones extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelTextoFrecuenciaGuardado;
     private javax.swing.JLabel jLabelTextoMinutos;
     private javax.swing.JLabel jLabelValorFrecuencia;
-    private javax.swing.JPanel jPanelBotonesCarrera;
-    private javax.swing.JPanel jPanelCamposCarrera;
+    private javax.swing.JPanel jPanel;
+    private javax.swing.JPanel jPanelBotones;
     private javax.swing.JSlider jSliderFrecuenciaGuardado;
     // End of variables declaration//GEN-END:variables
 }

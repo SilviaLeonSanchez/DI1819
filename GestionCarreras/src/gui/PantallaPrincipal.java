@@ -5,8 +5,6 @@
  */
 package gui;
 
-import br.com.paulocanedo.pc9.laf.PC9LookAndFeel;
-import com.alee.laf.WebLookAndFeel;
 import com.birosoft.liquid.LiquidLookAndFeel;
 import com.bulenkov.darcula.DarculaLaf;
 import com.jtattoo.plaf.acryl.AcrylLookAndFeel;
@@ -51,7 +49,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import logic.Configuracion;
 import logic.LogicaCarrera;
 import logic.LogicaGuardado;
-import napkin.NapkinLookAndFeel;
 import net.sf.tinylaf.TinyLookAndFeel;
 import org.openide.util.Exceptions;
 
@@ -199,11 +196,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         lookAndFeels.put("Noire", new NoireLookAndFeel());
         lookAndFeels.put("Smart", new SmartLookAndFeel());
         lookAndFeels.put("Texture", new TextureLookAndFeel());
-        lookAndFeels.put("PC9", new PC9LookAndFeel());
-        lookAndFeels.put("Napkin", new NapkinLookAndFeel());
         lookAndFeels.put("Pgs", new PgsLookAndFeel());
         lookAndFeels.put("Tiny", new TinyLookAndFeel());
-        lookAndFeels.put("Web", new WebLookAndFeel());
 
     }
 
@@ -219,13 +213,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         buttonGroupLookAndFeels = new javax.swing.ButtonGroup();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
-        jPanelBotones = new javax.swing.JPanel();
-        jButtonVerCorredores = new javax.swing.JButton();
+        jLayeredPaneFondo = new javax.swing.JLayeredPane();
+        jLabelFondo = new javax.swing.JLabel();
+        jLayeredPaneBotones = new javax.swing.JLayeredPane();
         jButtonSalir = new javax.swing.JButton();
         jButtonVerCarreras = new javax.swing.JButton();
-        jPanelTitulo = new javax.swing.JPanel();
+        jButtonVerCorredores = new javax.swing.JButton();
+        jLayeredPaneTitulo = new javax.swing.JLayeredPane();
         jLabelTitulo = new javax.swing.JLabel();
-        jLabelIcono = new javax.swing.JLabel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuArchivos = new javax.swing.JMenu();
         jMenuItemExportarCorredores = new javax.swing.JMenuItem();
@@ -246,106 +241,153 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         setTitle("MarAppTon");
         setBounds(new java.awt.Rectangle(0, 0, 640, 480));
         setForeground(new java.awt.Color(51, 51, 51));
-        setMinimumSize(new java.awt.Dimension(640, 480));
+        setMaximumSize(new java.awt.Dimension(800, 600));
+        setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         setSize(new java.awt.Dimension(800, 600));
 
-        jPanelBotones.setForeground(new java.awt.Color(51, 51, 51));
-        jPanelBotones.setMaximumSize(new java.awt.Dimension(32767, 150));
-        jPanelBotones.setPreferredSize(new java.awt.Dimension(814, 150));
+        jLayeredPaneFondo.setMaximumSize(new java.awt.Dimension(640, 480));
+        jLayeredPaneFondo.setMinimumSize(null);
+        jLayeredPaneFondo.setPreferredSize(new java.awt.Dimension(640, 480));
 
-        jButtonVerCorredores.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
-        jButtonVerCorredores.setText("CORREDORES");
-        jButtonVerCorredores.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVerCorredoresActionPerformed(evt);
-            }
-        });
+        jLabelFondo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabelFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.png"))); // NOI18N
+        jLabelFondo.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabelFondo.setAlignmentY(0.0F);
+        jLabelFondo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabelFondo.setMaximumSize(new java.awt.Dimension(640, 480));
+        jLabelFondo.setMinimumSize(new java.awt.Dimension(600, 460));
+        jLabelFondo.setPreferredSize(new java.awt.Dimension(640, 480));
 
-        jButtonSalir.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
+        jButtonSalir.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
         jButtonSalir.setText("SALIR");
         jButtonSalir.setHideActionText(true);
-        jButtonSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonSalir.setMaximumSize(new java.awt.Dimension(127, 41));
+        jButtonSalir.setMinimumSize(new java.awt.Dimension(127, 41));
+        jButtonSalir.setPreferredSize(new java.awt.Dimension(127, 41));
+        jButtonSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalirActionPerformed(evt);
             }
         });
 
-        jButtonVerCarreras.setFont(new java.awt.Font("DejaVu Sans", 1, 16)); // NOI18N
+        jButtonVerCarreras.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
         jButtonVerCarreras.setText("CARRERAS");
+        jButtonVerCarreras.setMaximumSize(new java.awt.Dimension(127, 41));
+        jButtonVerCarreras.setMinimumSize(new java.awt.Dimension(127, 41));
+        jButtonVerCarreras.setPreferredSize(new java.awt.Dimension(127, 41));
+        jButtonVerCarreras.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButtonVerCarreras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonVerCarrerasActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanelBotonesLayout = new javax.swing.GroupLayout(jPanelBotones);
-        jPanelBotones.setLayout(jPanelBotonesLayout);
-        jPanelBotonesLayout.setHorizontalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jButtonVerCorredores.setFont(new java.awt.Font("Uroob", 1, 24)); // NOI18N
+        jButtonVerCorredores.setText("CORREDORES");
+        jButtonVerCorredores.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonVerCorredores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVerCorredoresActionPerformed(evt);
+            }
+        });
+
+        jLayeredPaneBotones.setLayer(jButtonSalir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneBotones.setLayer(jButtonVerCarreras, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneBotones.setLayer(jButtonVerCorredores, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPaneBotonesLayout = new javax.swing.GroupLayout(jLayeredPaneBotones);
+        jLayeredPaneBotones.setLayout(jLayeredPaneBotonesLayout);
+        jLayeredPaneBotonesLayout.setHorizontalGroup(
+            jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneBotonesLayout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(jButtonVerCorredores)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
+                .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(124, 124, 124))
+                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(175, 175, 175))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
+        jLayeredPaneBotonesLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
 
-        jPanelBotonesLayout.setVerticalGroup(
-            jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesLayout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButtonVerCorredores))
-                    .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+        jLayeredPaneBotonesLayout.setVerticalGroup(
+            jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneBotonesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jLayeredPaneBotonesLayout.createSequentialGroup()
+                        .addComponent(jButtonVerCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jLayeredPaneBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonVerCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        jPanelBotonesLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButtonSalir, jButtonVerCarreras, jButtonVerCorredores});
-
-        jPanelTitulo.setForeground(new java.awt.Color(51, 51, 51));
+        jLayeredPaneTitulo.setMaximumSize(new java.awt.Dimension(640, 100));
+        jLayeredPaneTitulo.setMinimumSize(new java.awt.Dimension(640, 10));
+        jLayeredPaneTitulo.setPreferredSize(new java.awt.Dimension(640, 34));
 
         jLabelTitulo.setBackground(new java.awt.Color(51, 51, 51));
-        jLabelTitulo.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabelTitulo.setFont(new java.awt.Font("Uroob", 1, 64)); // NOI18N
         jLabelTitulo.setForeground(new java.awt.Color(51, 0, 153));
         jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("MarAppTon");
 
-        jLabelIcono.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/img/icono.jpeg"))); // NOI18N
-        jLabelIcono.setAlignmentY(0.0F);
-        jLabelIcono.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLayeredPaneTitulo.setLayer(jLabelTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
-        jPanelTitulo.setLayout(jPanelTituloLayout);
-        jPanelTituloLayout.setHorizontalGroup(
-            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTituloLayout.createSequentialGroup()
-                .addGroup(jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTituloLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanelTituloLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        javax.swing.GroupLayout jLayeredPaneTituloLayout = new javax.swing.GroupLayout(jLayeredPaneTitulo);
+        jLayeredPaneTitulo.setLayout(jLayeredPaneTituloLayout);
+        jLayeredPaneTituloLayout.setHorizontalGroup(
+            jLayeredPaneTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneTituloLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(73, 73, 73))
+        );
+        jLayeredPaneTituloLayout.setVerticalGroup(
+            jLayeredPaneTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneTituloLayout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jLabelTitulo)
                 .addContainerGap())
         );
-        jPanelTituloLayout.setVerticalGroup(
-            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTituloLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabelIcono, javax.swing.GroupLayout.PREFERRED_SIZE, 310, Short.MAX_VALUE)
-                .addContainerGap())
+
+        jLayeredPaneFondo.setLayer(jLabelFondo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneFondo.setLayer(jLayeredPaneBotones, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPaneFondo.setLayer(jLayeredPaneTitulo, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPaneFondoLayout = new javax.swing.GroupLayout(jLayeredPaneFondo);
+        jLayeredPaneFondo.setLayout(jLayeredPaneFondoLayout);
+        jLayeredPaneFondoLayout.setHorizontalGroup(
+            jLayeredPaneFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jLayeredPaneFondoLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jLayeredPaneFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLayeredPaneTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(jLayeredPaneBotones))
+                .addGap(0, 0, 0))
+            .addGroup(jLayeredPaneFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPaneFondoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jLayeredPaneFondoLayout.setVerticalGroup(
+            jLayeredPaneFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jLayeredPaneFondoLayout.createSequentialGroup()
+                .addComponent(jLayeredPaneTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 388, Short.MAX_VALUE)
+                .addComponent(jLayeredPaneBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
+            .addGroup(jLayeredPaneFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jLayeredPaneFondoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
 
         jMenuBar.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -429,15 +471,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addComponent(jPanelTitulo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLayeredPaneFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(4, 4, 4)
-                .addComponent(jPanelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLayeredPaneFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -600,8 +644,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JButton jButtonVerCarreras;
     private javax.swing.JButton jButtonVerCorredores;
-    private javax.swing.JLabel jLabelIcono;
+    private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLayeredPane jLayeredPaneBotones;
+    private javax.swing.JLayeredPane jLayeredPaneFondo;
+    private javax.swing.JLayeredPane jLayeredPaneTitulo;
     private javax.swing.JMenu jMenuArchivos;
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBar;
@@ -615,8 +662,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemJavadoc;
     private javax.swing.JMenuItem jMenuItemOpciones;
     private javax.swing.JMenu jMenuLookAndFeel;
-    private javax.swing.JPanel jPanelBotones;
-    private javax.swing.JPanel jPanelTitulo;
     // End of variables declaration//GEN-END:variables
 
 }
