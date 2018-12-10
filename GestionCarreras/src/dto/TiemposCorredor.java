@@ -24,7 +24,8 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
     private final String dorsal;
     private Duration tiempo;
     public static final String[] DATOS = {"DNI", "NOMBRE", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO", "DORSAL", "TIEMPO"};
-
+    public static final String[] DATOS_CARRERA = {"DORSAL", "TIEMPO", "NOMBRE", "DNI", "FECHA DE NACIMIENTO", "DIRECCION", "TELEFONO"};
+    
     // METODOS
     public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal) {
         this.idCarrera = idCarrera;
@@ -55,7 +56,19 @@ public class TiemposCorredor implements Serializable, Comparable<TiemposCorredor
         array[6] = Duracion.verDuracionFormatoCorto(this.tiempo);
         return array;
     }
-
+    
+    public String[] toArrayCarrera() {
+        String array[] = new String[7];
+        array[0] = this.dorsal; 
+        array[1] = Duracion.verDuracionFormatoCorto(this.tiempo);
+        array[2] = this.corredor.getNombre();
+        array[3] = this.corredor.getDni();
+        array[4] = Utiles.Sdf.formatFecha(this.corredor.getFecha_nac()); 
+        array[5] = this.corredor.getDireccion();
+        array[6] =  this.corredor.getTelefono();
+        return array;
+        
+    }
 
     // GETTER
     public Duration getTiempo() {

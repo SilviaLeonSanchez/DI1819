@@ -245,7 +245,7 @@ public class LogicaGuardado {
 
         // CABECERA CORREDORES
         gestorCSVCarrera.print("POSICION,");
-        for (String nombreAtributo : TiemposCorredor.DATOS) {
+        for (String nombreAtributo : TiemposCorredor.DATOS_CARRERA) {
             gestorCSVCarrera.print(nombreAtributo + ",");
         }
         gestorCSVCarrera.print("\n");
@@ -258,7 +258,7 @@ public class LogicaGuardado {
         for (TiemposCorredor corredor : corredores) {
 
             gestorCSVCarrera.print(posicion + "º,");
-            for (String atributo : corredor.toArray()) {
+            for (String atributo : corredor.toArrayCarrera()) {
                 gestorCSVCarrera.print(atributo + ",");
             }
             gestorCSVCarrera.print("\n");
