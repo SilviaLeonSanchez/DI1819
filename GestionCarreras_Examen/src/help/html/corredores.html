@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Gestión de corredores</title>
+    </head>
+    <body>
+        <h1>Gestión de corredores</h1>
+        <p>Pulsando F1 con el foco en el botón Corredores, se abrira esta pagina de ayuda.</p>
+        <p>Puedes añadir corredores, borrarlos, modificarlos y exportarlos a CSV. 
+            Aunque lo principal es que puedes hacer que corran en una carrera
+            y registrar sus tiempos.</p>
+
+        <p>En la ventana de Corredores aparecen los siguientes elementos:</p>
+        <dl>
+            <dt><b>Tabla de corredores</b></dt>
+            <dd>En la tabla aparecerán todos los corredores creados y su información. 
+                Se pueden ordenar por cualquier campo de la tabla pulsando en 
+                la celda de titulo del campo.</dd>
+
+            <dt><b>Filtro de corredores</b></dt>
+            <dd>Sirve para filtrar los corredores que aparecen en la tabla según 
+                el criterio elegido en el deplegable.
+                Después solo hay que introdudir en el campo de texto los caracteres 
+                que creemos que contiene en ese campo el corredor que buscamos.
+                Destacar que la búsqueda es sensible a mayúsculas.
+                Por último, al pulsar Filtrar, la tabla se actualiza mostrando 
+                solamente los corredores que cumplen con los criterios de búsqueda.</dd>
+
+            <dt><b>Botón Nuevo</b></dt>
+            <dd>Al pulsar este botón se abrirá un cuadro de diálogo donde se
+                podrá introducir la información del nuevo corredor. 
+                La información se irá analizando para indicarlos en todo momento 
+                si algún campo no cumple con los requisitos.
+                Si se introduce un Dni que ya se encuentra en la base de datos 
+                el sistema dará un aviso no permitiendo que se sobreescriba el registro.</dd>
+
+            <dt><b>Botón Modificar</b></dt>
+            <dd>Deberemos elegir de la tabla el registro que deseamos modificar, 
+                y pulsando después este botón se abrirá un cuadro de dialogo que 
+                nos permitirá modificar los datos del corredor. Se comprobará la validez 
+                de los datos y, al igual que al introducir un nuevo corredor, no se permitirá 
+                duplicar o sobreescribir un Dni existente.</dd>
+
+            <dt><b>Botón Borrar</b></dt>
+            <dd>Se podrá elegir uno o varios corredores de la tabla para ser borrados.
+                Después de realizar la operación los registros se habran eliminado de la 
+                lista de corredores disponibles y de las carreras que aún están abiertas, 
+                pero no de las que ya han finallizado</dd>
+        </dl>
+    </body>
+</html>
