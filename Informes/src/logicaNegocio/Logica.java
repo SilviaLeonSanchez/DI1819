@@ -186,6 +186,7 @@ public class Logica {
     }
 
     private void inicializarCorredoresApuntadosCarreras() {
+        this.corredoresApuntadosCarreras = new ArrayList<>();
         for (Carrera carrera : carreras) {
             if (carrera.getTotalCorredores() > 0) {
                 this.corredoresApuntadosCarreras.addAll(carrera.getListaCorredores());

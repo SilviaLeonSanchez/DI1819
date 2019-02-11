@@ -36,7 +36,8 @@ public class TiemposCorredor implements Comparable<TiemposCorredor>{
 
     @Override
     public String toString() {
-        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" + (new SimpleDateFormat("hh:mm:ss")).format(tiempo)+ '}';
+        String tiempoString = ((this.tiempo == null)? "Ninguno": (new SimpleDateFormat("hh:mm:ss")).format(this.tiempo));
+        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" +tiempoString+ '}';
     }
 
     // GETTER

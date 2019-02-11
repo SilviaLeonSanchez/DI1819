@@ -28,7 +28,6 @@ public class Carrera implements Comparable<Carrera> {
     private int totalCorredores;
     private List<TiemposCorredor> listaCorredores;
 
-
     //  METODOS
     public Carrera(String id, String nombre, Date fecha, String lugar, int maxCorredores) {
         this.id = id;
@@ -38,18 +37,17 @@ public class Carrera implements Comparable<Carrera> {
         this.maxCorredores = maxCorredores;
         this.listaCorredores = new ArrayList<>();
         this.carreraCerrada = false;
-        this.totalCorredores = 0;
     }
 
     @Override
     public String toString() {
         String string = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", carreraCerrada=" + carreraCerrada + ", maxCorredores=" + maxCorredores + '}';
-        string += "\tCorredores{\n";
+        string += "\n\tCorredores{\n";
         for (TiemposCorredor c : listaCorredores) {
-            string.concat("\n\t\t" + c.toString());
+            string += "\n\t\t" + c.toString();
         }
-        string += "\t}";
-        string += "\tTotal corredores="+totalCorredores;
+        string += "}";
+        string += "\n\tTotal corredores=" + totalCorredores;
         return string;
     }
 
@@ -102,7 +100,7 @@ public class Carrera implements Comparable<Carrera> {
         }
         this.maxCorredores = maxCorredores;
     }
-    
+
     public void setTotalCorredores(int totalCorredores) {
         this.totalCorredores = totalCorredores;
     }
@@ -135,7 +133,7 @@ public class Carrera implements Comparable<Carrera> {
     public String getId() {
         return id;
     }
-    
+
     public int getTotalCorredores() {
         return totalCorredores;
     }
@@ -155,10 +153,15 @@ public class Carrera implements Comparable<Carrera> {
     }
 
     public boolean aniadirCorredor(TiemposCorredor corredor) {
-        return this.listaCorredores.add(corredor);
+        if (this.listaCorredores.add(corredor)) {
+            this.totalCorredores += 1;
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public boolean borrarCorredor(TiemposCorredor corredor) {
+public boolean borrarCorredor(TiemposCorredor corredor) {
         return this.listaCorredores.remove(corredor);
     }
 
