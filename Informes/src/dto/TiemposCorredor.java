@@ -7,50 +7,63 @@ package dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  *
  * @author silvia
  */
-public class TiemposCorredor implements Comparable<TiemposCorredor>{
+public class TiemposCorredor {
 
     // ATRIBUTOS
     private final String idCarrera;
-    private final Corredor corredor;
     private final String dorsal;
-    private Date tiempo;
+    private String tiempo;
+    
+    private String dni;
+    private String nombre;
+    private String fecha_nac;
+    private String direccion;
+    private String telefono;
     
     // METODOS
     public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal, Date tiempo) {
         this.idCarrera = idCarrera;
-        this.corredor = corredor;
         this.dorsal = dorsal;
-        this.tiempo = tiempo;
+        this.tiempo = (new SimpleDateFormat("hh:mm:ss")).format(tiempo);
+        this.dni =  corredor.getDni();
+        this.nombre = corredor.getNombre();
+        this.fecha_nac = (new SimpleDateFormat("dd/MM/yy")).format(corredor.getFecha_nac());
+        this.direccion = corredor.getDireccion();
+        this.telefono = corredor.getTelefono();
     }
 
-    @Override
-    public int compareTo(TiemposCorredor o) {
-        return this.tiempo.compareTo(o.getTiempo());
+    public String getDni() {
+        return dni;
     }
 
-    @Override
-    public String toString() {
-        String tiempoString = ((this.tiempo == null)? "Ninguno": (new SimpleDateFormat("hh:mm:ss")).format(this.tiempo));
-        return "TiemposCorredor{" + "corredor=" + corredor + ", idCarrera=" + idCarrera + ", dorsal=" + dorsal + ", tiempo=" +tiempoString+ '}';
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getFecha_nac() {
+        return fecha_nac;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public String getTelefono() {
+        return telefono;
     }
 
     // GETTER
-    public Date getTiempo() {
+    public String getTiempo() {
         return tiempo;
     }
 
     public String getDorsal() {
         return dorsal;
-    }
-
-    public Corredor getCorredor() {
-        return corredor;
     }
 
     public String getIdCarrera() {
@@ -60,37 +73,9 @@ public class TiemposCorredor implements Comparable<TiemposCorredor>{
 
     // SETTER
     public void setTiempo(Date tiempo) {
-        this.tiempo = tiempo;
+        this.tiempo = (new SimpleDateFormat("hh:mm:ss")).format(tiempo);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Objects.hashCode(this.corredor);
-        hash = 47 * hash + Objects.hashCode(this.idCarrera);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TiemposCorredor other = (TiemposCorredor) obj;
-        if (!Objects.equals(this.idCarrera, other.idCarrera)) {
-            return false;
-        }
-        if (!Objects.equals(this.corredor, other.corredor)) {
-            return false;
-        }
-        return true;
-    }
     
     
     

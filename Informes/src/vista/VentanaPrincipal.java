@@ -10,7 +10,6 @@ import dto.Carrera;
 import dto.Corredor;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -238,6 +237,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jButtonGenerarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarInformeActionPerformed
 
         Map parametros = new HashMap();
+        String ruta;    // Llamar el JFileChooser
 
         try {
 
@@ -246,15 +246,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 ArrayList<Carrera> carrerasSinFinalizar = CarrerasDataSource.getCarrerasSinFinalizar();
                 JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasSinFinalizar);
                 JasperPrint print = JasperFillManager.fillReport("informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
-                
                 JasperExportManager.exportReportToPdfFile(print, "informes/InformeCarrerasSinFinalizar.pdf");
 
             } else if (this.jRadioButtonCarrera.isSelected()) {
-                System.out.println("Has pulsado Carrera");
+                Carrera carreraElegida = logica.getCarreras().get(this.jComboBoxIdCarrera.getSelectedIndex());
+                logica.setCarreraElegida(carreraElegida);
+                
+                System.out.println(carreraElegida);
+                
+                ArrayList<Carrera> carrera = CarrerasDataSource.getCarrera();
+                JRDataSource dataSource = new JRBeanCollectionDataSource(carrera);
+                JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegida.jasper", parametros, dataSource);
+                JasperExportManager.exportReportToPdfFile(print, "informes/InformeCarrera_"+carreraElegida.getId()+".pdf");
+
+                
             } else if (this.jRadioButtonCarreraFinalizada.isSelected()) {
-                System.out.println("Has pulsado CarreraFinalizada");
+                
             } else if (this.jRadioButtonCorredor.isSelected()) {
-                System.out.println("Has pulsado Corredor");
+                
             }
         } catch (JRException ex) {
             Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);

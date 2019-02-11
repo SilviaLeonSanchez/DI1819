@@ -4,24 +4,12 @@
  * and open the template in the editor.
  */
 package vista;
-
-import datasources.CarrerasDataSource;
-import dto.Carrera;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import logicaNegocio.Logica;
-
 /**
  *
  * @author silvia
  */
 public class Informes {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
 
         /*
         • Informe 1. Lista de las carreras sin finalizar, mostrando el nombre de la carrera,
@@ -43,8 +31,5 @@ public class Informes {
          */
         
         
-        
-
-    }
 
 }

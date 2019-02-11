@@ -6,6 +6,7 @@
 package datasources;
 
 import dto.Carrera;
+import dto.TiemposCorredor;
 import java.util.ArrayList;
 import logicaNegocio.Logica;
 
@@ -27,5 +28,17 @@ public class CarrerasDataSource {
         
         return carrerasSinFinalizar;
     } 
+    
+    public static ArrayList<Carrera> getCarrera(){
+        Logica logica  = new Logica();
+        ArrayList<Carrera> arrayList = new ArrayList<>();
+        arrayList.add(logica.getCarreras().get(0));  // Para pruebas con Preview en iReport
+        //arrayList.add(logica.getCarreraElegida());
+        return arrayList;
+    } 
+    
+    public static ArrayList<TiemposCorredor> getCorredoresCarreraElegida(){
+        return getCarrera().get(0).getListaCorredores();
+    }
     
 }

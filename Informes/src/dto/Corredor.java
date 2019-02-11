@@ -13,12 +13,12 @@ import java.util.Objects;
  *
  * @author silvia
  */
-public class Corredor implements  Comparable<Corredor> {
+public class Corredor {
 
     // ATRIBUTOS
     private String dni;
     private String nombre;
-    private Date fecha_nac;
+    private String fecha_nac;
     private String direccion;
     private String telefono;
 
@@ -26,20 +26,16 @@ public class Corredor implements  Comparable<Corredor> {
     public Corredor(String dni, String nombre, Date fecha_nac, String direccion, String telefono) {
         this.dni = dni;
         this.nombre = nombre;
-        this.fecha_nac = fecha_nac;
+        this.fecha_nac = (new SimpleDateFormat("dd/MM/yyyy")).format(fecha_nac);
         this.direccion = direccion;
         this.telefono = telefono;
     }
 
-    @Override
-    public int compareTo(Corredor o) {
-        return this.dni.compareToIgnoreCase(o.getDni());
-    }
 
     @Override
     public String toString() {
         return "Corredor{" + "dni=" + dni + ", nombre=" + nombre
-                + ", fecha_nacimiento=" + (new SimpleDateFormat("dd/MM/yyyy")).format(fecha_nac)
+                + ", fecha_nacimiento=" + fecha_nac
                 + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
 
@@ -84,10 +80,10 @@ public class Corredor implements  Comparable<Corredor> {
     }
 
     public void setFecha_nac(Date fecha_nac) {
-        this.fecha_nac = fecha_nac;
+        this.fecha_nac = (new SimpleDateFormat("dd/MM/yyyy")).format(fecha_nac);
     }
 
-    public Date getFecha_nac() {
+    public String getFecha_nac() {
         return this.fecha_nac;
     }
 

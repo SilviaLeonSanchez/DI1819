@@ -18,6 +18,7 @@ import java.util.Calendar;
  */
 public class Logica {
     
+    private Carrera carreraElegida;
     private ArrayList<Corredor> corredores;
     private ArrayList<Carrera> carreras;
     private ArrayList<TiemposCorredor> corredoresApuntadosCarreras;
@@ -206,6 +207,12 @@ public class Logica {
         return corredoresApuntadosCarreras;
     }
     
-    
+    public Carrera getCarreraElegida() {
+        return carreraElegida;
+    }
+
+    public void setCarreraElegida(Carrera carreraElegida) {
+        this.carreraElegida = carreraElegida;
+    }
     
 }
