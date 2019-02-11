@@ -43,13 +43,7 @@ public class Informes {
          */
         
         
-        Logica logica = new Logica();
-
-        ArrayList<Carrera> carrerasSinFinalizar = CarrerasDataSource.getCarrerasSinFinalizar();
-
-        for (Carrera carrera : carrerasSinFinalizar) {
-            System.out.println("Total corredores : "+carrera.getTotalCorredores());
-        }
+        
 
     }
 

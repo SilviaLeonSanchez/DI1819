@@ -212,8 +212,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroupLookAndFeels = new javax.swing.ButtonGroup();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jLayeredPaneFondo = new javax.swing.JLayeredPane();
         jLabelFondo = new javax.swing.JLabel();
         jLayeredPaneBotones = new javax.swing.JLayeredPane();
@@ -232,10 +230,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuLookAndFeel = new javax.swing.JMenu();
         jMenuAyuda = new javax.swing.JMenu();
         jMenuItemAyuda = new javax.swing.JMenuItem();
-
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MarAppTon");
@@ -643,8 +637,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguracion;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItemAyuda;
     private javax.swing.JMenuItem jMenuItemExportarCarrera;
     private javax.swing.JMenuItem jMenuItemExportarCorredores;

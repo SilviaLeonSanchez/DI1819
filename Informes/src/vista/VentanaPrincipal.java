@@ -5,17 +5,66 @@
  */
 package vista;
 
+import datasources.CarrerasDataSource;
+import dto.Carrera;
+import dto.Corredor;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import logicaNegocio.Logica;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 /**
  *
  * @author silvia
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    private Logica logica;
+
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
+        this.logica = new Logica();
+        inicializarButtonGroup();
+        inicializarComboBox();
+    }
+
+    private void inicializarButtonGroup() {
+        this.buttonGroup.add(this.jRadioButtonCarrerasSinFinalizar);
+        this.buttonGroup.add(this.jRadioButtonCarrera);
+        this.buttonGroup.add(this.jRadioButtonCarreraFinalizada);
+        this.buttonGroup.add(this.jRadioButtonCorredor);
+        this.buttonGroup.setSelected(this.jRadioButtonCarrerasSinFinalizar.getModel(), true);
+    }
+
+    private void inicializarComboBox() {
+        for (Carrera c : logica.getCarreras()) {
+            this.jComboBoxIdCarrera.addItem(c.getId());
+        }
+        this.jComboBoxIdCarrera.setSelectedIndex(0);
+
+        for (Carrera c : logica.getCarreras()) {
+            if (c.isCarreraCerrada()) {
+                this.jComboBoxIdCarreraFinalizada.addItem(c.getId());
+            }
+        }
+        this.jComboBoxIdCarreraFinalizada.setSelectedIndex(0);
+
+        for (Corredor c : logica.getCorredores()) {
+            this.jComboBoxDniCorredor.addItem(c.getDni());
+        }
+        this.jComboBoxIdCarreraFinalizada.setSelectedIndex(0);
     }
 
     /**
@@ -34,11 +83,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jRadioButtonCarrerasSinFinalizar = new javax.swing.JRadioButton();
         jRadioButtonCarrera = new javax.swing.JRadioButton();
         jRadioButtonCarreraFinalizada = new javax.swing.JRadioButton();
-        Corredor = new javax.swing.JRadioButton();
+        jRadioButtonCorredor = new javax.swing.JRadioButton();
         jComboBoxIdCarrera = new javax.swing.JComboBox<>();
         jLabelIdCarreraFinalizada = new javax.swing.JLabel();
         jLabelIdCarrera = new javax.swing.JLabel();
-        jComboBoxIdCarreraSinFinalizar = new javax.swing.JComboBox<>();
+        jComboBoxIdCarreraFinalizada = new javax.swing.JComboBox<>();
         jLabelDniCorredor = new javax.swing.JLabel();
         jComboBoxDniCorredor = new javax.swing.JComboBox<>();
         jButtonGenerarInforme = new javax.swing.JButton();
@@ -50,22 +99,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(800, 600));
 
         jLabelTitulo.setFont(new java.awt.Font("Abyssinica SIL", 1, 24)); // NOI18N
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitulo.setText("INFORMES GESTIÓN CARRERAS");
 
-        jRadioButtonCarrerasSinFinalizar.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
+        jRadioButtonCarrerasSinFinalizar.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         jRadioButtonCarrerasSinFinalizar.setText("Carreras sin finalizar");
 
-        jRadioButtonCarrera.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
+        jRadioButtonCarrera.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         jRadioButtonCarrera.setText("Carrera");
 
-        jRadioButtonCarreraFinalizada.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
+        jRadioButtonCarreraFinalizada.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
         jRadioButtonCarreraFinalizada.setText("Carrera finalizada");
 
-        Corredor.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
-        Corredor.setText("Corredor");
+        jRadioButtonCorredor.setFont(new java.awt.Font("Abyssinica SIL", 0, 18)); // NOI18N
+        jRadioButtonCorredor.setText("Corredor");
 
         jComboBoxIdCarrera.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
-        jComboBoxIdCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabelIdCarreraFinalizada.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
         jLabelIdCarreraFinalizada.setText("Id ");
@@ -73,14 +122,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabelIdCarrera.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
         jLabelIdCarrera.setText("Id ");
 
-        jComboBoxIdCarreraSinFinalizar.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
-        jComboBoxIdCarreraSinFinalizar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxIdCarreraFinalizada.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
 
         jLabelDniCorredor.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
         jLabelDniCorredor.setText("Dni");
 
         jComboBoxDniCorredor.setFont(new java.awt.Font("Abyssinica SIL", 0, 16)); // NOI18N
-        jComboBoxDniCorredor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanelRadioButtonsLayout = new javax.swing.GroupLayout(jPanelRadioButtons);
         jPanelRadioButtons.setLayout(jPanelRadioButtonsLayout);
@@ -89,23 +136,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanelRadioButtonsLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButtonCarrerasSinFinalizar)
                     .addGroup(jPanelRadioButtonsLayout.createSequentialGroup()
-                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jRadioButtonCarreraFinalizada)
-                            .addComponent(jRadioButtonCarrera, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Corredor, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(61, 61, 61)
-                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelIdCarreraFinalizada, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(jLabelIdCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBoxIdCarrera, 0, 102, Short.MAX_VALUE)
-                            .addComponent(jComboBoxIdCarreraSinFinalizar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBoxDniCorredor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addComponent(jRadioButtonCarrerasSinFinalizar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelRadioButtonsLayout.createSequentialGroup()
+                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jRadioButtonCarreraFinalizada, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(jRadioButtonCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jRadioButtonCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelIdCarreraFinalizada)
+                            .addComponent(jLabelIdCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelDniCorredor))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBoxIdCarreraFinalizada, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxDniCorredor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxIdCarrera, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(39, 39, 39))))
         );
         jPanelRadioButtonsLayout.setVerticalGroup(
             jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,10 +170,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonCarreraFinalizada)
                     .addComponent(jLabelIdCarreraFinalizada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxIdCarreraSinFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxIdCarreraFinalizada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelRadioButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Corredor)
+                    .addComponent(jRadioButtonCorredor)
                     .addComponent(jLabelDniCorredor)
                     .addComponent(jComboBoxDniCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83))
@@ -132,6 +181,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jButtonGenerarInforme.setFont(new java.awt.Font("Abyssinica SIL", 1, 18)); // NOI18N
         jButtonGenerarInforme.setText("GENERAR INFORME");
+        jButtonGenerarInforme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGenerarInformeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -143,11 +197,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         .addGap(264, 264, 264)
                         .addComponent(jButtonGenerarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(jLabelTitulo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(jPanelRadioButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanelRadioButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -156,10 +209,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelRadioButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelRadioButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonGenerarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,6 +234,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGenerarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarInformeActionPerformed
+
+        Map parametros = new HashMap();
+
+        try {
+
+            if (this.jRadioButtonCarrerasSinFinalizar.isSelected()) {
+
+                ArrayList<Carrera> carrerasSinFinalizar = CarrerasDataSource.getCarrerasSinFinalizar();
+                JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasSinFinalizar);
+                JasperPrint print = JasperFillManager.fillReport("informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
+                
+                JasperExportManager.exportReportToPdfFile(print, "informes/InformeCarrerasSinFinalizar.pdf");
+
+            } else if (this.jRadioButtonCarrera.isSelected()) {
+                System.out.println("Has pulsado Carrera");
+            } else if (this.jRadioButtonCarreraFinalizada.isSelected()) {
+                System.out.println("Has pulsado CarreraFinalizada");
+            } else if (this.jRadioButtonCorredor.isSelected()) {
+                System.out.println("Has pulsado Corredor");
+            }
+        } catch (JRException ex) {
+            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonGenerarInformeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,12 +297,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton Corredor;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JButton jButtonGenerarInforme;
     private javax.swing.JComboBox<String> jComboBoxDniCorredor;
     private javax.swing.JComboBox<String> jComboBoxIdCarrera;
-    private javax.swing.JComboBox<String> jComboBoxIdCarreraSinFinalizar;
+    private javax.swing.JComboBox<String> jComboBoxIdCarreraFinalizada;
     private javax.swing.JLabel jLabelDniCorredor;
     private javax.swing.JLabel jLabelIdCarrera;
     private javax.swing.JLabel jLabelIdCarreraFinalizada;
@@ -233,5 +311,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButtonCarrera;
     private javax.swing.JRadioButton jRadioButtonCarreraFinalizada;
     private javax.swing.JRadioButton jRadioButtonCarrerasSinFinalizar;
+    private javax.swing.JRadioButton jRadioButtonCorredor;
     // End of variables declaration//GEN-END:variables
 }
