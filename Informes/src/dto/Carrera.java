@@ -7,6 +7,8 @@ package dto;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +26,7 @@ public class Carrera implements Comparable<Carrera> {
     private String fecha;
     private String lugar;
     private boolean carreraCerrada;
+    private String estadoCarrera;
 
     private int maxCorredores;
     private int totalCorredores;
@@ -38,19 +41,9 @@ public class Carrera implements Comparable<Carrera> {
         this.maxCorredores = maxCorredores;
         this.listaCorredores = new ArrayList<>();
         this.carreraCerrada = false;
+        this.estadoCarrera = "Carrera abierta";
     }
 
-    @Override
-    public String toString() {
-        String string = "Carrera{" + "id=" + id + ", nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", carreraCerrada=" + carreraCerrada + ", maxCorredores=" + maxCorredores + '}';
-        string += "\n\tCorredores{\n";
-        for (TiemposCorredor c : listaCorredores) {
-            string += "\n\t\t" + c.toString();
-        }
-        string += "}";
-        string += "\n\tTotal corredores=" + totalCorredores;
-        return string;
-    }
 
     @Override
     public int compareTo(Carrera o) {
@@ -108,6 +101,7 @@ public class Carrera implements Comparable<Carrera> {
 
     public void cerrarCarrera() {
         this.carreraCerrada = true;
+        this.estadoCarrera = "Carrera cerrada";
     }
 
     // GETTER
@@ -115,6 +109,17 @@ public class Carrera implements Comparable<Carrera> {
         return new ArrayList<>(listaCorredores);
     }
 
+    public ArrayList<TiemposCorredor> getListaClasificacionCorredores() {
+        Collections.sort(listaCorredores, new Comparator<TiemposCorredor>() {
+            @Override
+            public int compare(TiemposCorredor o1, TiemposCorredor o2) {
+                return Long.compare(o1.getTiempoParaComparar(), o2.getTiempoParaComparar());
+            }
+        });
+        
+        return new ArrayList<>(listaCorredores);
+    }
+    
     public int getMaxCorredores() {
         return maxCorredores;
     }
@@ -143,6 +148,10 @@ public class Carrera implements Comparable<Carrera> {
         return carreraCerrada;
     }
 
+    public String getEstadoCarrera() {
+        return estadoCarrera;
+    }
+    
     // CORREDORES
     public boolean contieneCorredor(String dniCorredor) {
         for (TiemposCorredor corredor : listaCorredores) {
@@ -162,7 +171,7 @@ public class Carrera implements Comparable<Carrera> {
         }
     }
 
-public boolean borrarCorredor(TiemposCorredor corredor) {
+    public boolean borrarCorredor(TiemposCorredor corredor) {
         return this.listaCorredores.remove(corredor);
     }
 
@@ -172,6 +181,7 @@ public boolean borrarCorredor(TiemposCorredor corredor) {
             while (iteratorCorredores.hasNext()) {
                 TiemposCorredor corredor = iteratorCorredores.next();
                 if (corredor.getDni().equalsIgnoreCase(dni)) {
+                    this.totalCorredores -= 1;
                     return this.listaCorredores.remove(corredor);
                 }
             }

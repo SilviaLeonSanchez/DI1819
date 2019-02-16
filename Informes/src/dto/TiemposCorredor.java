@@ -18,6 +18,7 @@ public class TiemposCorredor {
     private final String idCarrera;
     private final String dorsal;
     private String tiempo;
+    private long tiempoParaComparar;
     
     private String dni;
     private String nombre;
@@ -29,12 +30,17 @@ public class TiemposCorredor {
     public TiemposCorredor(String idCarrera, Corredor corredor, String dorsal, Date tiempo) {
         this.idCarrera = idCarrera;
         this.dorsal = dorsal;
-        this.tiempo = (new SimpleDateFormat("hh:mm:ss")).format(tiempo);
+        this.tiempo = (tiempo != null)? (new SimpleDateFormat("hh:mm:ss")).format(tiempo) : "Sin tiempo";
+        this.tiempoParaComparar = (tiempo != null)? tiempo.getTime() : 0;
         this.dni =  corredor.getDni();
         this.nombre = corredor.getNombre();
-        this.fecha_nac = (new SimpleDateFormat("dd/MM/yy")).format(corredor.getFecha_nac());
+        this.fecha_nac = corredor.getFecha_nac();
         this.direccion = corredor.getDireccion();
         this.telefono = corredor.getTelefono();
+    }
+
+    public long getTiempoParaComparar() {
+        return tiempoParaComparar;
     }
 
     public String getDni() {

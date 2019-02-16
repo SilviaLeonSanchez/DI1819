@@ -5,14 +5,16 @@
  */
 package vista;
 
-import datasources.CarrerasDataSource;
 import dto.Carrera;
 import dto.Corredor;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import logicaNegocio.Logica;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -53,10 +55,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         this.jComboBoxIdCarrera.setSelectedIndex(0);
 
-        for (Carrera c : logica.getCarreras()) {
-            if (c.isCarreraCerrada()) {
-                this.jComboBoxIdCarreraFinalizada.addItem(c.getId());
-            }
+        for (Carrera c : logica.getCarrerasFinalizadas()) {
+            this.jComboBoxIdCarreraFinalizada.addItem(c.getId());
         }
         this.jComboBoxIdCarreraFinalizada.setSelectedIndex(0);
 
@@ -237,38 +237,87 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void jButtonGenerarInformeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGenerarInformeActionPerformed
 
         Map parametros = new HashMap();
-        String ruta;    // Llamar el JFileChooser
+        String ruta = pedirRutaInforme();
 
-        try {
+        if (ruta != null) {
+            ruta += ".pdf";
 
-            if (this.jRadioButtonCarrerasSinFinalizar.isSelected()) {
+            try {
 
-                ArrayList<Carrera> carrerasSinFinalizar = CarrerasDataSource.getCarrerasSinFinalizar();
-                JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasSinFinalizar);
-                JasperPrint print = JasperFillManager.fillReport("informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
-                JasperExportManager.exportReportToPdfFile(print, "informes/InformeCarrerasSinFinalizar.pdf");
+                if (this.jRadioButtonCarrerasSinFinalizar.isSelected()) {
 
-            } else if (this.jRadioButtonCarrera.isSelected()) {
-                Carrera carreraElegida = logica.getCarreras().get(this.jComboBoxIdCarrera.getSelectedIndex());
-                logica.setCarreraElegida(carreraElegida);
-                
-                System.out.println(carreraElegida);
-                
-                ArrayList<Carrera> carrera = CarrerasDataSource.getCarrera();
-                JRDataSource dataSource = new JRBeanCollectionDataSource(carrera);
-                JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegida.jasper", parametros, dataSource);
-                JasperExportManager.exportReportToPdfFile(print, "informes/InformeCarrera_"+carreraElegida.getId()+".pdf");
+                    ArrayList<Carrera> carrerasSinFinalizar = logica.getCarrerasSinFinalizar();
+                    JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasSinFinalizar);
+                    JasperPrint print = JasperFillManager.fillReport("informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
+                    JasperExportManager.exportReportToPdfFile(print, ruta);
 
-                
-            } else if (this.jRadioButtonCarreraFinalizada.isSelected()) {
-                
-            } else if (this.jRadioButtonCorredor.isSelected()) {
-                
+                } else if (this.jRadioButtonCarrera.isSelected()) {
+
+                    Carrera carreraElegida = logica.getCarrera(this.jComboBoxIdCarrera.getSelectedItem().toString());
+                    System.out.println(this.jComboBoxIdCarrera.getSelectedItem().toString());
+                    parametros.put("ID", carreraElegida.getId());
+                    parametros.put("ESTADO", carreraElegida.getEstadoCarrera());
+
+                    JRDataSource dataSource = new JRBeanCollectionDataSource(carreraElegida.getListaCorredores());
+                    JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegida.jasper", parametros, dataSource);
+                    JasperExportManager.exportReportToPdfFile(print, ruta);
+
+                } else if (this.jRadioButtonCarreraFinalizada.isSelected()) {
+
+                    Carrera carreraElegida = logica.getCarrera(this.jComboBoxIdCarreraFinalizada.getSelectedItem().toString());
+                    parametros.put("ID", carreraElegida.getId());
+                    parametros.put("NOMBRE", carreraElegida.getNombre());
+                    parametros.put("FECHA", carreraElegida.getFecha());
+
+                    JRDataSource dataSource = new JRBeanCollectionDataSource(carreraElegida.getListaClasificacionCorredores());
+                    JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegidaFinalizada.jasper", parametros, dataSource);
+                    JasperExportManager.exportReportToPdfFile(print, ruta);
+
+                } else if (this.jRadioButtonCorredor.isSelected()) {
+
+                    Corredor corredorElegido = logica.getCorredor(this.jComboBoxDniCorredor.getSelectedItem().toString());
+                    parametros.put("DNI", corredorElegido.getDni());
+                    parametros.put("NOMBRE", corredorElegido.getNombre());
+                    parametros.put("FECHA", corredorElegido.getFecha_nac());
+                    parametros.put("DIR", corredorElegido.getDireccion());
+                    parametros.put("TEL", corredorElegido.getTelefono());
+
+                    ArrayList<Carrera> carrerasCorredor = logica.getCarrerasCorredor(corredorElegido.getDni());
+                    if (carrerasCorredor == null) {
+                        // Añado una carrera vacia porque si no el informe sale en blanco
+                        carrerasCorredor = new ArrayList();
+                        carrerasCorredor.add(new Carrera("", "", new Date(), "", 0));
+                        JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasCorredor);
+                        JasperPrint print = JasperFillManager.fillReport("informes/CorredorElegidoSinCarreras.jasper", parametros, dataSource);
+                        JasperExportManager.exportReportToPdfFile(print, ruta);
+                    } else {
+                        JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasCorredor);
+                        JasperPrint print = JasperFillManager.fillReport("informes/CorredorElegido.jasper", parametros, dataSource);
+                        JasperExportManager.exportReportToPdfFile(print, ruta);
+                    }
+
+                }
+
+                JOptionPane.showMessageDialog(this, "El informe se ha generado correctamente", "Informe generado", JOptionPane.INFORMATION_MESSAGE);
+                // No es compatible con mi sistema
+                // Desktop.getDesktop().open(ruta);
+
+            } catch (JRException ex) {
+                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (JRException ex) {
-            Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonGenerarInformeActionPerformed
+
+    private String pedirRutaInforme() {
+        JFileChooser jfc = new JFileChooser();
+        int resultado = jfc.showSaveDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            return jfc.getSelectedFile().getAbsolutePath();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha indicado donde guardar el archivo por lo tanto no se generará el informe.", "Sin ruta especificada", JOptionPane.INFORMATION_MESSAGE);
+            return null;
+        }
+    }
 
     /**
      * @param args the command line arguments
