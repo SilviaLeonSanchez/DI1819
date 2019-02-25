@@ -7,6 +7,7 @@ package vista;
 
 import dto.Carrera;
 import dto.Corredor;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -248,7 +249,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
                     ArrayList<Carrera> carrerasSinFinalizar = logica.getCarrerasSinFinalizar();
                     JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasSinFinalizar);
-                    JasperPrint print = JasperFillManager.fillReport("informes/InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
+                    JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"InformeCarrerasSinFinalizar.jasper", parametros, dataSource);
                     JasperExportManager.exportReportToPdfFile(print, ruta);
 
                 } else if (this.jRadioButtonCarrera.isSelected()) {
@@ -259,7 +260,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     parametros.put("ESTADO", carreraElegida.getEstadoCarrera());
 
                     JRDataSource dataSource = new JRBeanCollectionDataSource(carreraElegida.getListaCorredores());
-                    JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegida.jasper", parametros, dataSource);
+                    JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"CarreraElegida.jasper", parametros, dataSource);
                     JasperExportManager.exportReportToPdfFile(print, ruta);
 
                 } else if (this.jRadioButtonCarreraFinalizada.isSelected()) {
@@ -270,7 +271,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     parametros.put("FECHA", carreraElegida.getFecha());
 
                     JRDataSource dataSource = new JRBeanCollectionDataSource(carreraElegida.getListaClasificacionCorredores());
-                    JasperPrint print = JasperFillManager.fillReport("informes/CarreraElegidaFinalizada.jasper", parametros, dataSource);
+                    JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"CarreraElegidaFinalizada.jasper", parametros, dataSource);
                     JasperExportManager.exportReportToPdfFile(print, ruta);
 
                 } else if (this.jRadioButtonCorredor.isSelected()) {
@@ -288,11 +289,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                         carrerasCorredor = new ArrayList();
                         carrerasCorredor.add(new Carrera("", "", new Date(), "", 0));
                         JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasCorredor);
-                        JasperPrint print = JasperFillManager.fillReport("informes/CorredorElegidoSinCarreras.jasper", parametros, dataSource);
+                        JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"CorredorElegidoSinCarreras.jasper", parametros, dataSource);
                         JasperExportManager.exportReportToPdfFile(print, ruta);
                     } else {
                         JRDataSource dataSource = new JRBeanCollectionDataSource(carrerasCorredor);
-                        JasperPrint print = JasperFillManager.fillReport("informes/CorredorElegido.jasper", parametros, dataSource);
+                        JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"CorredorElegido.jasper", parametros, dataSource);
                         JasperExportManager.exportReportToPdfFile(print, ruta);
                     }
 
