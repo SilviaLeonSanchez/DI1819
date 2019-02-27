@@ -34,42 +34,42 @@
 			<staticText>
 				<reportElement x="0" y="0" width="555" height="37" uuid="088970a8-8ac9-4adb-b5ff-eb516c212265"/>
 				<textElement textAlignment="Center">
-					<font fontName="Abyssinica SIL" size="18" isBold="true"/>
+					<font fontName="Serif" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[INFORME CORREDOR ELEGIDO]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="15" y="49" width="235" height="20" uuid="c4a1188a-0aa6-4dee-b412-a52f6307ae7a"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12" isBold="false"/>
+					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DNI: "+$P{DNI}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="287" y="49" width="182" height="20" uuid="ac805548-1c3a-4204-a92e-dbcf01b7f135"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12" isBold="false"/>
+					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["NOMBRE: "+$P{NOMBRE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="15" y="89" width="235" height="20" uuid="03b5e56e-757d-4b03-944d-ca7efffa08b4"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12" isBold="false"/>
+					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["FECHA DE NACIMIENTO: "+$P{FECHA}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="287" y="69" width="182" height="20" uuid="0bd44ed3-c088-47a1-8ac6-bef7575d21e7"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12" isBold="false"/>
+					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["TELÉFONO: "+$P{TEL}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="15" y="69" width="235" height="20" uuid="a993f485-1617-49ab-868c-14f839263ed5"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12" isBold="false"/>
+					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DIRECCIÓN: "+$P{DIR}]]></textFieldExpression>
 			</textField>
@@ -80,35 +80,35 @@
 			<staticText>
 				<reportElement x="0" y="13" width="555" height="28" uuid="c5e35470-66f7-44a1-a66b-676069fdf621"/>
 				<textElement textAlignment="Center">
-					<font fontName="Abyssinica SIL" size="14" isBold="true"/>
+					<font fontName="Serif" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CARRERAS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="39" y="55" width="63" height="20" uuid="249ab020-5e0d-44c7-90a5-b8c90d6ab506"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="102" y="55" width="175" height="20" uuid="daa54fca-5b6f-4300-a4d5-d53428e46312"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="277" y="55" width="141" height="20" uuid="3b56f21a-8b22-4ea1-9df6-c051b980bd30"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<text><![CDATA[LUGAR]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="418" y="55" width="100" height="20" uuid="b6dfa14d-dc5d-4bc9-afda-26251fbdc4d0"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
 			</staticText>
@@ -119,28 +119,28 @@
 			<textField>
 				<reportElement x="39" y="0" width="63" height="20" uuid="40161dac-dfe8-41bc-b07d-bed91b57f407"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="0" width="175" height="20" uuid="a491d550-273c-43df-8717-84e694fa2ccc"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="277" y="0" width="141" height="20" uuid="47e0440b-d926-4006-8ec8-b7bd6a78a8ca"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{lugar}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="418" y="0" width="100" height="20" uuid="fad12a77-3d31-45e4-a6a0-58cd58998b45"/>
 				<textElement>
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
@@ -151,7 +151,7 @@
 			<textField>
 				<reportElement x="0" y="11" width="555" height="20" uuid="7a2528f2-d20e-470d-b923-6c7b955a5750"/>
 				<textElement textAlignment="Center">
-					<font fontName="Abyssinica SIL" size="12"/>
+					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA["TOTAL CARRERAS INSCRITO: "+$V{id_1}]]></textFieldExpression>
 			</textField>
