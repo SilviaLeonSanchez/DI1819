@@ -31,14 +31,22 @@ Section
   writeUninstaller "$INSTDIR\uninstall.exe"
 
   # Crear accesos directos
-  createShortCut "$SMPROGRAMS\Desinstalar.lnk" "$INSTDIR\uninstall.exe" 
-  createShortCut "$SMPROGRAMS\Instalar.lnk" "$INSTDIR\install.exe" 
+  CreateDirectory "$SMPROGRAMS\Informes"
+  createShortCut "$SMPROGRAMS\Informes\Desinstalar.lnk" "$INSTDIR\uninstall.exe" 
+  createShortCut "$SMPROGRAMS\Informes\Informes.lnk" "$INSTDIR\informes.jar" 
   
   # Grabar los archivos necesarios
   File informes.jar
   File /r lib
   File /r informes
 
+  #Añadimos información para que salga en el menú de desinstalar de Windows
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
+                 "DisplayName" "Informes"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
+                 "Publisher" "Silvia - Desarrollo Interfaces"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
+                 "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
   
 # Fin de la seccion
 SectionEnd
@@ -52,17 +60,18 @@ section "uninstall"
 
     # Borrar los archivos 
     delete "$INSTDIR\informes.jar"
-    delete /r "$INSTDIR\informes"
-    RmDir "$INSTDIR\informes"
-    delete /r "$INSTDIR\lib"
-    RmDir "$INSTDIR\lib"
+    RmDir /r "$INSTDIR\informes"
+    RmDir /r "$INSTDIR\lib"
 
     # Borrar el directorio
     RmDir "$INSTDIR"
 
     # Borrar los accesos directos
     delete "$SMPROGRAMS\Desinstalar.lnk"
-    delete "$SMPROGRAMS\Instalar.lnk"
+    delete "$SMPROGRAMS\Informes.lnk"
+ 
+    #Borramos la entrada del registro
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes"
  
 # Fin de la seccion del desinstalador
 sectionEnd
