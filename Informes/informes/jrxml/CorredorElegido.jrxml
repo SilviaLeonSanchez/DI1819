@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CorredorElegido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="740f7d53-b0eb-47ce-911e-a1fc0791fd18">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="234"/>
 	<parameter name="DNI" class="java.lang.String"/>
 	<parameter name="NOMBRE" class="java.lang.String"/>
 	<parameter name="FECHA" class="java.lang.String"/>
@@ -30,115 +30,128 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="123" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="555" height="37" uuid="088970a8-8ac9-4adb-b5ff-eb516c212265"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" size="18" isBold="true"/>
-				</textElement>
-				<text><![CDATA[INFORME CORREDOR ELEGIDO]]></text>
-			</staticText>
+		<band height="306" splitType="Stretch">
+			<image>
+				<reportElement x="370" y="94" width="160" height="185" uuid="dd2408c6-0ccf-411a-8bb7-20b4fe0145e0"/>
+				<imageExpression><![CDATA["corredor.jpeg"]]></imageExpression>
+			</image>
+			<rectangle radius="10">
+				<reportElement mode="Opaque" x="39" y="94" width="280" height="185" forecolor="#C899FF" backcolor="#F5F5F5" uuid="fc15b33f-c0dc-42e0-a1b9-71f53ca06c45"/>
+			</rectangle>
 			<textField>
-				<reportElement x="15" y="49" width="235" height="20" uuid="c4a1188a-0aa6-4dee-b412-a52f6307ae7a"/>
-				<textElement>
+				<reportElement x="51" y="135" width="254" height="30" forecolor="#330033" uuid="c4a1188a-0aa6-4dee-b412-a52f6307ae7a"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DNI: "+$P{DNI}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="287" y="49" width="182" height="20" uuid="ac805548-1c3a-4204-a92e-dbcf01b7f135"/>
-				<textElement>
+				<reportElement x="51" y="105" width="254" height="30" forecolor="#330033" uuid="ac805548-1c3a-4204-a92e-dbcf01b7f135"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["NOMBRE: "+$P{NOMBRE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="15" y="89" width="235" height="20" uuid="03b5e56e-757d-4b03-944d-ca7efffa08b4"/>
-				<textElement>
+				<reportElement x="51" y="225" width="254" height="42" forecolor="#330033" uuid="03b5e56e-757d-4b03-944d-ca7efffa08b4"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["FECHA DE NACIMIENTO: "+$P{FECHA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="287" y="69" width="182" height="20" uuid="0bd44ed3-c088-47a1-8ac6-bef7575d21e7"/>
-				<textElement>
+				<reportElement x="51" y="165" width="254" height="30" forecolor="#330033" uuid="0bd44ed3-c088-47a1-8ac6-bef7575d21e7"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["TELÉFONO: "+$P{TEL}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="15" y="69" width="235" height="20" uuid="a993f485-1617-49ab-868c-14f839263ed5"/>
-				<textElement>
+				<reportElement x="51" y="195" width="254" height="30" forecolor="#330033" uuid="a993f485-1617-49ab-868c-14f839263ed5"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Serif" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DIRECCIÓN: "+$P{DIR}]]></textFieldExpression>
 			</textField>
+			<rectangle radius="10">
+				<reportElement x="39" y="10" width="479" height="58" forecolor="#C899FF" backcolor="#F8F0FF" uuid="1f8a73d8-0233-4277-98c6-dbc61ab8fc5e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="39" y="10" width="479" height="58" forecolor="#330033" uuid="088970a8-8ac9-4adb-b5ff-eb516c212265"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INFORME CORREDOR ELEGIDO]]></text>
+			</staticText>
 		</band>
 	</title>
 	<columnHeader>
-		<band height="93" splitType="Stretch">
+		<band height="122" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="13" width="555" height="28" uuid="c5e35470-66f7-44a1-a66b-676069fdf621"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" size="14" isBold="true"/>
-				</textElement>
-				<text><![CDATA[CARRERAS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="39" y="55" width="63" height="20" uuid="249ab020-5e0d-44c7-90a5-b8c90d6ab506"/>
+				<reportElement x="49" y="92" width="63" height="20" forecolor="#330033" uuid="249ab020-5e0d-44c7-90a5-b8c90d6ab506"/>
 				<textElement>
-					<font fontName="Serif" size="12"/>
+					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="102" y="55" width="175" height="20" uuid="daa54fca-5b6f-4300-a4d5-d53428e46312"/>
+				<reportElement x="112" y="92" width="175" height="20" forecolor="#330033" uuid="daa54fca-5b6f-4300-a4d5-d53428e46312"/>
 				<textElement>
-					<font fontName="Serif" size="12"/>
+					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NOMBRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="277" y="55" width="141" height="20" uuid="3b56f21a-8b22-4ea1-9df6-c051b980bd30"/>
+				<reportElement x="287" y="92" width="141" height="20" forecolor="#330033" uuid="3b56f21a-8b22-4ea1-9df6-c051b980bd30"/>
 				<textElement>
-					<font fontName="Serif" size="12"/>
+					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[LUGAR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="418" y="55" width="100" height="20" uuid="b6dfa14d-dc5d-4bc9-afda-26251fbdc4d0"/>
+				<reportElement x="428" y="92" width="86" height="20" forecolor="#330033" uuid="b6dfa14d-dc5d-4bc9-afda-26251fbdc4d0"/>
 				<textElement>
-					<font fontName="Serif" size="12"/>
+					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<rectangle radius="10">
+				<reportElement x="39" y="13" width="479" height="58" forecolor="#C899FF" backcolor="#F8F0FF" uuid="0387dfa4-c1f5-4eac-9e5b-00a02c0f34c6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="58" y="25" width="446" height="35" forecolor="#330033" uuid="c5e35470-66f7-44a1-a66b-676069fdf621"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARRERAS]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="27" splitType="Stretch">
 			<textField>
-				<reportElement x="39" y="0" width="63" height="20" uuid="40161dac-dfe8-41bc-b07d-bed91b57f407"/>
+				<reportElement x="49" y="0" width="63" height="20" uuid="40161dac-dfe8-41bc-b07d-bed91b57f407"/>
 				<textElement>
 					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="102" y="0" width="175" height="20" uuid="a491d550-273c-43df-8717-84e694fa2ccc"/>
+				<reportElement x="112" y="0" width="175" height="20" uuid="a491d550-273c-43df-8717-84e694fa2ccc"/>
 				<textElement>
 					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="277" y="0" width="141" height="20" uuid="47e0440b-d926-4006-8ec8-b7bd6a78a8ca"/>
+				<reportElement x="287" y="0" width="141" height="20" uuid="47e0440b-d926-4006-8ec8-b7bd6a78a8ca"/>
 				<textElement>
 					<font fontName="Serif" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{lugar}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="418" y="0" width="100" height="20" uuid="fad12a77-3d31-45e4-a6a0-58cd58998b45"/>
+				<reportElement x="428" y="0" width="86" height="20" uuid="fad12a77-3d31-45e4-a6a0-58cd58998b45"/>
 				<textElement>
 					<font fontName="Serif" size="12"/>
 				</textElement>
@@ -147,11 +160,14 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch">
+		<band height="101" splitType="Stretch">
+			<rectangle radius="10">
+				<reportElement x="80" y="31" width="387" height="53" forecolor="#C899FF" backcolor="#F8F0FF" uuid="354fd04e-c4ff-4cbd-8912-81883d16140d"/>
+			</rectangle>
 			<textField>
-				<reportElement x="0" y="11" width="555" height="20" uuid="7a2528f2-d20e-470d-b923-6c7b955a5750"/>
-				<textElement textAlignment="Center">
-					<font fontName="Serif" size="12"/>
+				<reportElement x="102" y="43" width="342" height="30" forecolor="#330033" uuid="7a2528f2-d20e-470d-b923-6c7b955a5750"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Serif" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["TOTAL CARRERAS INSCRITO: "+$V{id_1}]]></textFieldExpression>
 			</textField>
