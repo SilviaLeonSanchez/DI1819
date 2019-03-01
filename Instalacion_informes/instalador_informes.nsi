@@ -6,14 +6,17 @@ Name "Instalador de informes de carreras"
 OutFile "install.exe"
 
 # La ruta de instalacion por defecto
-InstallDir $PROGRAMFILES\Informes
+InstallDir $PROGRAMFILES\AplicacionInformes
 
-# Pedimos permisos para Windows 7
+# Pedimos permisos para acceder a $PROGRAMFILES
 RequestExecutionLevel admin
 
 # Pantallas que hay que mostrar del instalador
-Page directory
-Page instfiles
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE “licencia.txt”
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_PAGE_FINISH
 
 # Cambiar el UI
 !include "MUI2.nsh"
@@ -25,20 +28,23 @@ Page instfiles
 Section
 
   # Establecemos el directorio de salida al directorio de instalacion
-  SetOutPath $INSTDIR
-  
-  # Creamos el desinstalador
-  writeUninstaller "$INSTDIR\uninstall.exe"
-
-  # Crear accesos directos
-  CreateDirectory "$SMPROGRAMS\Informes"
-  createShortCut "$SMPROGRAMS\Informes\Desinstalar.lnk" "$INSTDIR\uninstall.exe" 
-  createShortCut "$SMPROGRAMS\Informes\Informes.lnk" "$INSTDIR\informes.jar" 
+  SetOutPath $INSTDIR\AplicacionInformes
   
   # Grabar los archivos necesarios
   File informes.jar
+  File licencia.txt
   File /r lib
   File /r informes
+
+  # Creamos el desinstalador
+  writeUninstaller "$INSTDIR\AplicacionInformes\uninstall.exe"
+  
+  # Crear accesos directos
+  CreateDirectory "$SMPROGRAMS\AplicacionInformes"
+  createShortCut "$SMPROGRAMS\AplicacionInformes\DesinstalarInformes.lnk" "$INSTDIR\AplicacionInformes\uninstall.exe" 
+  createShortCut "$SMPROGRAMS\AplicacionInformes\Informes.lnk" "$INSTDIR\AplicacionInformes\informes.jar" 
+  createShortCut "$DESKTOP\Informes.lnk" "$INSTDIR\AplicacionInformes\informes.jar" 
+  
 
   #Añadimos información para que salga en el menú de desinstalar de Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
@@ -46,7 +52,7 @@ Section
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
                  "Publisher" "Silvia - Desarrollo Interfaces"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes" \
-                 "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+                 "UninstallString" "$\"$INSTDIR\AplicacionInformes\uninstall.exe$\""
   
 # Fin de la seccion
 SectionEnd
@@ -55,20 +61,23 @@ SectionEnd
 section "uninstall"
  
     # Borrar el desintalador primero
-    delete "$INSTDIR\uninstall.exe"
-    delete "$INSTDIR\install.exe"
+    delete "$INSTDIR\AplicacionInformes\uninstall.exe"
+    delete "$INSTDIR\AplicacionInformes\install.exe"
 
     # Borrar los archivos 
-    delete "$INSTDIR\informes.jar"
-    RmDir /r "$INSTDIR\informes"
-    RmDir /r "$INSTDIR\lib"
+    delete "$INSTDIR\AplicacionInformes\informes.jar"
+	delete "$INSTDIR\AplicacionInformes\licencia.txt"
+    RmDir /r "$INSTDIR\AplicacionInformes\informes"
+    RmDir /r "$INSTDIR\AplicacionInformes\lib"
 
-    # Borrar el directorio
-    RmDir "$INSTDIR"
+    # Borrar el directorio 
+    RmDir "$INSTDIR\AplicacionInformes"
 
     # Borrar los accesos directos
-    delete "$SMPROGRAMS\Desinstalar.lnk"
-    delete "$SMPROGRAMS\Informes.lnk"
+	delete "$DESKTOP\Informes.lnk"
+    delete "$SMPROGRAMS\AplicacionInformes\DesinstalarInformes.lnk"
+    delete "$SMPROGRAMS\AplicacionInformes\Informes.lnk"
+	RmDir "$SMPROGRAMS\AplicacionInformes"
  
     #Borramos la entrada del registro
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Informes"
