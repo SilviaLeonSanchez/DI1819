@@ -15,6 +15,7 @@ namespace Proyecto_Avituallamientos.logica
         public ObservableCollection<Material> ListaMateriales {get; set;}
         public ObservableCollection<String> TipoMaterial { get; set; }
 
+
         // METODOS 
         public LogicaNegocio()
         {

@@ -34,8 +34,10 @@ namespace Proyecto_Avituallamientos.interfaz
             this.ListaMateriales = MainWindow.Logica.ListaMateriales;
             this.TipoMaterial = MainWindow.Logica.TipoMaterial;
             this.Cantidad = this.ListaMateriales.Count;
+            this.LabelCantidad.Content = this.Cantidad;
             this.TipoElegido = "";
             this.DataContext = this;
+            this.DataGridMateriales.DataContext = ListaMateriales;
         }
 
         private void ComboBoxTipoMaterial_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,8 +53,11 @@ namespace Proyecto_Avituallamientos.interfaz
 	        }
             this.ListaMateriales = NuevaListaMateriales;
             this.Cantidad = this.ListaMateriales.Count;
-            this.DataContext = this;
+            this.LabelCantidad.Content = this.Cantidad;
+            this.DataGridMateriales.DataContext = ListaMateriales;
+            
         }
+
 
 
 
