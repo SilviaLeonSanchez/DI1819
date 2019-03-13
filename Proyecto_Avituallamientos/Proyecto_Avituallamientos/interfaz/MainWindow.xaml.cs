@@ -43,6 +43,12 @@ namespace Proyecto_Avituallamientos.interfaz
             ventana.ShowDialog();
         }
 
+        private void ButtonExamen2Eval_Click(object sender, RoutedEventArgs e)
+        {
+            Examen2Eval ventana = new Examen2Eval();
+            ventana.ShowDialog();
+        }
+
 
     }
 }

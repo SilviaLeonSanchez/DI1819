@@ -57,6 +57,9 @@
     <Compile Include="dto\Carrera.cs" />
     <Compile Include="dto\MaterialAvituallamiento.cs" />
     <Compile Include="dto\Material.cs" />
+    <Compile Include="interfaz\Examen2Eval.xaml.cs">
+      <DependentUpon>Examen2Eval.xaml</DependentUpon>
+    </Compile>
     <Compile Include="logica\LogicaNegocio.cs" />
     <Compile Include="interfaz\VentanaNuevaCarrera.xaml.cs">
       <DependentUpon>VentanaNuevaCarrera.xaml</DependentUpon>
@@ -73,6 +76,10 @@
     <Compile Include="interfaz\VentanaCarreras.xaml.cs">
       <DependentUpon>VentanaCarreras.xaml</DependentUpon>
     </Compile>
+    <Page Include="interfaz\Examen2Eval.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="interfaz\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

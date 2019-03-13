@@ -26,10 +26,21 @@ namespace Proyecto_Avituallamientos.logica
             TipoMaterial.Add("Bebida"); 
             TipoMaterial.Add("Comida");
             TipoMaterial.Add("Material sanitario");
+            TipoMaterial.Add("Equipacion");
 
             // LISTA DE MATERIALES
             ListaMateriales.Add(new Material("Redbull",TipoMaterial[0], 2.00));
-            ListaMateriales.Add(new Material("Panchitos", TipoMaterial[1], 1.50));
+            ListaMateriales.Add(new Material("Agua", TipoMaterial[0], 1.50));
+            ListaMateriales.Add(new Material("Zumo 1L", TipoMaterial[0], 2.50));
+            ListaMateriales.Add(new Material("Patatas fritas", TipoMaterial[1], 2.00));
+            ListaMateriales.Add(new Material("Hamburguesa", TipoMaterial[1], 3.50));
+            ListaMateriales.Add(new Material("Panchitos", TipoMaterial[1], 1.20));
+            ListaMateriales.Add(new Material("Tiritas", TipoMaterial[2], 0.50));
+            ListaMateriales.Add(new Material("Vendas", TipoMaterial[2], 4.50));
+            ListaMateriales.Add(new Material("Parche calor", TipoMaterial[2], 2.90));
+            ListaMateriales.Add(new Material("Calcetines", TipoMaterial[3], 3.40));
+            ListaMateriales.Add(new Material("Braga cuello", TipoMaterial[3], 2.30));
+            ListaMateriales.Add(new Material("Gorra", TipoMaterial[3], 1.50));
 
             // CARRERAS
             Carrera carrera = new Carrera("Carrera de prueba");
