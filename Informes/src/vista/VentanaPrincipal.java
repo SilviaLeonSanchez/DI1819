@@ -7,13 +7,15 @@ package vista;
 
 import dto.Carrera;
 import dto.Corredor;
+import dto.TiemposCorredor;
+import java.awt.Desktop;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import logicaNegocio.Logica;
@@ -91,6 +93,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabelDniCorredor = new javax.swing.JLabel();
         jComboBoxDniCorredor = new javax.swing.JComboBox<>();
         jButtonGenerarInforme = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItemInformeExamen2Eval = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -205,15 +210,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanelRadioButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonGenerarInforme, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
+
+        jMenu1.setText("Informes");
+
+        jMenuItemInformeExamen2Eval.setText("InformeExamen2Eval");
+        jMenuItemInformeExamen2Eval.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemInformeExamen2EvalActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemInformeExamen2Eval);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -304,10 +323,43 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 // Desktop.getDesktop().open(ruta);
 
             } catch (JRException ex) {
-                Logger.getLogger(VentanaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Ha habido problemas en la generacion del informe", "Problemas con el informe", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
             }
         }
     }//GEN-LAST:event_jButtonGenerarInformeActionPerformed
+
+    private void jMenuItemInformeExamen2EvalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemInformeExamen2EvalActionPerformed
+        Map parametros = new HashMap();
+        String ruta = pedirRutaInforme();
+
+        if (ruta != null) {
+            try {
+                ruta += ".pdf";
+                
+                ArrayList<TiemposCorredor> corredoresApuntadosCarreras = logica.getCorredoresApuntadosCarreras();
+                // Ordeno la coleccion por dni para agrupar en el informe
+                Collections.sort(corredoresApuntadosCarreras, new Comparator<TiemposCorredor>() {
+                    @Override
+                    public int compare(TiemposCorredor o1, TiemposCorredor o2) {
+                        return o1.getDni().compareToIgnoreCase(o2.getDni());
+                    }
+                });
+                
+                JRDataSource dataSource = new JRBeanCollectionDataSource(corredoresApuntadosCarreras);
+                JasperPrint print = JasperFillManager.fillReport("informes"+File.separator+"InformeExamen2Eval.jasper", parametros, dataSource);
+                JasperExportManager.exportReportToPdfFile(print, ruta);
+                
+                JOptionPane.showMessageDialog(this, "El informe se ha generado correctamente", "Informe generado", JOptionPane.INFORMATION_MESSAGE);
+               
+                
+            } catch (JRException ex) {
+                JOptionPane.showMessageDialog(this, "Ha habido problemas en la generacion del informe", "Problemas con el informe", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println(ex.getMessage());
+            }
+            
+        }
+    }//GEN-LAST:event_jMenuItemInformeExamen2EvalActionPerformed
 
     private String pedirRutaInforme() {
         JFileChooser jfc = new JFileChooser();
@@ -365,6 +417,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelIdCarrera;
     private javax.swing.JLabel jLabelIdCarreraFinalizada;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItemInformeExamen2Eval;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelRadioButtons;
     private javax.swing.JRadioButton jRadioButtonCarrera;

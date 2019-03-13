@@ -66,13 +66,13 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 1, 26, 32);
-        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(8), "001", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(8), "001", calendar.getTime(), 1));
         calendar.set(0, 0, 0, 1, 44, 01);
-        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(3), "002", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(3), "002", calendar.getTime(), 3));
         calendar.set(0, 0, 0, 2, 01, 54);
-        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(4), "003", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(4), "003", calendar.getTime(), 4));
         calendar.set(0, 0, 0, 1, 32, 46);
-        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(6), "004", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("MA-036", this.corredores.get(6), "004", calendar.getTime(), 2));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
@@ -81,9 +81,6 @@ public class Logica {
         calendar.set(2019, 9, 2);
         carrera = new Carrera("SE-025", "Maratón de Sevilla", calendar.getTime(), "Sevilla", 200);
 
-        // CORREDORES
-        carrera.aniadirCorredor(new TiemposCorredor("SE-025", this.corredores.get(1), "005", null));
-        carrera.aniadirCorredor(new TiemposCorredor("SE-025", this.corredores.get(5), "006", null));
         this.carreras.add(carrera);
 
         // CARRERA 3
@@ -92,13 +89,13 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 2, 36, 40);
-        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(8), "007", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(8), "007", calendar.getTime(), 4));
         calendar.set(0, 0, 0, 2, 10, 22);
-        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(7), "008", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(7), "008", calendar.getTime(), 2));
         calendar.set(0, 0, 0, 1, 59, 54);
-        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(3), "009", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(3), "009", calendar.getTime(), 1));
         calendar.set(0, 0, 0, 2, 15, 46);
-        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(2), "010", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("CA-012", this.corredores.get(2), "010", calendar.getTime(), 3));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
@@ -107,20 +104,11 @@ public class Logica {
         calendar.set(2019, 5, 21);
         carrera = new Carrera("BA-040", "Maratón de Barcelona", calendar.getTime(), "Barcelona", 100);
 
-        // CORREDORES
-        carrera.aniadirCorredor(new TiemposCorredor("BA-040", this.corredores.get(3), "023", null));
-        carrera.aniadirCorredor(new TiemposCorredor("BA-040", this.corredores.get(4), "024", null));
-
         this.carreras.add(carrera);
 
         // CARRERA 5
         calendar.set(2019, 6, 7);
         carrera = new Carrera("M-072", "Maratón de Madrid", calendar.getTime(), "Madrid", 220);
-
-        // CORREDORES
-        carrera.aniadirCorredor(new TiemposCorredor("M-072", this.corredores.get(8), "011", null));
-        carrera.aniadirCorredor(new TiemposCorredor("M-072", this.corredores.get(1), "012", null));
-        carrera.aniadirCorredor(new TiemposCorredor("M-072", this.corredores.get(7), "013", null));
 
         this.carreras.add(carrera);
 
@@ -130,11 +118,11 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 0, 56, 20);
-        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(6), "014", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(6), "014", calendar.getTime(), 1));
         calendar.set(0, 0, 0, 1, 10, 29);
-        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(2), "015", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(2), "015", calendar.getTime(), 3));
         calendar.set(0, 0, 0, 1, 2, 33);
-        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(8), "016", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("ZA-022", this.corredores.get(8), "016", calendar.getTime(), 2));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
@@ -145,9 +133,9 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 1, 35, 49);
-        carrera.aniadirCorredor(new TiemposCorredor("SF-033", this.corredores.get(3), "025", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("SF-033", this.corredores.get(3), "025", calendar.getTime(), 2));
         calendar.set(0, 0, 0, 1, 19, 38);
-        carrera.aniadirCorredor(new TiemposCorredor("SF-033", this.corredores.get(4), "026", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("SF-033", this.corredores.get(4), "026", calendar.getTime(), 1));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
@@ -158,9 +146,9 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 1, 35, 49);
-        carrera.aniadirCorredor(new TiemposCorredor("LA-025", this.corredores.get(3), "017", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("LA-025", this.corredores.get(3), "017", calendar.getTime(), 2));
         calendar.set(0, 0, 0, 1, 19, 38);
-        carrera.aniadirCorredor(new TiemposCorredor("LA-025", this.corredores.get(4), "018", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("LA-025", this.corredores.get(4), "018", calendar.getTime(), 1));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
@@ -171,13 +159,13 @@ public class Logica {
 
         // CORREDORES
         calendar.set(0, 0, 0, 3, 36, 40);
-        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(2), "019", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(2), "019", calendar.getTime(), 3));
         calendar.set(0, 0, 0, 3, 16, 22);
-        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(6), "020", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(6), "020", calendar.getTime(), 1));
         calendar.set(0, 0, 0, 3, 20, 54);
-        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(5), "021", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(5), "021", calendar.getTime(), 2));
         calendar.set(0, 0, 0, 3, 37, 46);
-        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(1), "022", calendar.getTime()));
+        carrera.aniadirCorredor(new TiemposCorredor("PM-001", this.corredores.get(1), "022", calendar.getTime(), 4));
 
         carrera.cerrarCarrera();
         this.carreras.add(carrera);
