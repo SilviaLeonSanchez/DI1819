@@ -1,0 +1,7 @@
+<DataGrid x:Name="DataGridCarreras" ItemsSource="{Binding Path=ListaCarreras}" AutoGenerateColumns="False" CanUserAddRows="False" IsReadOnly="True" Margin="78,72,78,0" VerticalAlignment="Top" Height="262" MouseDoubleClick="DataGridCarreras_DoubleClick" Background="White" BorderBrush="#FFABF0E6">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=IdCarrera}" CanUserResize="False" Width="80"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Path=NombreCarrera}" CanUserResize="False" Width="260"/>
+                <DataGridTextColumn Header="Avituallamientos" Binding="{Binding Path=Avituallamientos.Count}" CanUserResize="False" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>

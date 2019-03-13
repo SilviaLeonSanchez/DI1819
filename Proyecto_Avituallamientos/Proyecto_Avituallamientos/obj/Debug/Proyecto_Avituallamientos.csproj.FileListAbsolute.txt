@@ -44,3 +44,6 @@ C:\Users\alumno\Downloads\DI\Proyecto_Avituallamientos\Proyecto_Avituallamientos
 C:\Users\alumno\Downloads\DI\Proyecto_Avituallamientos\Proyecto_Avituallamientos\obj\Debug\Proyecto_Avituallamientos.Properties.Resources.resources
 C:\Users\alumno\Downloads\DI\Proyecto_Avituallamientos\Proyecto_Avituallamientos\obj\Debug\Proyecto_Avituallamientos.csproj.GenerateResource.Cache
 C:\Users\alumno\Downloads\DI\Proyecto_Avituallamientos\Proyecto_Avituallamientos\obj\Debug\Proyecto_Avituallamientos.csprojResolveAssemblyReference.cache
+C:\Users\alumno\Downloads\DI1819\Proyecto_Avituallamientos\Proyecto_Avituallamientos\bin\Debug\Proyecto_Avituallamientos.exe.config
+C:\Users\alumno\Downloads\DI1819\Proyecto_Avituallamientos\Proyecto_Avituallamientos\obj\Debug\Proyecto_Avituallamientos.exe
+C:\Users\alumno\Downloads\DI1819\Proyecto_Avituallamientos\Proyecto_Avituallamientos\obj\Debug\Proyecto_Avituallamientos.pdb
